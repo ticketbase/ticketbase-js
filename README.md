@@ -27,6 +27,19 @@ TB.request('GET', '/events/my-event/tickets.json')
   });
 ```
 
+
+<br>
+
+## To do
+
+- [x] Low-level API (`TB.request()`)
+- [ ] High-level API
+     - [ ] .event()
+     - [ ] .event().tickets()
+     - [ ] .event().orders()
+     - [ ] .currentEvents()
+     - [ ] .allEvents()
+
 <br>
 
 ## API docuemntation
