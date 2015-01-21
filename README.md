@@ -1,7 +1,7 @@
 # Ticketbase JS client
 
 Embed Ticketbase stuff into your website. Works on both Node and the browser.<br>
-__[Demo →](http://rawgit.com/rstacruz/ticketbase-js/master/example/index.html)__
+__[Demo →](http://rawgit.com/ticketbase/ticketbase-js/master/example/index.html)__
 
 High-level API:
 
