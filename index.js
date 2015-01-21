@@ -6,6 +6,29 @@
 var TB = {};
 
 /**
+ * TB.setKey() : setKey(key)
+ * Sets the API key to given `key` string. Use this before running any other
+ * function, otherwise, errors will be thrown.
+ *
+ *     TB.setKey('a0b1cd30a91adc0ffee');
+ */
+
+TB.setKey = function (key) {
+  TB._key = key;
+  return TB;
+};
+
+/**
+ * TB.getKey : getKey()
+ * Returns the API key, or throws an error if no key is set yet.
+ */
+
+TB.getKey = function () {
+  if (TB._key) return TB._key;
+  throw new Error("Ticketbase: No API key. use TB.setKey() first");
+};
+
+/**
  * TB.base:
  * (Internal) Base URL path.
  */
@@ -28,10 +51,10 @@ TB.base = 'http://api.ticketbase.com/v1';
 TB._request = require('then-request');
 
 /**
- * TB.request() : request(method, url, options, callback)
- * (Internal) AJAX library. See [then-request].
- * [then-request]: https://www.npmjs.com/package/then-request
+ * TB.request() : request(method, path, options, callback)
+ * Performs an API request.
  *
+ *     // Performs a GET on http://api.ticketbase.com/v1/events.json
  *     request('GET', '/events.json')
  *     .then(function (res) {
  *       res.statusCode == 200
@@ -52,28 +75,6 @@ TB.request = function (method, path, options) {
     // do error checking here too if needed
     return res;
   });
-};
-
-/**
- * TB.setKey() : setKey(key)
- * Sets the API key to given `key` string.
- *
- *     TB.setKey('a0b1cd30a91adc0ffee');
- */
-
-TB.setKey = function (key) {
-  TB._key = key;
-  return TB;
-};
-
-/**
- * TB.getKey : getKey()
- * Returns the API key, or throws an error if no key is set yet.
- */
-
-TB.getKey = function () {
-  if (TB._key) return TB._key;
-  throw new Error("Ticketbase: No API key. use TB.setKey() first");
 };
 
 /*
