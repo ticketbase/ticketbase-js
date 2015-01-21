@@ -51,8 +51,10 @@ TB.base = 'http://api.ticketbase.com/v1';
 TB._request = require('then-request');
 
 /**
- * TB.request() : request(method, path, options, callback)
- * Performs an API request.
+ * TB.request() : request(method, path, data)
+ * Performs an API request. Returns a promise.
+ *
+ * `data` may be an Object that will be sent as the body.
  *
  *     // Performs a GET on http://api.ticketbase.com/v1/events.json
  *     request('GET', '/events.json')
@@ -62,17 +64,27 @@ TB._request = require('then-request');
  *     });
  */
 
-TB.request = function (method, path, options) {
-  if (!options) options = {};
-  if (!options.qs) options.qs = {};
-  if (!options.qs.api_key) options.qs.api_key = TB.getKey();
+TB.request = function (method, path, data) {
+  var options = {
+    qs: { api_key: TB.getKey() },
+    json: data
+  };
 
   var url = TB.base + path;
 
   return TB._request(method, url, options)
   .then(function (res) {
-    // do any transforms here if necessary
-    // do error checking here too if needed
+    // Only allow OK responses, throw 401's et al
+    if (!/^2../.test(res.status)) {
+      var err = new Error("Ticketbase: " + res.headers.status);
+      err.body = JSON.parse(res.body.toString());
+      err.statusCode = res.statusCode;
+      err.headers = res.headers;
+      throw err;
+    }
+
+    // Return result
+    res.body = res.getBody();
     return res;
   });
 };

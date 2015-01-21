@@ -36,9 +36,11 @@ TB.setKey('a0b1cd30a91adc0ffee');
 Returns the API key, or throws an error if no key is set yet.
 
 ### TB.request()
-> `request(method, path, options, callback)`
+> `request(method, path, data)`
 
-Performs an API request.
+Performs an API request. Returns a promise.
+
+`data` may be an Object that will be sent as the body.
 
 ```js
 // Performs a GET on http://api.ticketbase.com/v1/events.json
