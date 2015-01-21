@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "browserify -s TB index.js > ticketbase.js"
   },
   "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^8.1.1",
     "chai": "^1.10.0",
     "mocha": "^2.1.0",
     "mocha-clean": "^0.4.0",
