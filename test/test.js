@@ -12,22 +12,21 @@ afterEach(function () {
 
 before(function () {
   TB = require('../index');
+  TB.setKey('.');
   // TB.base = 'http://api.dev.local:3000/v1';
 });
 
 describe('API keys', function () {
   it('resolves to an error before API keys', function () {
+    TB.setKey(undefined);
     TB.request('GET', '/')
       .then(errExpected, function (err) {
         expect(err.match(/No API key/));
       });
   });
 
-  it('throws no errors with an API key', function () {
-    expect(function () {
-      TB.setKey('.');
-      TB.getKey();
-    }).not.to.throw(/No API key/);
+  afterEach(function () {
+    TB.setKey('.');
   });
 });
 

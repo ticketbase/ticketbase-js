@@ -19,16 +19,6 @@ TB.setKey = function (key) {
 };
 
 /**
- * TB.getKey() : getKey()
- * (Internal) Returns the API key, or throws an error if no key is set yet.
- */
-
-TB.getKey = function () {
-  if (TB._key) return TB._key;
-  throw new Error("Ticketbase: No API key. use TB.setKey() first");
-};
-
-/**
  * TB.base:
  * The base URL path for the API server (string).
  *
@@ -85,21 +75,16 @@ TB._request = require('then-request');
  */
 
 TB.request = function (method, path, data) {
-  var key;
+  var key = TB._key;
+  if (!key)
+    return Promise.reject(new Error(
+      "Ticketbase: No API key. Use TB.setKey() first."));
 
-  // Resolve to an error
-  try {
-    key = TB.getKey();
-  } catch (e) {
-    return Promise.reject(e);
-  }
-
+  var url = TB.base + path;
   var options = {
     qs: { api_key: key },
     json: data
   };
-
-  var url = TB.base + path;
 
   return TB._request(method, url, options)
   .then(function (res) {
