@@ -30,10 +30,6 @@
       clear();
 
       var key = document.getElementById('key').value;
-      if (!key) {
-        alert("Use an API key.");
-        return;
-      }
 
       TB.setKey(key);
       log("Contacting API...\n");
