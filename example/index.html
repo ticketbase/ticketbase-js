@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Ticketbase API test</title>
-  <script src="//rawgit.com/rstacruz/ticketbase-js/master/ticketbase.js"></script>
+  <script src="../ticketbase.js"></script>
   <style>
     * { box-sizing: border-box; }
     body { max-width: 300px; margin: 50px auto; font-size: 10pt; }
@@ -22,7 +22,13 @@
       document.getElementById('output').value += msg + '\n';
     }
 
+    function clear () {
+      document.getElementById('output').value = '';
+    }
+
     document.getElementById('btn').addEventListener('click', function () {
+      clear();
+
       var key = document.getElementById('key').value;
       if (!key) {
         alert("Use an API key.");
@@ -36,13 +42,15 @@
         .then(function (events) {
           log("Response:");
           log(JSON.stringify(events, null, 2));
-        })
-        .catch(function (err) {
+        },
+        function (err) {
           log("Error received");
           log("" + err.message);
           log(JSON.stringify(err.body, null, 2));
         });
     });
+
+    clear();
   </script>
   
 </body>

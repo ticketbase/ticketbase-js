@@ -49,9 +49,27 @@ describe('TB.request', function () {
       .then(function () {
         throw new Error("Error was expected");
       }, function (err) {
-        expect(err.statusCode).eql(401);
-        expect(err.body.error).eql("401 Unauthorized");
         expect(err.message).eql("Ticketbase: 401 Unauthorized");
+        expect(err.statusCode).eql(401);
+        expect(err.body).eql({ error: "401 Unauthorized" });
+        return true;
+      });
+  });
+});
+
+describe('TB.request: CORS errors', function () {
+  beforeEach(function () {
+    stubAjax(function () {
+      return stubResponse(0, "", {});
+    });
+  });
+
+  it('handles CORS errors', function () {
+    return TB.request('GET', '/events.json')
+      .then(function () {
+        throw new Error("Error was expected");
+      }, function (err) {
+        expect(err.message).match(/Ticketbase: CORS error/);
         return true;
       });
   });
