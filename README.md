@@ -14,7 +14,9 @@ TB.event('my-event')
   });
 ```
 
-## API
+<br>
+
+## API docuemntation
 
 <!-- begin api -->
 
