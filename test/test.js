@@ -16,10 +16,11 @@ before(function () {
 });
 
 describe('API keys', function () {
-  it('throws an error before API keys', function () {
-    expect(function () {
-      TB.request('GET', '/');
-    }).to.throw(/No API key/);
+  it('resolves to an error before API keys', function () {
+    TB.request('GET', '/')
+      .then(errExpected, function (err) {
+        expect(err.match(/No API key/));
+      });
   });
 
   it('throws no errors with an API key', function () {
@@ -94,3 +95,7 @@ function stubResponse(code, msg, body) {
   });
 }
 
+
+function errExpected () {
+  throw new Error("Error was expected");
+}

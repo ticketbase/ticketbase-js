@@ -55,30 +55,45 @@ TB._request = require('then-request');
  * Performs an API request. The client takes care of API authentication details
  * for you (as long as you used `TB.setKey()`).
  *
- * Returns a promise that will resolve to the JSON data, or to an error.
+ * Returns a promise that will resolve to the JSON data, or reject to an error.
  *
- * `data` may be an Object that will be sent as the body.
+ * `data` may be an Object that will be sent as the POST body.
  *
  *     // Performs a GET on http://api.ticketbase.com/v1/events.json.
  *
- *     request('GET', '/events.json')
+ *     TB.setKey('aabbccdd');
+ *     TB.request('GET', '/events.json')
  *       .then(function (events) {
  *         events == [ ...list of events... ]
  *       })
  *
- * Errors look like this:
+ * Here are some errors that can be thrown:
  *
- *     request('GET', '/events.json')
+ *     TB.request('GET', '/events.json')
  *       .catch(function (err) {
- *         err.statusCode == 401
+ *         // General errors:
+ *         err.message == "Ticketbase: no API key..."
+ *         err.message == "Ticketbase: CORS error. This site is..."
+ *
+ *         // HTTP errors:
  *         err.message == "Ticketbase: 401 Unauthorized"
+ *         err.statusCode == 401
  *         err.body == { ... }
  *       })
  */
 
 TB.request = function (method, path, data) {
+  var key;
+
+  // Resolve to an error
+  try {
+    key = TB.getKey();
+  } catch (e) {
+    return Promise.reject(e);
+  }
+
   var options = {
-    qs: { api_key: TB.getKey() },
+    qs: { api_key: key },
     json: data
   };
 
