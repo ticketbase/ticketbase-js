@@ -76,9 +76,8 @@ TB._request = require('then-request');
 
 TB.request = function (method, path, data) {
   var key = TB._key;
-  if (!key)
-    return Promise.reject(new Error(
-      "Ticketbase: No API key. Use TB.setKey() first."));
+  if (!key) return Promise.reject(new Error(
+    "Ticketbase: No API key. Use TB.setKey() first."));
 
   var url = TB.base + path;
   var options = {
@@ -88,33 +87,16 @@ TB.request = function (method, path, data) {
 
   return TB._request(method, url, options)
   .then(function (res) {
-    // then-request uses `0` for this for some reason
-    if (res.statusCode === 0) {
-      var err = new Error(
-        "Ticketbase: CORS error: "+
-        "this site is not allowed to access the Ticketbase API.");
-      throw err;
-    }
+    // then-request uses `0` for this for some reason.
+    if (res.statusCode === 0)
+      throw corsError();
 
-    // Only allow OK responses, throw 401's et al
-    if (!/^2../.test(res.status)) {
-      var err = new Error("Ticketbase: " + res.headers.status);
-      err.body = parse(res.body, res.headers['content-type']);
-      err.statusCode = res.statusCode;
-      err.headers = res.headers;
-      throw err;
-    }
+    // Only allow OK responses, throw 401's et al.
+    if (!/^2../.test(res.status))
+      throw apiError(res);
 
-    function parse (body, type) {
-      if (type === 'application/json') {
-        return JSON.parse(body.toString());
-      } else {
-        return body.toString();
-      }
-    }
-
-    // Return result
-    return res.getBody();
+    // Return the API's JSON body result.
+    return parseBody(res);
   });
 };
 
@@ -138,3 +120,32 @@ TB.event = function () {
  */
 
 module.exports = TB;
+
+/*
+ * Helpers
+ */
+
+function corsError () {
+  return new Error(
+    "Ticketbase: CORS error: "+
+    "this site is not allowed to access the Ticketbase API.");
+}
+
+function apiError (res) {
+  var err = new Error("Ticketbase: " + res.headers.status);
+  err.body = parseBody(res);
+  err.statusCode = res.statusCode;
+  err.headers = res.headers;
+  throw err;
+}
+
+function parseBody (res) {
+  var
+    body = res.body.toString(),
+    type = res.headers['content-type'];
+
+  if (type === 'application/json')
+    return JSON.parse(body);
+  else
+    return body;
+}
