@@ -36,17 +36,18 @@
       }
 
       TB.setKey(key);
-      log('Contacting API...');
+      log("Contacting API...\n");
 
       TB.request('GET', '/events.json')
         .then(function (events) {
-          log("Response:");
+          log("Response:\n");
           log(JSON.stringify(events, null, 2));
         },
         function (err) {
-          log("Error received");
+          log("!! Error received.\n");
           log("" + err.message);
-          log(JSON.stringify(err.body, null, 2));
+          if (err.body)
+            log(JSON.stringify(err.body, null, 2));
         });
     });
 
