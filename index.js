@@ -12,6 +12,18 @@ var TB = {};
 var Promise =
 TB.Promise = this.Promise || require('promise-polyfill');
 
+/**
+ * TB.setKey() : setKey(key)
+ * Sets the API key to given `key` string.
+ *
+ *     TB.setKey('a0b1cd30a91adc0ffee');
+ */
+
+TB.setKey = function (key) {
+  TB._key = key;
+  return TB;
+};
+
 /*
  * scope
  */
