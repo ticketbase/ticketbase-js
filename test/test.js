@@ -30,11 +30,18 @@ describe('API keys', function () {
   });
 });
 
-describe('test', function () {
+describe('TB.request', function () {
   beforeEach(function () {
     stubAjax(function () {
       return stubResponse(401, "Unauthorized", { error: "401 Unauthorized" });
     });
+  });
+
+  it('performs a GET request', function () {
+    TB.request('GET', '/events.json');
+    expect(TB._request.calledWith(
+      'GET', 'http://api.ticketbase.com/v1/events.json'))
+      .eql(true);
   });
 
   it('handles 401 cases', function () {

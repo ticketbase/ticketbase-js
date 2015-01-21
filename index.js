@@ -52,16 +52,28 @@ TB._request = require('then-request');
 
 /**
  * TB.request() : request(method, path, data)
- * Performs an API request. Returns a promise.
+ * Performs an API request. The client takes care of API authentication details
+ * for you (as long as you used `TB.setKey()`).
+ *
+ * Returns a promise that will resolve to the JSON data, or to an error.
  *
  * `data` may be an Object that will be sent as the body.
  *
- *     // Performs a GET on http://api.ticketbase.com/v1/events.json
+ *     // Performs a GET on http://api.ticketbase.com/v1/events.json.
+ *
  *     request('GET', '/events.json')
- *     .then(function (res) {
- *       res.statusCode == 200
- *       res.getBody()
- *     });
+ *       .then(function (events) {
+ *         events == [ ...list of events... ]
+ *       })
+ *
+ * Errors look like this:
+ *
+ *     request('GET', '/events.json')
+ *       .catch(function (err) {
+ *         err.statusCode == 401
+ *         err.message == "Ticketbase: 401 Unauthorized"
+ *         err.body == { ... }
+ *       })
  */
 
 TB.request = function (method, path, data) {
@@ -84,8 +96,7 @@ TB.request = function (method, path, data) {
     }
 
     // Return result
-    res.body = res.getBody();
-    return res;
+    return res.getBody();
   });
 };
 
