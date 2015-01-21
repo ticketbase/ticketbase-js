@@ -31,13 +31,15 @@ TB.request('GET', '/events/my-event/tickets.json')
 
 ## To do
 
-- [x] Low-level API (`TB.request()`)
+- [x] Low-level API
+    - [x] TB.setKey() — sets the API key
+    - [x] TB.request() — performs an API request
 - [ ] High-level API
-     - [ ] .event()
-     - [ ] .event().tickets()
-     - [ ] .event().orders()
-     - [ ] .currentEvents()
-     - [ ] .allEvents()
+    - [ ] .event()
+    - [ ] .event().tickets()
+    - [ ] .event().orders()
+    - [ ] .currentEvents()
+    - [ ] .allEvents()
 
 <br>
 
