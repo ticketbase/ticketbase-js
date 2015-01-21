@@ -19,8 +19,8 @@ TB.setKey = function (key) {
 };
 
 /**
- * TB.getKey : getKey()
- * Returns the API key, or throws an error if no key is set yet.
+ * TB.getKey() : getKey()
+ * (Internal) Returns the API key, or throws an error if no key is set yet.
  */
 
 TB.getKey = function () {
@@ -30,7 +30,9 @@ TB.getKey = function () {
 
 /**
  * TB.base:
- * (Internal) Base URL path.
+ * The base URL path for the API server (string).
+ *
+ *     TB.base = 'http://api.ticketbase.com/v1';
  */
 
 TB.base = 'http://api.ticketbase.com/v1';
