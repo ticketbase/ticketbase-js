@@ -1,100 +1,45 @@
-var expect = require('chai').expect;
-var Promise = this.Promise || require('promise');
-var TB;
+require('./setup');
 
-beforeEach(function () {
-  global.sinon = require('sinon').sandbox.create();
-});
-
-afterEach(function () {
-  global.sinon.restore();
-});
-
-before(function () {
-  TB = require('../index');
-  TB.setKey('.');
-  // TB.base = 'http://api.dev.local:3000/v1';
-});
-
-describe('API keys', function () {
-  it('resolves to an error before API keys', function () {
-    TB.setKey(undefined);
-    TB.request('GET', '/')
-      .then(errExpected, function (err) {
-        expect(err.match(/No API key/));
-      });
-  });
-
-  afterEach(function () {
-    TB.setKey('.');
-  });
-});
-
-describe('TB.request', function () {
-  beforeEach(function () {
-    stubAjax(function () {
-      return stubResponse(401, "Unauthorized", { error: "401 Unauthorized" });
-    });
-  });
+describe('TB.request: 401', function () {
+  stubAjax(401, { error: "401 Unauthorized" });
 
   it('performs a GET request', function () {
     TB.request('GET', '/events.json');
-    expect(TB._request.calledWith(
-      'GET', 'http://api.ticketbase.com/v1/events.json'))
-      .eql(true);
+    expect(TB._request)
+      .calledWith('GET', TB.base + '/events.json');
   });
 
   it('handles 401 cases', function () {
     return TB.request('GET', '/events.json')
-      .then(function () {
-        throw new Error("Error was expected");
-      }, function (err) {
-        expect(err.message).eql("Ticketbase: 401 Unauthorized");
-        expect(err.statusCode).eql(401);
-        expect(err.body).eql({ error: "401 Unauthorized" });
-        return true;
+      .then(
+        errExpected,
+        function (err) {
+          expect(err.message).eql("Ticketbase: API failed (401)");
+          expect(err.statusCode).eql(401);
+          expect(err.body).eql({ error: "401 Unauthorized" });
+          return true;
       });
   });
 });
 
-describe('TB.request: CORS errors', function () {
-  beforeEach(function () {
-    stubAjax(function () {
-      return stubResponse(0, "", {});
-    });
+describe('TB.request: 200', function () {
+  stubAjax(200, [
+    { id: 6, title: 'Event 1' },
+    { id: 7, title: 'Event 2' }
+  ]);
+
+  it('performs a GET request', function () {
+    TB.request('GET', '/events.json');
+    expect(TB._request)
+      .calledWith('GET', TB.base + '/events.json');
   });
 
-  it('handles CORS errors', function () {
+  it('handles 200 cases', function () {
     return TB.request('GET', '/events.json')
-      .then(function () {
-        throw new Error("Error was expected");
-      }, function (err) {
-        expect(err.message).match(/Ticketbase: CORS error/);
+      .then(function (res) {
+        expect(res[0].id).not.be.undefined;
+        expect(res[1].id).not.be.undefined;
         return true;
       });
   });
 });
-
-/*
- * Simple request stubbing
- */
-
-function stubAjax (fn) {
-  sinon.stub(TB, '_request', fn);
-}
-
-function stubResponse(code, msg, body) {
-  return Promise.resolve({
-    statusCode: code,
-    headers: {
-      'content-type': 'application/json',
-      status: '' + code + ' ' + msg,
-    },
-    body: JSON.stringify(body)
-  });
-}
-
-
-function errExpected () {
-  throw new Error("Error was expected");
-}
