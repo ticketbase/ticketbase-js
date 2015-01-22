@@ -92,7 +92,7 @@ TB.request = function (method, path, data) {
       throw corsError();
 
     // Only allow OK responses, throw 401's et al.
-    if (!/^2../.test(res.status))
+    if (!/^[23]../.test(''+res.statusCode))
       throw apiError(res);
 
     // Return the API's JSON body result.
@@ -132,7 +132,7 @@ function corsError () {
 }
 
 function apiError (res) {
-  var err = new Error("Ticketbase: " + res.headers.status);
+  var err = new Error("Ticketbase: API failed (" + res.statusCode + ")");
   err.body = parseBody(res);
   err.statusCode = res.statusCode;
   err.headers = res.headers;
