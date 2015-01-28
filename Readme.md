@@ -18,7 +18,7 @@ Embed into your page like so:
 </div>
 ```
 
-Add to the bottom:
+Add to the bottom: (loosely based on [this](https://about.twitter.com/resources/buttons))
 
 ```html
 <script>
