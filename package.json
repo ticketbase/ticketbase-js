@@ -22,6 +22,7 @@
     "mocha-clean": "^0.4.0"
   },
   "dependencies": {
+    "ajaxapi": "git://github.com/rstacruz/ajaxapi",
     "dom101": "^0.4.0"
   }
 }
