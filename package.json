@@ -1,0 +1,27 @@
+{
+  "name": "ticketbase-widget",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ticketbase/ticketbase-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ticketbase/ticketbase-widget/issues"
+  },
+  "homepage": "https://github.com/ticketbase/ticketbase-widget",
+  "devDependencies": {
+    "browserify": "^8.1.1",
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "mocha-clean": "^0.4.0"
+  },
+  "dependencies": {
+    "lodash": "^3.0.0"
+  }
+}
