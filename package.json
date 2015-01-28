@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "ajaxapi": "git://github.com/rstacruz/ajaxapi",
-    "dom101": "^0.4.0"
+    "dom101": "^0.5.0"
   }
 }
