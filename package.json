@@ -1,9 +1,10 @@
 {
   "name": "ticketbase-widget",
-  "version": "0.0.1",
+  "version": "0.0.0-1",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "prepublish": "make -B"
   },
   "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
   "license": "MIT",
