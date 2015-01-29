@@ -1,1 +1,1605 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var t;"undefined"!=typeof window?t=window:"undefined"!=typeof global?t=global:"undefined"!=typeof self&&(t=self),t.TBjs=e()}}(function(){var e,t,n;return function r(e,t,n){function i(s,a){if(!t[s]){if(!e[s]){var u=typeof require=="function"&&require;if(!a&&u)return u(s,!0);if(o)return o(s,!0);var f=new Error("Cannot find module '"+s+"'");throw f.code="MODULE_NOT_FOUND",f}var c=t[s]={exports:{}};e[s][0].call(c.exports,function(t){var n=e[s][1][t];return i(n?n:t)},c,c.exports,r,e,t,n)}return t[s].exports}var o=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i}({1:[function(e,t,n){t.exports=e("./lib")},{"./lib":5}],2:[function(e,t,n){function r(e){e=e||{};for(var t=1;t<arguments.length;t++){if(!arguments[t])continue;for(var n in arguments[t]){if(arguments[t].hasOwnProperty(n))e[n]=arguments[t][n]}}}t.exports=r},{}],3:[function(e,t,n){function r(e,t){var n;var r={};if(!t)t="data-";for(var o=0,s=e.attributes.length;o<s;o++){var a=e.attributes[o];n=a.name;if(n.substr(0,t.length)!==t)continue;n=n.substr(t.length);n=i(n);r[n]=a.value}return r}function i(e){return e.replace(/[\s_\-]+([a-zA-Z])/g,function(e,t){return t.toUpperCase()})}t.exports=r},{}],4:[function(e,t,n){var r={};var i="function(s){"+"return (''+s)"+".replace(/&/g,'&amp;')"+".replace(/</g,'&lt;')"+".replace(/>/g,'&gt;')"+".replace(/'/g,'&quot;')"+";}";t.exports=function(e,t){var n;n=new Function("obj","var p=[],"+"print=function(){p.push.apply(p,arguments);},"+"escape="+i+";"+"with(obj||{}){p.push('"+e.replace(/[\r\t\n]/g," ").split("<%").join("	").replace(/((^|%>)[^\t]*)'/g,"$1\r").replace(/\t=(.*?)%>/g,"',escape($1),'").replace(/\t!=(.*?)%>/g,"',$1,'").split("	").join("');").split("%>").join("p.push('").split("\r").join("\\'")+"');}return p.join('');");return t?n(t):n}},{}],5:[function(e,t,n){var r=e("ajaxapi");var i=e("./helpers/template");var o=e("./helpers/get_data");var s=e("./helpers/extend");var a=e("dom101/add-class");var u=e("dom101/add-class");var f=e("dom101/ready");var c=e("dom101/each");var p=e("dom101/query-selector-all");var l=e("dom101/query-selector");var d=t.exports={};d.api=r("http://api.ticketbase.com");d.go=function(){c(p("[data-tb]"),function(e){d.widget(e)})};d.widget=function(e){if(e.__tbInstance)return;var t=o(e);new h(e,t)};function h(e,t){e.__tbInstance=this;s(this,t,{el:e});this.el=e;this.load()}h.prototype={load:function(){var e=this;this.el.innerHTML="loading...";u(this.el,"tb-loading");d.api.get("/v1/events/"+this.eventId).then(function(t){e.event=t;e.render()},function(e){throw e})},render:function(){a(this.el,"tb-loading");try{var e=i("<h1>"+"<a href='<%=event.url%>'><%= event.title %></a></h1>"+"<% event.ticket_types.forEach(function (tix) { %>\n"+"<li>"+"<b><%= tix.title %></b> $ <%= tix.price %>"+"</li>"+"<% }); %>");console.log(e.toString());this.el.innerHTML=e({event:this.event})}catch(t){console.error(t);throw t}},onerror:function(e){throw e}};f(function(){d.go()})},{"./helpers/extend":2,"./helpers/get_data":3,"./helpers/template":4,ajaxapi:6,"dom101/add-class":22,"dom101/each":23,"dom101/query-selector":25,"dom101/query-selector-all":24,"dom101/ready":26}],6:[function(e,t,n){function r(e){if(!(this instanceof r))return new r(e);if(typeof e==="string")e={base:e};else if(!e)e={};this.base=e.base;this._after=[];this._before=[];this.response=null}r.request=e("then-request");r.prototype.request=function(e,t,n){var i={headers:{},qs:{},json:n||{}};var o={method:e,url:this.prefix(t),data:n,headers:i.headers,options:i};this._before.forEach(function(e){e.call(this,o)});var s=r.request(o.method,o.url,o.options);s=s.then(this.saveResponse.bind(this)).then(this.parseBody.bind(this));this._after.forEach(function(e){s=s.then(e[0].bind(this),e[1].bind(this))});return s};r.prototype.get=i("GET");r.prototype.put=i("PUT");r.prototype.del=i("DELETE");r.prototype.post=i("POST");r.prototype.patch=i("PATCH");function i(e){return function(){return r.prototype.request.apply(this,[e].concat([].slice.call(arguments)))}}r.prototype.before=function(e){this._before.push(e);return this};r.prototype.after=function(e,t){this._after.push([e,t]);return this};r.prototype.parseBody=function(e){var t=e.getBody(),n=e.headers["content-type"];if(n.match(/^application\/json/))return JSON.parse(t);else return t};r.prototype.prefix=function(e){if(e[0]==="/")return(this.base||"")+e;else return e};r.prototype.saveResponse=function(e){this.response=this.res=e;return e};t.exports=r},{"then-request":7}],7:[function(e,t,n){"use strict";var r=e("promise");var i=e("http-response-object");var o=e("./lib/handle-qs.js");t.exports=s;function s(e,t,n,s){var a=new r(function(r,a){var u=new window.XMLHttpRequest;if(typeof e!=="string"){throw new TypeError("The method must be a string.")}if(typeof t!=="string"){throw new TypeError("The URL/path must be a string.")}if(typeof n==="function"){s=n;n={}}if(n===null||n===undefined){n={}}if(typeof n!=="object"){throw new TypeError("Options must be an object (or null).")}if(typeof s!=="function"){s=undefined}e=e.toUpperCase();n.headers=n.headers||{};var f;var c=!!((f=/^([\w-]+:)?\/\/([^\/]+)/.exec(n.uri))&&f[2]!=window.location.host);if(!c)n.headers["X-Requested-With"]="XMLHttpRequest";if(n.qs){t=o(t,n.qs)}if(n.json){n.body=JSON.stringify(n.json);n.headers["content-type"]="application/json"}u.onreadystatechange=function(){if(u.readyState===4){var e={};u.getAllResponseHeaders().split("\r\n").forEach(function(t){var n=t.split(":");if(n.length>1){e[n[0].toLowerCase()]=n.slice(1).join(":").trim()}});r(new i(u.status,e,u.responseText))}};u.open(e,t,true);for(var p in n.headers){u.setRequestHeader(p.toLowerCase(),n.headers[p])}u.send(n.body?n.body:null)});a.getBody=function(){return a.then(function(e){return e.getBody()})};return a.nodeify(s)}},{"./lib/handle-qs.js":8,"http-response-object":9,promise:10}],8:[function(e,t,n){"use strict";var r=e("qs").parse;var i=e("qs").stringify;t.exports=o;function o(e,t){e=e.split("?");var n=e[0];var o=(e[1]||"").split("#")[0];var s=e[1]&&e[1].split("#").length>1?"#"+e[1].split("#")[1]:"";var a=r(o);for(var u in t){a[u]=t[u]}o=i(a);if(o!==""){o="?"+o}return n+o+s}},{qs:16}],9:[function(e,t,n){"use strict";t.exports=r;function r(e,t,n){if(typeof e!=="number"){throw new TypeError("statusCode must be a number but was "+typeof e)}if(t===null){throw new TypeError("headers cannot be null")}if(typeof t!=="object"){throw new TypeError("headers must be an object but was "+typeof t)}this.statusCode=e;this.headers={};for(var r in t){this.headers[r.toLowerCase()]=t[r]}this.body=n}r.prototype.getBody=function(e){if(this.statusCode>=300){var t=new Error("Server responded with status code "+this.statusCode+":\n"+this.body.toString());t.statusCode=this.statusCode;t.headers=this.headers;t.body=this.body;throw t}return e?this.body.toString(e):this.body}},{}],10:[function(e,t,n){"use strict";t.exports=e("./lib/core.js");e("./lib/done.js");e("./lib/es6-extensions.js");e("./lib/node-extensions.js")},{"./lib/core.js":11,"./lib/done.js":12,"./lib/es6-extensions.js":13,"./lib/node-extensions.js":14}],11:[function(e,t,n){"use strict";var r=e("asap");t.exports=i;function i(e){if(typeof this!=="object")throw new TypeError("Promises must be constructed via new");if(typeof e!=="function")throw new TypeError("not a function");var t=null;var n=null;var i=[];var a=this;this.then=function(e,t){return new a.constructor(function(n,r){u(new o(e,t,n,r))})};function u(e){if(t===null){i.push(e);return}r(function(){var r=t?e.onFulfilled:e.onRejected;if(r===null){(t?e.resolve:e.reject)(n);return}var i;try{i=r(n)}catch(o){e.reject(o);return}e.resolve(i)})}function f(e){try{if(e===a)throw new TypeError("A promise cannot be resolved with itself.");if(e&&(typeof e==="object"||typeof e==="function")){var r=e.then;if(typeof r==="function"){s(r.bind(e),f,c);return}}t=true;n=e;p()}catch(i){c(i)}}function c(e){t=false;n=e;p()}function p(){for(var e=0,t=i.length;e<t;e++)u(i[e]);i=null}s(e,f,c)}function o(e,t,n,r){this.onFulfilled=typeof e==="function"?e:null;this.onRejected=typeof t==="function"?t:null;this.resolve=n;this.reject=r}function s(e,t,n){var r=false;try{e(function(e){if(r)return;r=true;t(e)},function(e){if(r)return;r=true;n(e)})}catch(i){if(r)return;r=true;n(i)}}},{asap:15}],12:[function(e,t,n){"use strict";var r=e("./core.js");var i=e("asap");t.exports=r;r.prototype.done=function(e,t){var n=arguments.length?this.then.apply(this,arguments):this;n.then(null,function(e){i(function(){throw e})})}},{"./core.js":11,asap:15}],13:[function(e,t,n){"use strict";var r=e("./core.js");var i=e("asap");t.exports=r;function o(e){this.then=function(t){if(typeof t!=="function")return this;return new r(function(n,r){i(function(){try{n(t(e))}catch(i){r(i)}})})}}o.prototype=r.prototype;var s=new o(true);var a=new o(false);var u=new o(null);var f=new o(undefined);var c=new o(0);var p=new o("");r.resolve=function(e){if(e instanceof r)return e;if(e===null)return u;if(e===undefined)return f;if(e===true)return s;if(e===false)return a;if(e===0)return c;if(e==="")return p;if(typeof e==="object"||typeof e==="function"){try{var t=e.then;if(typeof t==="function"){return new r(t.bind(e))}}catch(n){return new r(function(e,t){t(n)})}}return new o(e)};r.all=function(e){var t=Array.prototype.slice.call(e);return new r(function(e,n){if(t.length===0)return e([]);var r=t.length;function i(o,s){try{if(s&&(typeof s==="object"||typeof s==="function")){var a=s.then;if(typeof a==="function"){a.call(s,function(e){i(o,e)},n);return}}t[o]=s;if(--r===0){e(t)}}catch(u){n(u)}}for(var o=0;o<t.length;o++){i(o,t[o])}})};r.reject=function(e){return new r(function(t,n){n(e)})};r.race=function(e){return new r(function(t,n){e.forEach(function(e){r.resolve(e).then(t,n)})})};r.prototype["catch"]=function(e){return this.then(null,e)}},{"./core.js":11,asap:15}],14:[function(e,t,n){"use strict";var r=e("./core.js");var i=e("asap");t.exports=r;r.denodeify=function(e,t){t=t||Infinity;return function(){var n=this;var i=Array.prototype.slice.call(arguments);return new r(function(r,o){while(i.length&&i.length>t){i.pop()}i.push(function(e,t){if(e)o(e);else r(t)});var s=e.apply(n,i);if(s&&(typeof s==="object"||typeof s==="function")&&typeof s.then==="function"){r(s)}})}};r.nodeify=function(e){return function(){var t=Array.prototype.slice.call(arguments);var n=typeof t[t.length-1]==="function"?t.pop():null;var o=this;try{return e.apply(this,arguments).nodeify(n,o)}catch(s){if(n===null||typeof n=="undefined"){return new r(function(e,t){t(s)})}else{i(function(){n.call(o,s)})}}}};r.prototype.nodeify=function(e,t){if(typeof e!="function")return this;this.then(function(n){i(function(){e.call(t,null,n)})},function(n){i(function(){e.call(t,n)})})}},{"./core.js":11,asap:15}],15:[function(e,t,n){(function(e){var n={task:void 0,next:null};var r=n;var i=false;var o=void 0;var s=false;function a(){while(n.next){n=n.next;var e=n.task;n.task=void 0;var t=n.domain;if(t){n.domain=void 0;t.enter()}try{e()}catch(r){if(s){if(t){t.exit()}setTimeout(a,0);if(t){t.enter()}throw r}else{setTimeout(function(){throw r},0)}}if(t){t.exit()}}i=false}if(typeof e!=="undefined"&&e.nextTick){s=true;o=function(){e.nextTick(a)}}else if(typeof setImmediate==="function"){if(typeof window!=="undefined"){o=setImmediate.bind(window,a)}else{o=function(){setImmediate(a)}}}else if(typeof MessageChannel!=="undefined"){var u=new MessageChannel;u.port1.onmessage=a;o=function(){u.port2.postMessage(0)}}else{o=function(){setTimeout(a,0)}}function f(t){r=r.next={task:t,domain:s&&e.domain,next:null};if(!i){i=true;o()}}t.exports=f}).call(this,e("_process"))},{_process:21}],16:[function(e,t,n){t.exports=e("./lib/")},{"./lib/":17}],17:[function(e,t,n){var r=e("./stringify");var i=e("./parse");var o={};t.exports={stringify:r,parse:i}},{"./parse":18,"./stringify":19}],18:[function(e,t,n){var r=e("./utils");var i={delimiter:"&",depth:5,arrayLimit:20,parameterLimit:1e3};i.parseValues=function(e,t){var n={};var i=e.split(t.delimiter,t.parameterLimit===Infinity?undefined:t.parameterLimit);for(var o=0,s=i.length;o<s;++o){var a=i[o];var u=a.indexOf("]=")===-1?a.indexOf("="):a.indexOf("]=")+1;if(u===-1){n[r.decode(a)]=""}else{var f=r.decode(a.slice(0,u));var c=r.decode(a.slice(u+1));if(!n.hasOwnProperty(f)){n[f]=c}else{n[f]=[].concat(n[f]).concat(c)}}}return n};i.parseObject=function(e,t,n){if(!e.length){return t}var r=e.shift();var o={};if(r==="[]"){o=[];o=o.concat(i.parseObject(e,t,n))}else{var s=r[0]==="["&&r[r.length-1]==="]"?r.slice(1,r.length-1):r;var a=parseInt(s,10);var u=""+a;if(!isNaN(a)&&r!==s&&u===s&&a>=0&&a<=n.arrayLimit){o=[];o[a]=i.parseObject(e,t,n)}else{o[s]=i.parseObject(e,t,n)}}return o};i.parseKeys=function(e,t,n){if(!e){return}var r=/^([^\[\]]*)/;var o=/(\[[^\[\]]*\])/g;var s=r.exec(e);if(Object.prototype.hasOwnProperty(s[1])){return}var a=[];if(s[1]){a.push(s[1])}var u=0;while((s=o.exec(e))!==null&&u<n.depth){++u;if(!Object.prototype.hasOwnProperty(s[1].replace(/\[|\]/g,""))){a.push(s[1])}}if(s){a.push("["+e.slice(s.index)+"]")}return i.parseObject(a,t,n)};t.exports=function(e,t){if(e===""||e===null||typeof e==="undefined"){return{}}t=t||{};t.delimiter=typeof t.delimiter==="string"||r.isRegExp(t.delimiter)?t.delimiter:i.delimiter;t.depth=typeof t.depth==="number"?t.depth:i.depth;t.arrayLimit=typeof t.arrayLimit==="number"?t.arrayLimit:i.arrayLimit;t.parameterLimit=typeof t.parameterLimit==="number"?t.parameterLimit:i.parameterLimit;var n=typeof e==="string"?i.parseValues(e,t):e;var o={};var s=Object.keys(n);for(var a=0,u=s.length;a<u;++a){var f=s[a];var c=i.parseKeys(f,n[f],t);o=r.merge(o,c)}return r.compact(o)}},{"./utils":20}],19:[function(e,t,n){var r=e("./utils");var i={delimiter:"&",indices:true};i.stringify=function(e,t,n){if(r.isBuffer(e)){e=e.toString()}else if(e instanceof Date){e=e.toISOString()}else if(e===null){e=""}if(typeof e==="string"||typeof e==="number"||typeof e==="boolean"){return[encodeURIComponent(t)+"="+encodeURIComponent(e)]}var o=[];if(typeof e==="undefined"){return o}var s=Object.keys(e);for(var a=0,u=s.length;a<u;++a){var f=s[a];if(!n.indices&&Array.isArray(e)){o=o.concat(i.stringify(e[f],t,n))}else{o=o.concat(i.stringify(e[f],t+"["+f+"]",n))}}return o};t.exports=function(e,t){t=t||{};var n=typeof t.delimiter==="undefined"?i.delimiter:t.delimiter;t.indices=typeof t.indices==="boolean"?t.indices:i.indices;var r=[];if(typeof e!=="object"||e===null){return""}var o=Object.keys(e);for(var s=0,a=o.length;s<a;++s){var u=o[s];r=r.concat(i.stringify(e[u],u,t))}return r.join(n)}},{"./utils":20}],20:[function(e,t,n){var r={};n.arrayToObject=function(e){var t={};for(var n=0,r=e.length;n<r;++n){if(typeof e[n]!=="undefined"){t[n]=e[n]}}return t};n.merge=function(e,t){if(!t){return e}if(typeof t!=="object"){if(Array.isArray(e)){e.push(t)}else{e[t]=true}return e}if(typeof e!=="object"){e=[e].concat(t);return e}if(Array.isArray(e)&&!Array.isArray(t)){e=n.arrayToObject(e)}var r=Object.keys(t);for(var i=0,o=r.length;i<o;++i){var s=r[i];var a=t[s];if(!e[s]){e[s]=a}else{e[s]=n.merge(e[s],a)}}return e};n.decode=function(e){try{return decodeURIComponent(e.replace(/\+/g," "))}catch(t){return e}};n.compact=function(e,t){if(typeof e!=="object"||e===null){return e}t=t||[];var r=t.indexOf(e);if(r!==-1){return t[r]}t.push(e);if(Array.isArray(e)){var i=[];for(var o=0,s=e.length;o<s;++o){if(typeof e[o]!=="undefined"){i.push(e[o])}}return i}var a=Object.keys(e);for(o=0,s=a.length;o<s;++o){var u=a[o];e[u]=n.compact(e[u],t)}return e};n.isRegExp=function(e){return Object.prototype.toString.call(e)==="[object RegExp]"};n.isBuffer=function(e){if(e===null||typeof e==="undefined"){return false}return!!(e.constructor&&e.constructor.isBuffer&&e.constructor.isBuffer(e))}},{}],21:[function(e,t,n){var r=t.exports={};var i=[];var o=false;function s(){if(o){return}o=true;var e;var t=i.length;while(t){e=i;i=[];var n=-1;while(++n<t){e[n]()}t=i.length}o=false}r.nextTick=function(e){i.push(e);if(!o){setTimeout(s,0)}};r.title="browser";r.browser=true;r.env={};r.argv=[];r.version="";function a(){}r.on=a;r.addListener=a;r.once=a;r.off=a;r.removeListener=a;r.removeAllListeners=a;r.emit=a;r.binding=function(e){throw new Error("process.binding is not supported")};r.cwd=function(){return"/"};r.chdir=function(e){throw new Error("process.chdir is not supported")};r.umask=function(){return 0}},{}],22:[function(e,t,n){function r(e,t){if(e.classList)e.classList.add(t);else e.className+=" "+t}t.exports=r},{}],23:[function(e,t,n){function r(e,t){var n,r=e.length;if(r===+r){for(n=0;n<r;n++){t(e[n],n)}}else{for(n in e){if(e.hasOwnProperty(n))t(e[n],n)}}return e}t.exports=r},{}],24:[function(e,t,n){function r(e){return document.querySelectorAll(e)}t.exports=r},{}],25:[function(e,t,n){function r(e){return document.querySelector(e)}t.exports=r},{}],26:[function(e,t,n){function r(e){if(document.addEventListener){document.addEventListener("DOMContentLoaded",e)}else{document.attachEvent("onreadystatechange",function(){if(document.readyState==="interactive")e()})}}t.exports=r},{}]},{},[1])(1)});
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.TB=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = require('./lib');
+
+},{"./lib":3}],2:[function(require,module,exports){
+/*
+ * getData() : getData(el)
+ * Returns data attributes.
+ *
+ *     // <div data-name='john' data-last-name='watson'>
+ *
+ *     getData(div)
+ *     => { name: "john", lastName: "watson" }
+ */
+
+function getData (el, prefix) {
+  var key;
+  var re = {};
+  if (!prefix) prefix = 'data-';
+
+  for (var i = 0, len = el.attributes.length; i < len; i++) {
+    var attr = el.attributes[i];
+    key = attr.name;
+    if (key.substr(0, prefix.length) !== prefix) continue;
+
+    key = key.substr(prefix.length);
+    key = camelize(key);
+    re[key] = attr.value;
+  }
+
+  return re;
+}
+
+function camelize (str) {
+  return str.replace(/[\s_\-]+([a-zA-Z])/g, function (_, l) {
+    return l.toUpperCase();
+  });
+}
+
+module.exports = getData;
+
+},{}],3:[function(require,module,exports){
+var ajaxapi = require('ajaxapi');
+var template = require('templayed');
+
+
+var getData = require('./helpers/get_data');
+
+var removeClass = require('dom101/remove-class');
+var addClass = require('dom101/add-class');
+var extend = require('dom101/extend');
+var ready = require('dom101/ready');
+var each = require('dom101/each');
+var qa = require('dom101/query-selector-all');
+var q = require('dom101/query-selector');
+
+var TB = module.exports = {};
+
+/*
+ * API
+ */
+
+TB.api = ajaxapi('http://api.ticketbase.com');
+
+/*
+ * processes all widgets
+ */
+
+TB.go = function () {
+  each(qa('[data-tb]'), function (el) {
+    TB.widget(el);
+  });
+};
+
+/*
+ * process one widget
+ */
+
+TB.widget = function (el) {
+  // skip if already widgetized
+  if (el.__tbInstance) return;
+
+  var data = getData(el);
+  new EventOrderWidget(el, data);
+};
+
+/*
+ * I'm a widget
+ */
+
+function EventOrderWidget (el, data) {
+  el.__tbInstance = this;
+  extend(this, data, { el: el });
+  this.el = el;
+  this.load();
+}
+
+EventOrderWidget.prototype = {
+  template:
+    "<div>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='tb-event-name'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <ul>\n      {{#event.ticket_types}}\n      <li>\n        <strong class='tb-title'>{{title}}</strong>\n        <span class='tb-price'>{{price_label}}</span>\n        <div class='tb-quantity'>\n          <input type='number' name='{{input_quantity_name}}' value='0'>\n        </div>\n      </li>\n      {{/event.ticket_types}}\n    </ul>\n\n    <button type='submit' class='tb-submit'>Order</button>\n\n  </form>\n</div>\n",
+
+  load: function () {
+    var self = this;
+
+    this.el.innerHTML = 'loading...';
+    addClass(this.el, 'tb-loading');
+
+    TB.api.get('/v1/events/'+this.eventId)
+      .then(function (event) {
+        self.event = event;
+        self.render();
+        console.log(event);
+      })
+      .done();
+  },
+
+  render: function () {
+    removeClass(this.el, 'tb-loading');
+    addClass(this.el, 'tb-loaded');
+
+    var tpl = template(this.template);
+    var event = presentEvent(this.event);
+    this.el.innerHTML = tpl({ event: event });
+  },
+
+  onerror: function (err) {
+    throw err;
+  }
+};
+
+/* event presenter */
+
+function presentEvent (event) {
+  event.ticket_types = presentTicketTypes(event.ticket_types, event);
+  event.order_action_url = event.url + '/orders';
+  event.form_hidden = getHiddenFields(event);
+  return event;
+}
+
+function getHiddenFields (event) {
+  var re = [];
+  var types = event.ticket_types;
+  for (var i = 0, len = types.length; i < len; i++) {
+    var ticket = types[i];
+
+    // hide dead tickets
+    if (ticket.status !== 'live') continue;
+
+    re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_id]' value='"+(ticket.id||1726)+"'>");
+    re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_type]' value='TicketType'>");
+  }
+  return re.join("\n");
+}
+
+function presentTicketTypes (types, event) {
+  var re = [];
+
+  var curr = getCurrency(event.currency || 'usd');
+
+  for (var i = 0, len = types.length; i < len; i++) {
+    var ticket = types[i];
+
+    // hide dead tickets
+    if (ticket.status !== 'live') continue;
+
+    ticket.price_label = formatPrice(ticket.price, curr);
+    ticket.input_quantity_name = 'order[order_items_attributes]['+i+'][quantity]';
+
+    re.push(ticket);
+  }
+
+  return re;
+}
+
+function formatPrice (price, curr) {
+  var priceStr = parseFloat(price, 10).toFixed(2);
+
+  if (priceStr.match(/00$/))
+    priceStr = parseFloat(price, 10).toFixed(0);
+
+  return '' +
+    curr.symbol +
+    priceStr;
+}
+
+function getCurrency (code) {
+  var currencies = {
+    usd: { symbol: '$' },
+    aud: { symbol: 'AU$' },
+    btc: { symbol: 'B' }
+  };
+
+  var curr = currencies[code.toLowerCase()];
+  if (!curr) throw new Error("Unknown currency '"+code+"'");
+  return curr;
+}
+/*
+ * get all widgets
+ */
+
+ready(function () {
+  TB.go();
+});
+
+},{"./helpers/get_data":2,"ajaxapi":4,"dom101/add-class":20,"dom101/each":21,"dom101/extend":22,"dom101/query-selector":24,"dom101/query-selector-all":23,"dom101/ready":25,"dom101/remove-class":26,"templayed":27}],4:[function(require,module,exports){
+/*
+ * API
+ */
+
+function Api (config) {
+  if (!(this instanceof Api))
+    return new Api(config);
+
+  if (typeof config === 'string') config = { base: config };
+  else if (!config) config = {};
+
+  this.base = config.base;
+  this._after = [];
+  this._before = [];
+  this.response = null;
+}
+
+/*
+ * Api.request() : Api.request(...)
+ * ThenRequest instance. See http://npmjs.com/then-request
+ */
+
+Api.request = require('then-request');
+
+/**
+ * Api.expand() : Api.expand(template, data)
+ * Expands a URL template.
+ *
+ *     API.expand('/get/{user}', { user: 'john' })
+ *     => "/get/john"
+ */
+
+/*
+ * request() : request(method, url, [data])
+ * Performs a request.
+ */
+
+Api.prototype.request = function (method, url, data) {
+  var options = { headers: {}, qs: {}, json: (data || {}) };
+
+  var context = {
+    method: method,
+    url: this.prefix(url),
+    data: data,
+    headers: options.headers,
+    options: options
+  };
+
+  // apply before hooks (custom)
+  this._before.forEach(function (fn) { fn.call(this, context); });
+
+  // promise
+  var pro = Api.request(
+    context.method,
+    context.url,
+    context.options);
+
+  // apply after hooks (defaults)
+  pro = pro
+    .then(this.saveResponse.bind(this))
+    .then(this.parseBody.bind(this));
+
+  // apply after hooks (custom)
+  this._after.forEach(function (callbacks) {
+    pro = pro.then(proxy(callbacks[0]), proxy(callbacks[1]));
+  });
+
+  function proxy (fn) {
+    return fn ? fn.bind(this) : null;
+  }
+
+  return pro;
+};
+
+/*
+ * aliases
+ */
+
+Api.prototype.get = buildAlias('GET');
+Api.prototype.put = buildAlias('PUT');
+Api.prototype.del = buildAlias('DELETE');
+Api.prototype.post = buildAlias('POST');
+Api.prototype.patch = buildAlias('PATCH');
+
+/*
+ * currying helper to make alias methods
+ */
+
+function buildAlias (method) {
+  return function () {
+    return Api.prototype.request.apply(this,
+      [method].concat([].slice.call(arguments)));
+  };
+}
+
+/*
+ * add before hook
+ */
+
+Api.prototype.before = function (fn) {
+  this._before.push(fn);
+  return this;
+};
+
+/*
+ * add after hook
+ */
+
+Api.prototype.after = function (okFn, errFn) {
+  this._after.push([ okFn, errFn ]);
+  return this;
+};
+
+/*
+ * parses the body
+ *
+ *     parseBody({
+ *       body: '{"name":"Joe"}',
+ *       headers: { 'content-type': 'application/json' }
+ *     })
+ *     => { name: "Joe" }
+ */
+
+Api.prototype.parseBody = function (res) {
+  var
+    body = res.getBody(),
+    type = res.headers['content-type'];
+
+  if (type.match(/^application\/json/))
+    return JSON.parse(body);
+  else
+    return body;
+};
+
+/*
+ * prefixes a url with the base
+ */
+
+Api.prototype.prefix = function (url) {
+  if (url[0] === '/')
+    return (this.base || '') + url;
+  else
+    return url;
+};
+
+/*
+ * (internal) saves responses
+ */
+
+Api.prototype.saveResponse = function (res) {
+  this.response = this.res = res;
+  return res;
+};
+
+/*
+ * export
+ */
+
+module.exports = Api;
+
+},{"then-request":5}],5:[function(require,module,exports){
+'use strict';
+
+var Promise = require('promise');
+var Response = require('http-response-object');
+var handleQs = require('./lib/handle-qs.js');
+
+module.exports = doRequest;
+function doRequest(method, url, options, callback) {
+  var result = new Promise(function (resolve, reject) {
+    var xhr = new window.XMLHttpRequest();
+
+    // check types of arguments
+
+    if (typeof method !== 'string') {
+      throw new TypeError('The method must be a string.');
+    }
+    if (typeof url !== 'string') {
+      throw new TypeError('The URL/path must be a string.');
+    }
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    if (options === null || options === undefined) {
+      options = {};
+    }
+    if (typeof options !== 'object') {
+      throw new TypeError('Options must be an object (or null).');
+    }
+    if (typeof callback !== 'function') {
+      callback = undefined;
+    }
+
+    method = method.toUpperCase();
+    options.headers = options.headers || {};
+
+    // handle cross domain
+
+    var match;
+    var crossDomain = !!((match = /^([\w-]+:)?\/\/([^\/]+)/.exec(options.uri)) && (match[2] != window.location.host));
+    if (!crossDomain) options.headers['X-Requested-With'] = 'XMLHttpRequest';
+
+    // handle query string
+    if (options.qs) {
+      url = handleQs(url, options.qs);
+    }
+
+    // handle json body
+    if (options.json) {
+      options.body = JSON.stringify(options.json);
+      options.headers['content-type'] = 'application/json';
+    }
+
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        var headers = {};
+        xhr.getAllResponseHeaders().split('\r\n').forEach(function (header) {
+          var h = header.split(':');
+          if (h.length > 1) {
+            headers[h[0].toLowerCase()] = h.slice(1).join(':').trim();
+          }
+        });
+        resolve(new Response(xhr.status, headers, xhr.responseText));
+      }
+    };
+
+    // method, url, async
+    xhr.open(method, url, true);
+
+    for (var name in options.headers) {
+      xhr.setRequestHeader(name.toLowerCase(), options.headers[name]);
+    }
+
+    // avoid sending empty string (#319)
+    xhr.send(options.body ? options.body : null);
+  });
+  result.getBody = function () {
+    return result.then(function (res) { return res.getBody(); });
+  };
+  return result.nodeify(callback);
+}
+
+},{"./lib/handle-qs.js":6,"http-response-object":7,"promise":8}],6:[function(require,module,exports){
+'use strict';
+
+var parse = require('qs').parse;
+var stringify = require('qs').stringify;
+
+module.exports = handleQs;
+function handleQs(url, query) {
+  url = url.split('?');
+  var start = url[0];
+  var qs = (url[1] || '').split('#')[0];
+  var end = url[1] && url[1].split('#').length > 1 ? '#' + url[1].split('#')[1] : '';
+
+  var baseQs = parse(qs);
+  for (var i in query) {
+    baseQs[i] = query[i];
+  }
+  qs = stringify(baseQs);
+  if (qs !== '') {
+    qs = '?' + qs;
+  }
+  return start + qs + end;
+}
+
+},{"qs":14}],7:[function(require,module,exports){
+'use strict';
+
+module.exports = Response;
+
+/**
+ * A response from a web request
+ *
+ * @param {Number} statusCode
+ * @param {Object} headers
+ * @param {Buffer} body
+ */
+function Response(statusCode, headers, body) {
+  if (typeof statusCode !== 'number') {
+    throw new TypeError('statusCode must be a number but was ' + (typeof statusCode));
+  }
+  if (headers === null) {
+    throw new TypeError('headers cannot be null');
+  }
+  if (typeof headers !== 'object') {
+    throw new TypeError('headers must be an object but was ' + (typeof headers));
+  }
+  this.statusCode = statusCode;
+  this.headers = {};
+  for (var key in headers) {
+    this.headers[key.toLowerCase()] = headers[key];
+  }
+  this.body = body;
+}
+
+Response.prototype.getBody = function (encoding) {
+  if (this.statusCode >= 300) {
+    var err = new Error('Server responded with status code '
+                    + this.statusCode + ':\n' + this.body.toString());
+    err.statusCode = this.statusCode;
+    err.headers = this.headers;
+    err.body = this.body;
+    throw err;
+  }
+  return encoding ? this.body.toString(encoding) : this.body;
+};
+
+},{}],8:[function(require,module,exports){
+'use strict';
+
+module.exports = require('./lib/core.js')
+require('./lib/done.js')
+require('./lib/es6-extensions.js')
+require('./lib/node-extensions.js')
+},{"./lib/core.js":9,"./lib/done.js":10,"./lib/es6-extensions.js":11,"./lib/node-extensions.js":12}],9:[function(require,module,exports){
+'use strict';
+
+var asap = require('asap')
+
+module.exports = Promise;
+function Promise(fn) {
+  if (typeof this !== 'object') throw new TypeError('Promises must be constructed via new')
+  if (typeof fn !== 'function') throw new TypeError('not a function')
+  var state = null
+  var value = null
+  var deferreds = []
+  var self = this
+
+  this.then = function(onFulfilled, onRejected) {
+    return new self.constructor(function(resolve, reject) {
+      handle(new Handler(onFulfilled, onRejected, resolve, reject))
+    })
+  }
+
+  function handle(deferred) {
+    if (state === null) {
+      deferreds.push(deferred)
+      return
+    }
+    asap(function() {
+      var cb = state ? deferred.onFulfilled : deferred.onRejected
+      if (cb === null) {
+        (state ? deferred.resolve : deferred.reject)(value)
+        return
+      }
+      var ret
+      try {
+        ret = cb(value)
+      }
+      catch (e) {
+        deferred.reject(e)
+        return
+      }
+      deferred.resolve(ret)
+    })
+  }
+
+  function resolve(newValue) {
+    try { //Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+      if (newValue === self) throw new TypeError('A promise cannot be resolved with itself.')
+      if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
+        var then = newValue.then
+        if (typeof then === 'function') {
+          doResolve(then.bind(newValue), resolve, reject)
+          return
+        }
+      }
+      state = true
+      value = newValue
+      finale()
+    } catch (e) { reject(e) }
+  }
+
+  function reject(newValue) {
+    state = false
+    value = newValue
+    finale()
+  }
+
+  function finale() {
+    for (var i = 0, len = deferreds.length; i < len; i++)
+      handle(deferreds[i])
+    deferreds = null
+  }
+
+  doResolve(fn, resolve, reject)
+}
+
+
+function Handler(onFulfilled, onRejected, resolve, reject){
+  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null
+  this.onRejected = typeof onRejected === 'function' ? onRejected : null
+  this.resolve = resolve
+  this.reject = reject
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, onFulfilled, onRejected) {
+  var done = false;
+  try {
+    fn(function (value) {
+      if (done) return
+      done = true
+      onFulfilled(value)
+    }, function (reason) {
+      if (done) return
+      done = true
+      onRejected(reason)
+    })
+  } catch (ex) {
+    if (done) return
+    done = true
+    onRejected(ex)
+  }
+}
+
+},{"asap":13}],10:[function(require,module,exports){
+'use strict';
+
+var Promise = require('./core.js')
+var asap = require('asap')
+
+module.exports = Promise
+Promise.prototype.done = function (onFulfilled, onRejected) {
+  var self = arguments.length ? this.then.apply(this, arguments) : this
+  self.then(null, function (err) {
+    asap(function () {
+      throw err
+    })
+  })
+}
+},{"./core.js":9,"asap":13}],11:[function(require,module,exports){
+'use strict';
+
+//This file contains the ES6 extensions to the core Promises/A+ API
+
+var Promise = require('./core.js')
+var asap = require('asap')
+
+module.exports = Promise
+
+/* Static Functions */
+
+function ValuePromise(value) {
+  this.then = function (onFulfilled) {
+    if (typeof onFulfilled !== 'function') return this
+    return new Promise(function (resolve, reject) {
+      asap(function () {
+        try {
+          resolve(onFulfilled(value))
+        } catch (ex) {
+          reject(ex);
+        }
+      })
+    })
+  }
+}
+ValuePromise.prototype = Promise.prototype
+
+var TRUE = new ValuePromise(true)
+var FALSE = new ValuePromise(false)
+var NULL = new ValuePromise(null)
+var UNDEFINED = new ValuePromise(undefined)
+var ZERO = new ValuePromise(0)
+var EMPTYSTRING = new ValuePromise('')
+
+Promise.resolve = function (value) {
+  if (value instanceof Promise) return value
+
+  if (value === null) return NULL
+  if (value === undefined) return UNDEFINED
+  if (value === true) return TRUE
+  if (value === false) return FALSE
+  if (value === 0) return ZERO
+  if (value === '') return EMPTYSTRING
+
+  if (typeof value === 'object' || typeof value === 'function') {
+    try {
+      var then = value.then
+      if (typeof then === 'function') {
+        return new Promise(then.bind(value))
+      }
+    } catch (ex) {
+      return new Promise(function (resolve, reject) {
+        reject(ex)
+      })
+    }
+  }
+
+  return new ValuePromise(value)
+}
+
+Promise.all = function (arr) {
+  var args = Array.prototype.slice.call(arr)
+
+  return new Promise(function (resolve, reject) {
+    if (args.length === 0) return resolve([])
+    var remaining = args.length
+    function res(i, val) {
+      try {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then
+          if (typeof then === 'function') {
+            then.call(val, function (val) { res(i, val) }, reject)
+            return
+          }
+        }
+        args[i] = val
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex)
+      }
+    }
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i])
+    }
+  })
+}
+
+Promise.reject = function (value) {
+  return new Promise(function (resolve, reject) { 
+    reject(value);
+  });
+}
+
+Promise.race = function (values) {
+  return new Promise(function (resolve, reject) { 
+    values.forEach(function(value){
+      Promise.resolve(value).then(resolve, reject);
+    })
+  });
+}
+
+/* Prototype Methods */
+
+Promise.prototype['catch'] = function (onRejected) {
+  return this.then(null, onRejected);
+}
+
+},{"./core.js":9,"asap":13}],12:[function(require,module,exports){
+'use strict';
+
+//This file contains then/promise specific extensions that are only useful for node.js interop
+
+var Promise = require('./core.js')
+var asap = require('asap')
+
+module.exports = Promise
+
+/* Static Functions */
+
+Promise.denodeify = function (fn, argumentCount) {
+  argumentCount = argumentCount || Infinity
+  return function () {
+    var self = this
+    var args = Array.prototype.slice.call(arguments)
+    return new Promise(function (resolve, reject) {
+      while (args.length && args.length > argumentCount) {
+        args.pop()
+      }
+      args.push(function (err, res) {
+        if (err) reject(err)
+        else resolve(res)
+      })
+      var res = fn.apply(self, args)
+      if (res && (typeof res === 'object' || typeof res === 'function') && typeof res.then === 'function') {
+        resolve(res)
+      }
+    })
+  }
+}
+Promise.nodeify = function (fn) {
+  return function () {
+    var args = Array.prototype.slice.call(arguments)
+    var callback = typeof args[args.length - 1] === 'function' ? args.pop() : null
+    var ctx = this
+    try {
+      return fn.apply(this, arguments).nodeify(callback, ctx)
+    } catch (ex) {
+      if (callback === null || typeof callback == 'undefined') {
+        return new Promise(function (resolve, reject) { reject(ex) })
+      } else {
+        asap(function () {
+          callback.call(ctx, ex)
+        })
+      }
+    }
+  }
+}
+
+Promise.prototype.nodeify = function (callback, ctx) {
+  if (typeof callback != 'function') return this
+
+  this.then(function (value) {
+    asap(function () {
+      callback.call(ctx, null, value)
+    })
+  }, function (err) {
+    asap(function () {
+      callback.call(ctx, err)
+    })
+  })
+}
+
+},{"./core.js":9,"asap":13}],13:[function(require,module,exports){
+(function (process){
+
+// Use the fastest possible means to execute a task in a future turn
+// of the event loop.
+
+// linked list of tasks (single, with head node)
+var head = {task: void 0, next: null};
+var tail = head;
+var flushing = false;
+var requestFlush = void 0;
+var isNodeJS = false;
+
+function flush() {
+    /* jshint loopfunc: true */
+
+    while (head.next) {
+        head = head.next;
+        var task = head.task;
+        head.task = void 0;
+        var domain = head.domain;
+
+        if (domain) {
+            head.domain = void 0;
+            domain.enter();
+        }
+
+        try {
+            task();
+
+        } catch (e) {
+            if (isNodeJS) {
+                // In node, uncaught exceptions are considered fatal errors.
+                // Re-throw them synchronously to interrupt flushing!
+
+                // Ensure continuation if the uncaught exception is suppressed
+                // listening "uncaughtException" events (as domains does).
+                // Continue in next event to avoid tick recursion.
+                if (domain) {
+                    domain.exit();
+                }
+                setTimeout(flush, 0);
+                if (domain) {
+                    domain.enter();
+                }
+
+                throw e;
+
+            } else {
+                // In browsers, uncaught exceptions are not fatal.
+                // Re-throw them asynchronously to avoid slow-downs.
+                setTimeout(function() {
+                   throw e;
+                }, 0);
+            }
+        }
+
+        if (domain) {
+            domain.exit();
+        }
+    }
+
+    flushing = false;
+}
+
+if (typeof process !== "undefined" && process.nextTick) {
+    // Node.js before 0.9. Note that some fake-Node environments, like the
+    // Mocha test runner, introduce a `process` global without a `nextTick`.
+    isNodeJS = true;
+
+    requestFlush = function () {
+        process.nextTick(flush);
+    };
+
+} else if (typeof setImmediate === "function") {
+    // In IE10, Node.js 0.9+, or https://github.com/NobleJS/setImmediate
+    if (typeof window !== "undefined") {
+        requestFlush = setImmediate.bind(window, flush);
+    } else {
+        requestFlush = function () {
+            setImmediate(flush);
+        };
+    }
+
+} else if (typeof MessageChannel !== "undefined") {
+    // modern browsers
+    // http://www.nonblocking.io/2011/06/windownexttick.html
+    var channel = new MessageChannel();
+    channel.port1.onmessage = flush;
+    requestFlush = function () {
+        channel.port2.postMessage(0);
+    };
+
+} else {
+    // old browsers
+    requestFlush = function () {
+        setTimeout(flush, 0);
+    };
+}
+
+function asap(task) {
+    tail = tail.next = {
+        task: task,
+        domain: isNodeJS && process.domain,
+        next: null
+    };
+
+    if (!flushing) {
+        flushing = true;
+        requestFlush();
+    }
+};
+
+module.exports = asap;
+
+
+}).call(this,require('_process'))
+},{"_process":19}],14:[function(require,module,exports){
+module.exports = require('./lib/');
+
+},{"./lib/":15}],15:[function(require,module,exports){
+// Load modules
+
+var Stringify = require('./stringify');
+var Parse = require('./parse');
+
+
+// Declare internals
+
+var internals = {};
+
+
+module.exports = {
+    stringify: Stringify,
+    parse: Parse
+};
+
+},{"./parse":16,"./stringify":17}],16:[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    depth: 5,
+    arrayLimit: 20,
+    parameterLimit: 1000
+};
+
+
+internals.parseValues = function (str, options) {
+
+    var obj = {};
+    var parts = str.split(options.delimiter, options.parameterLimit === Infinity ? undefined : options.parameterLimit);
+
+    for (var i = 0, il = parts.length; i < il; ++i) {
+        var part = parts[i];
+        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
+
+        if (pos === -1) {
+            obj[Utils.decode(part)] = '';
+        }
+        else {
+            var key = Utils.decode(part.slice(0, pos));
+            var val = Utils.decode(part.slice(pos + 1));
+
+            if (!obj.hasOwnProperty(key)) {
+                obj[key] = val;
+            }
+            else {
+                obj[key] = [].concat(obj[key]).concat(val);
+            }
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseObject = function (chain, val, options) {
+
+    if (!chain.length) {
+        return val;
+    }
+
+    var root = chain.shift();
+
+    var obj = {};
+    if (root === '[]') {
+        obj = [];
+        obj = obj.concat(internals.parseObject(chain, val, options));
+    }
+    else {
+        var cleanRoot = root[0] === '[' && root[root.length - 1] === ']' ? root.slice(1, root.length - 1) : root;
+        var index = parseInt(cleanRoot, 10);
+        var indexString = '' + index;
+        if (!isNaN(index) &&
+            root !== cleanRoot &&
+            indexString === cleanRoot &&
+            index >= 0 &&
+            index <= options.arrayLimit) {
+
+            obj = [];
+            obj[index] = internals.parseObject(chain, val, options);
+        }
+        else {
+            obj[cleanRoot] = internals.parseObject(chain, val, options);
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseKeys = function (key, val, options) {
+
+    if (!key) {
+        return;
+    }
+
+    // The regex chunks
+
+    var parent = /^([^\[\]]*)/;
+    var child = /(\[[^\[\]]*\])/g;
+
+    // Get the parent
+
+    var segment = parent.exec(key);
+
+    // Don't allow them to overwrite object prototype properties
+
+    if (Object.prototype.hasOwnProperty(segment[1])) {
+        return;
+    }
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (segment[1]) {
+        keys.push(segment[1]);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while ((segment = child.exec(key)) !== null && i < options.depth) {
+
+        ++i;
+        if (!Object.prototype.hasOwnProperty(segment[1].replace(/\[|\]/g, ''))) {
+            keys.push(segment[1]);
+        }
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return internals.parseObject(keys, val, options);
+};
+
+
+module.exports = function (str, options) {
+
+    if (str === '' ||
+        str === null ||
+        typeof str === 'undefined') {
+
+        return {};
+    }
+
+    options = options || {};
+    options.delimiter = typeof options.delimiter === 'string' || Utils.isRegExp(options.delimiter) ? options.delimiter : internals.delimiter;
+    options.depth = typeof options.depth === 'number' ? options.depth : internals.depth;
+    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : internals.arrayLimit;
+    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : internals.parameterLimit;
+
+    var tempObj = typeof str === 'string' ? internals.parseValues(str, options) : str;
+    var obj = {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        var newObj = internals.parseKeys(key, tempObj[key], options);
+        obj = Utils.merge(obj, newObj);
+    }
+
+    return Utils.compact(obj);
+};
+
+},{"./utils":18}],17:[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    indices: true
+};
+
+
+internals.stringify = function (obj, prefix, options) {
+
+    if (Utils.isBuffer(obj)) {
+        obj = obj.toString();
+    }
+    else if (obj instanceof Date) {
+        obj = obj.toISOString();
+    }
+    else if (obj === null) {
+        obj = '';
+    }
+
+    if (typeof obj === 'string' ||
+        typeof obj === 'number' ||
+        typeof obj === 'boolean') {
+
+        return [encodeURIComponent(prefix) + '=' + encodeURIComponent(obj)];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys = Object.keys(obj);
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+        if (!options.indices &&
+            Array.isArray(obj)) {
+
+            values = values.concat(internals.stringify(obj[key], prefix, options));
+        }
+        else {
+            values = values.concat(internals.stringify(obj[key], prefix + '[' + key + ']', options));
+        }
+    }
+
+    return values;
+};
+
+
+module.exports = function (obj, options) {
+
+    options = options || {};
+    var delimiter = typeof options.delimiter === 'undefined' ? internals.delimiter : options.delimiter;
+    options.indices = typeof options.indices === 'boolean' ? options.indices : internals.indices;
+
+    var keys = [];
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return '';
+    }
+
+    var objKeys = Object.keys(obj);
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+        keys = keys.concat(internals.stringify(obj[key], key, options));
+    }
+
+    return keys.join(delimiter);
+};
+
+},{"./utils":18}],18:[function(require,module,exports){
+// Load modules
+
+
+// Declare internals
+
+var internals = {};
+
+
+exports.arrayToObject = function (source) {
+
+    var obj = {};
+    for (var i = 0, il = source.length; i < il; ++i) {
+        if (typeof source[i] !== 'undefined') {
+
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+
+exports.merge = function (target, source) {
+
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (Array.isArray(target)) {
+            target.push(source);
+        }
+        else {
+            target[source] = true;
+        }
+
+        return target;
+    }
+
+    if (typeof target !== 'object') {
+        target = [target].concat(source);
+        return target;
+    }
+
+    if (Array.isArray(target) &&
+        !Array.isArray(source)) {
+
+        target = exports.arrayToObject(target);
+    }
+
+    var keys = Object.keys(source);
+    for (var k = 0, kl = keys.length; k < kl; ++k) {
+        var key = keys[k];
+        var value = source[key];
+
+        if (!target[key]) {
+            target[key] = value;
+        }
+        else {
+            target[key] = exports.merge(target[key], value);
+        }
+    }
+
+    return target;
+};
+
+
+exports.decode = function (str) {
+
+    try {
+        return decodeURIComponent(str.replace(/\+/g, ' '));
+    } catch (e) {
+        return str;
+    }
+};
+
+
+exports.compact = function (obj, refs) {
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return obj;
+    }
+
+    refs = refs || [];
+    var lookup = refs.indexOf(obj);
+    if (lookup !== -1) {
+        return refs[lookup];
+    }
+
+    refs.push(obj);
+
+    if (Array.isArray(obj)) {
+        var compacted = [];
+
+        for (var i = 0, il = obj.length; i < il; ++i) {
+            if (typeof obj[i] !== 'undefined') {
+                compacted.push(obj[i]);
+            }
+        }
+
+        return compacted;
+    }
+
+    var keys = Object.keys(obj);
+    for (i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        obj[key] = exports.compact(obj[key], refs);
+    }
+
+    return obj;
+};
+
+
+exports.isRegExp = function (obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+
+exports.isBuffer = function (obj) {
+
+    if (obj === null ||
+        typeof obj === 'undefined') {
+
+        return false;
+    }
+
+    return !!(obj.constructor &&
+        obj.constructor.isBuffer &&
+        obj.constructor.isBuffer(obj));
+};
+
+},{}],19:[function(require,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+var queue = [];
+var draining = false;
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    draining = true;
+    var currentQueue;
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        var i = -1;
+        while (++i < len) {
+            currentQueue[i]();
+        }
+        len = queue.length;
+    }
+    draining = false;
+}
+process.nextTick = function (fun) {
+    queue.push(fun);
+    if (!draining) {
+        setTimeout(drainQueue, 0);
+    }
+};
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],20:[function(require,module,exports){
+/**
+ * addClass : addClass(el, className)
+ * Adds a class name to an element. Compare with `$.fn.addClass`.
+ *
+ *     var addClass = require('dom101/add-class');
+ *
+ *     addClass(el, 'active');
+ */
+
+function addClass (el, className) {
+  if (el.classList)
+    el.classList.add(className);
+  else
+    el.className += ' ' + className;
+}
+
+module.exports = addClass;
+
+},{}],21:[function(require,module,exports){
+/**
+ * each : each(list, fn)
+ * Iterates through `list` (an array or an object). This is useful when dealing
+ * with NodeLists like `document.querySelectorAll`.
+ *
+ *     var each = require('dom101/each');
+ *     var qa = require('dom101/query-selector-all');
+ *
+ *     each(qa('.button'), function (el) {
+ *       addClass('el', 'selected');
+ *     });
+ */
+
+function each (list, fn) {
+  var i, len = list.length;
+
+  if (len === +len) {
+    for (i = 0; i < len; i++) {
+      fn(list[i], i);
+    }
+  } else {
+    for (i in list) {
+      if (list.hasOwnProperty(i))
+        fn(list[i], i);
+    }
+  }
+
+  return list;
+}
+
+module.exports = each;
+
+},{}],22:[function(require,module,exports){
+/**
+ * extend() : extend(dest, src1, [src2 ...])
+ * Extends object `dest` with properties from sources `src`.
+ * Compare with [$.extend](http://api.jquery.com/jquery.extend/).
+ *
+ * Also consider [node-extend] for more complicated cases.
+ * [node-extend]: http://npmjs.com/node-extend
+ *
+ *     var extend = require('dom101/extend');
+ *     extend({}, defaults, options);
+ */
+
+function extend (out) {
+  out = out || {};
+
+  for (var i = 1; i < arguments.length; i++) {
+    if (!arguments[i])
+      continue;
+
+    for (var key in arguments[i]) {
+      if (arguments[i].hasOwnProperty(key))
+        out[key] = arguments[i][key];
+    }
+  }
+
+  return out;
+}
+
+// Thanks:
+// https://github.com/HubSpot/youmightnotneedjquery/blob/ef987223c20e480fcbfb5924d96c11cd928e1226/comparisons/utils/extend/ie8.js
+
+module.exports = extend;
+
+},{}],23:[function(require,module,exports){
+/**
+ * querySelectorAll : querySelectorAll(query)
+ * Convenience function to access `document.querySelectorAll`.
+ *
+ *     var each = require('dom101/each');
+ *     var qa = require('dom101/query-selector-all');
+ *
+ *     each(qa('.button'), function (el) {
+ *       addClass('el', 'selected');
+ *     });
+ */
+
+function querySelectorAll (query) {
+  return document.querySelectorAll(query);
+}
+
+module.exports = querySelectorAll;
+
+},{}],24:[function(require,module,exports){
+/**
+ * querySelector : querySelector(query)
+ * Convenience function to access `document.querySelector`.
+ *
+ *     var q = require('dom101/query-selector');
+ *     addClass(q('#instructions'), 'hidden');
+ */
+
+function querySelector (query) {
+  return document.querySelector(query);
+}
+
+module.exports = querySelector;
+
+},{}],25:[function(require,module,exports){
+/**
+ * ready : ready(fn)
+ * Executes `fn` when the DOM is ready.
+ *
+ *     var ready = require('dom101/ready');
+ *
+ *     ready(function () {
+ *       ...
+ *     });
+ */
+
+function ready (fn) {
+  if (document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', fn);
+  } else {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState === 'interactive') fn();
+    });
+  }
+}
+
+module.exports = ready;
+
+},{}],26:[function(require,module,exports){
+/**
+ * removeClass : removeClass(el, className)
+ * Removes a classname.
+ *
+ *     var removeClass = require('dom101/remove-class');
+ *
+ *     el.className = 'selected active';
+ *     removeClass(el, 'active');
+ *
+ *     el.className
+ *     => "selected"
+ */
+
+function removeClass (el, className) {
+  if (el.classList) {
+    el.classList.remove(className);
+  } else {
+    var expr =
+      new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi');
+
+    el.className = el.className.replace(expr, ' ');
+  }
+}
+
+module.exports = removeClass;
+
+},{}],27:[function(require,module,exports){
+// * templayed.js 0.2.1
+// * The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)
+// *
+// * (c) 2012 Paul Engel (Internetbureau Holder B.V.)
+// * Except otherwise noted, templayed.js is licensed under
+// * http://creativecommons.org/licenses/by-sa/3.0
+// *
+// * $Date: 2012-10-14 01:17:01 +0100 (Sun, 14 October 2012) $
+// *
+
+function templayed(template, vars) {
+
+  var get = function(path, i) {
+    i = 1; path = path.replace(/\.\.\//g, function() { i++; return ''; });
+    var js = ['vars[vars.length - ', i, ']'], keys = (path == "." ? [] : path.split(".")), j = 0;
+    for (j; j < keys.length; j++) { js.push('.' + keys[j]); };
+    return js.join('');
+  }, tag = function(template) {
+    return template.replace(/\{\{(!|&|\{)?\s*(.*?)\s*}}+/g, function(match, operator, context) {
+      if (operator == "!") return '';
+      var i = inc++;
+      return ['"; var o', i, ' = ', get(context), ', s', i, ' = (((typeof(o', i, ') == "function" ? o', i, '.call(vars[vars.length - 1]) : o', i, ') || "") + ""); s += ',
+        (operator ? ('s' + i) : '(/[&"><]/.test(s' + i + ') ? s' + i + '.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/>/g,"&gt;").replace(/</g,"&lt;") : s' + i + ')'), ' + "'
+      ].join('');
+    });
+  }, block = function(template) {
+    return tag(template.replace(/\{\{(\^|#)(.*?)}}(.*?)\{\{\/\2}}/g, function(match, operator, key, context) {
+      var i = inc++;
+      return ['"; var o', i, ' = ', get(key), '; ',
+        (operator == "^" ?
+          ['if ((o', i, ' instanceof Array) ? !o', i, '.length : !o', i, ') { s += "', block(context), '"; } '] :
+          ['if (typeof(o', i, ') == "boolean" && o', i, ') { s += "', block(context), '"; } else if (o', i, ') { for (var i', i, ' = 0; i', i, ' < o',
+            i, '.length; i', i, '++) { vars.push(o', i, '[i', i, ']); s += "', block(context), '"; vars.pop(); }}']
+        ).join(''), '; s += "'].join('');
+    }));
+  }, inc = 0;
+
+  return new Function("vars", 'vars = [vars]; var s = "' + block(template.replace(/"/g, '\\"').replace(/\n/g, '\\n')) + '"; return s;');
+};
+
+templayed.version = "0.2.1";
+
+//simpleport
+module.exports = templayed;
+
+},{}]},{},[1])(1)
+});

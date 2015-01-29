@@ -11,14 +11,25 @@ beforeEach(function() {
     .reply(200, {
       title: 'Ticket & Base',
       url: 'http://google.com',
+      currency: 'usd',
       ticket_types: [
         {
           title: 'VIP',
-          price: '200.0'
+          price: '200.0',
+          ticket_type: 'paid',
+          status: 'live'
         },
         {
           title: 'General attendee',
-          price: '0'
+          price: '0',
+          ticket_type: 'free',
+          status: 'live'
+        },
+        {
+          title: 'Sold out ticket',
+          price: '0',
+          ticket_type: 'free',
+          status: 'dead' /* ?? */
         }
       ]
     });
@@ -59,5 +70,9 @@ describe('TB', function () {
   it('has ticket types', function () {
     expect($('#w')).to.contain('VIP');
     expect($('#w')).to.contain('General attendee');
+  });
+
+  it('hides tickets that are sold out', function () {
+    expect($('#w')).not.to.contain('Sold out ticket');
   });
 });
