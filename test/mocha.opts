@@ -1,1 +1,2 @@
 --require mocha-clean/brief
+-R progress

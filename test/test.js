@@ -51,7 +51,8 @@ describe('TB', function () {
   });
 
   it('print', function () {
-    console.log('[body]', $('body').html());
+    if (process.env.print)
+      console.log('[body]', $('body').html());
   });
 
   it('works', function () {
