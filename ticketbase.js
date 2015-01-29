@@ -4,7 +4,7 @@ module.exports = require('./lib');
 },{"./lib":3}],2:[function(require,module,exports){
 /*
  * getData() : getData(el)
- * Returns data attributes.
+ * Returns data attributes as a plain object.
  *
  *     // <div data-name='john' data-last-name='watson'>
  *
@@ -40,29 +40,35 @@ module.exports = getData;
 
 },{}],3:[function(require,module,exports){
 var ajaxapi = require('ajaxapi');
-var template = require('templayed');
-
 
 var getData = require('./helpers/get_data');
 
-var removeClass = require('dom101/remove-class');
-var addClass = require('dom101/add-class');
-var extend = require('dom101/extend');
 var ready = require('dom101/ready');
 var each = require('dom101/each');
 var qa = require('dom101/query-selector-all');
 var q = require('dom101/query-selector');
 
+/**
+ * TB:
+ * Ticketbase widget library.
+ */
+
 var TB = module.exports = {};
 
-/*
- * API
+/**
+ * api : TB.api
+ * Access the Ticketbase API.
+ *
+ *     TB.api.get('/v1/events/101')
+ *       .then(function (event) { ... })
  */
 
 TB.api = ajaxapi('http://api.ticketbase.com');
 
 /*
- * processes all widgets
+ * go : TB.go()
+ * Processes all new widgets in the page.  Widgets are elements with the
+ * `<div data-tb='...'>` attribute. This procedure is idempotent.
  */
 
 TB.go = function () {
@@ -71,61 +77,28 @@ TB.go = function () {
   });
 };
 
-/*
- * process one widget
+/**
+ * widget : TB.widget(element)
+ * Converts a DOM `element` into a widget. This procedure is idempotent.
  */
 
 TB.widget = function (el) {
+  var EventForm = require('./widgets/event_form');
+
   // skip if already widgetized
   if (el.__tbInstance) return;
 
   var data = getData(el);
-  new EventOrderWidget(el, data);
+  return new EventForm(el, data);
 };
 
 /*
- * I'm a widget
+ * Run upon inclusion.
  */
 
-function EventOrderWidget (el, data) {
-  el.__tbInstance = this;
-  extend(this, data, { el: el });
-  this.el = el;
-  this.load();
-}
+ready(TB.go);
 
-EventOrderWidget.prototype = {
-  template:
-    "<div>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='tb-event-name'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <ul>\n      {{#event.ticket_types}}\n      <li>\n        <strong class='tb-title'>{{title}}</strong>\n        <span class='tb-price'>{{price_label}}</span>\n        <div class='tb-quantity'>\n          <input type='number' name='{{input_quantity_name}}' value='0'>\n        </div>\n      </li>\n      {{/event.ticket_types}}\n    </ul>\n\n    <button type='submit' class='tb-submit'>Order</button>\n\n  </form>\n</div>\n",
-
-  load: function () {
-    var self = this;
-
-    this.el.innerHTML = 'loading...';
-    addClass(this.el, 'tb-loading');
-
-    TB.api.get('/v1/events/'+this.eventId)
-      .then(function (event) {
-        self.event = event;
-        self.render();
-        console.log(event);
-      })
-      .done();
-  },
-
-  render: function () {
-    removeClass(this.el, 'tb-loading');
-    addClass(this.el, 'tb-loaded');
-
-    var tpl = template(this.template);
-    var event = presentEvent(this.event);
-    this.el.innerHTML = tpl({ event: event });
-  },
-
-  onerror: function (err) {
-    throw err;
-  }
-};
+},{"./helpers/get_data":2,"./widgets/event_form":5,"ajaxapi":6,"dom101/each":23,"dom101/query-selector":26,"dom101/query-selector-all":25,"dom101/ready":27}],4:[function(require,module,exports){
 
 /* event presenter */
 
@@ -136,6 +109,8 @@ function presentEvent (event) {
   return event;
 }
 
+module.exports = presentEvent;
+
 function getHiddenFields (event) {
   var re = [];
   var types = event.ticket_types;
@@ -145,7 +120,7 @@ function getHiddenFields (event) {
     // hide dead tickets
     if (ticket.status !== 'live') continue;
 
-    re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_id]' value='"+(ticket.id||1726)+"'>");
+    re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_id]' value='"+ticket.id+"'>");
     re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_type]' value='TicketType'>");
   }
   return re.join("\n");
@@ -193,15 +168,80 @@ function getCurrency (code) {
   if (!curr) throw new Error("Unknown currency '"+code+"'");
   return curr;
 }
+
+},{}],5:[function(require,module,exports){
+var presentEvent = require('../presenters/event');
+var removeClass = require('dom101/remove-class');
+var addClass = require('dom101/add-class');
+var template = require('templayed');
+var extend = require('dom101/extend');
+
+var TB = require('..');
+
 /*
- * get all widgets
+ * EventForm:
+ * For `data-tb='event-form'` widgets.
  */
 
-ready(function () {
-  TB.go();
-});
+function EventForm (el, data) {
+  el.__tbInstance = this;
+  extend(this, data, { el: el });
+  this.el = el;
+  this.load();
+}
 
-},{"./helpers/get_data":2,"ajaxapi":4,"dom101/add-class":20,"dom101/each":21,"dom101/extend":22,"dom101/query-selector":24,"dom101/query-selector-all":23,"dom101/ready":25,"dom101/remove-class":26,"templayed":27}],4:[function(require,module,exports){
+EventForm.prototype = {
+  /*
+   * template
+   */
+
+  template:
+    "<div>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='tb-event-name'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <ul>\n      {{#event.ticket_types}}\n      <li>\n        <strong class='tb-title'>{{title}}</strong>\n        <span class='tb-price'>{{price_label}}</span>\n        <div class='tb-quantity'>\n          <input type='number' name='{{input_quantity_name}}' value='0'>\n        </div>\n      </li>\n      {{/event.ticket_types}}\n    </ul>\n\n    <button type='submit' class='tb-submit'>Order</button>\n\n  </form>\n</div>\n",
+
+  /*
+   * loads data and renders
+   */
+
+  load: function () {
+    var self = this;
+
+    this.el.innerHTML = '<div class="tb-spinner"></div>';
+    addClass(this.el, 'tb-loading');
+
+    TB.api.get('/v1/events/'+this.eventId)
+      .then(function (event) {
+        self.event = event;
+        self.render();
+      })
+      .catch(self.onerror.bind(this))
+      .done();
+  },
+
+  /*
+   * renders
+   */
+
+  render: function () {
+    removeClass(this.el, 'tb-loading');
+    addClass(this.el, 'tb-loaded');
+
+    var tpl = template(this.template);
+    var event = presentEvent(this.event);
+    this.el.innerHTML = tpl({ event: event });
+  },
+
+  /*
+   * process an ajax error
+   */
+
+  onerror: function (err) {
+    throw err;
+  }
+};
+
+module.exports = EventForm;
+
+},{"..":3,"../presenters/event":4,"dom101/add-class":22,"dom101/extend":24,"dom101/remove-class":28,"templayed":29}],6:[function(require,module,exports){
 /*
  * API
  */
@@ -362,7 +402,7 @@ Api.prototype.saveResponse = function (res) {
 
 module.exports = Api;
 
-},{"then-request":5}],5:[function(require,module,exports){
+},{"then-request":7}],7:[function(require,module,exports){
 'use strict';
 
 var Promise = require('promise');
@@ -446,7 +486,7 @@ function doRequest(method, url, options, callback) {
   return result.nodeify(callback);
 }
 
-},{"./lib/handle-qs.js":6,"http-response-object":7,"promise":8}],6:[function(require,module,exports){
+},{"./lib/handle-qs.js":8,"http-response-object":9,"promise":10}],8:[function(require,module,exports){
 'use strict';
 
 var parse = require('qs').parse;
@@ -470,7 +510,7 @@ function handleQs(url, query) {
   return start + qs + end;
 }
 
-},{"qs":14}],7:[function(require,module,exports){
+},{"qs":16}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = Response;
@@ -512,14 +552,14 @@ Response.prototype.getBody = function (encoding) {
   return encoding ? this.body.toString(encoding) : this.body;
 };
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/core.js')
 require('./lib/done.js')
 require('./lib/es6-extensions.js')
 require('./lib/node-extensions.js')
-},{"./lib/core.js":9,"./lib/done.js":10,"./lib/es6-extensions.js":11,"./lib/node-extensions.js":12}],9:[function(require,module,exports){
+},{"./lib/core.js":11,"./lib/done.js":12,"./lib/es6-extensions.js":13,"./lib/node-extensions.js":14}],11:[function(require,module,exports){
 'use strict';
 
 var asap = require('asap')
@@ -626,7 +666,7 @@ function doResolve(fn, onFulfilled, onRejected) {
   }
 }
 
-},{"asap":13}],10:[function(require,module,exports){
+},{"asap":15}],12:[function(require,module,exports){
 'use strict';
 
 var Promise = require('./core.js')
@@ -641,7 +681,7 @@ Promise.prototype.done = function (onFulfilled, onRejected) {
     })
   })
 }
-},{"./core.js":9,"asap":13}],11:[function(require,module,exports){
+},{"./core.js":11,"asap":15}],13:[function(require,module,exports){
 'use strict';
 
 //This file contains the ES6 extensions to the core Promises/A+ API
@@ -751,7 +791,7 @@ Promise.prototype['catch'] = function (onRejected) {
   return this.then(null, onRejected);
 }
 
-},{"./core.js":9,"asap":13}],12:[function(require,module,exports){
+},{"./core.js":11,"asap":15}],14:[function(require,module,exports){
 'use strict';
 
 //This file contains then/promise specific extensions that are only useful for node.js interop
@@ -816,7 +856,7 @@ Promise.prototype.nodeify = function (callback, ctx) {
   })
 }
 
-},{"./core.js":9,"asap":13}],13:[function(require,module,exports){
+},{"./core.js":11,"asap":15}],15:[function(require,module,exports){
 (function (process){
 
 // Use the fastest possible means to execute a task in a future turn
@@ -933,10 +973,10 @@ module.exports = asap;
 
 
 }).call(this,require('_process'))
-},{"_process":19}],14:[function(require,module,exports){
+},{"_process":21}],16:[function(require,module,exports){
 module.exports = require('./lib/');
 
-},{"./lib/":15}],15:[function(require,module,exports){
+},{"./lib/":17}],17:[function(require,module,exports){
 // Load modules
 
 var Stringify = require('./stringify');
@@ -953,7 +993,7 @@ module.exports = {
     parse: Parse
 };
 
-},{"./parse":16,"./stringify":17}],16:[function(require,module,exports){
+},{"./parse":18,"./stringify":19}],18:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -1112,7 +1152,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-},{"./utils":18}],17:[function(require,module,exports){
+},{"./utils":20}],19:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -1191,7 +1231,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-},{"./utils":18}],18:[function(require,module,exports){
+},{"./utils":20}],20:[function(require,module,exports){
 // Load modules
 
 
@@ -1325,7 +1365,7 @@ exports.isBuffer = function (obj) {
         obj.constructor.isBuffer(obj));
 };
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1384,7 +1424,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * addClass : addClass(el, className)
  * Adds a class name to an element. Compare with `$.fn.addClass`.
@@ -1403,7 +1443,7 @@ function addClass (el, className) {
 
 module.exports = addClass;
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * each : each(list, fn)
  * Iterates through `list` (an array or an object). This is useful when dealing
@@ -1436,7 +1476,7 @@ function each (list, fn) {
 
 module.exports = each;
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * extend() : extend(dest, src1, [src2 ...])
  * Extends object `dest` with properties from sources `src`.
@@ -1470,7 +1510,7 @@ function extend (out) {
 
 module.exports = extend;
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * querySelectorAll : querySelectorAll(query)
  * Convenience function to access `document.querySelectorAll`.
@@ -1489,7 +1529,7 @@ function querySelectorAll (query) {
 
 module.exports = querySelectorAll;
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * querySelector : querySelector(query)
  * Convenience function to access `document.querySelector`.
@@ -1504,7 +1544,7 @@ function querySelector (query) {
 
 module.exports = querySelector;
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * ready : ready(fn)
  * Executes `fn` when the DOM is ready.
@@ -1528,7 +1568,7 @@ function ready (fn) {
 
 module.exports = ready;
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * removeClass : removeClass(el, className)
  * Removes a classname.
@@ -1555,7 +1595,7 @@ function removeClass (el, className) {
 
 module.exports = removeClass;
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 // * templayed.js 0.2.1
 // * The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)
 // *
