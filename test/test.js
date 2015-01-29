@@ -44,7 +44,7 @@ describe('TB', function () {
 
   before(function (next) {
     $('body').html(
-      "<div id='w' data-tb='event-form' data-event-id='101'></div>");
+      "<div id='w' data-tb='event-form' data-tb-event-id='101'></div>");
     TB.go();
 
     setTimeout(next, 100);
