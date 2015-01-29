@@ -39,10 +39,8 @@ function camelize (str) {
 module.exports = getData;
 
 },{}],3:[function(require,module,exports){
-var ajaxapi = require('ajaxapi');
-
 var getData = require('./helpers/get_data');
-
+var ajaxapi = require('ajaxapi');
 var ready = require('dom101/ready');
 var each = require('dom101/each');
 var qa = require('dom101/query-selector-all');
@@ -54,6 +52,13 @@ var q = require('dom101/query-selector');
  */
 
 var TB = module.exports = {};
+
+/**
+ * version:
+ * The widget version number.
+ */
+
+TB.version = "0.0.0-1";
 
 /**
  * api : TB.api
