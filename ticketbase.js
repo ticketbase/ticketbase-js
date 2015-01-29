@@ -196,7 +196,7 @@ EventForm.prototype = {
    */
 
   template:
-    "<div>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='tb-event-name'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <ul>\n      {{#event.ticket_types}}\n      <li>\n        <strong class='tb-title'>{{title}}</strong>\n        <span class='tb-price'>{{price_label}}</span>\n        <div class='tb-quantity'>\n          <input type='number' name='{{input_quantity_name}}' value='0'>\n        </div>\n      </li>\n      {{/event.ticket_types}}\n    </ul>\n\n    <button type='submit' class='tb-submit'>Order</button>\n\n  </form>\n</div>\n",
+    "<div class='tb-event-form'>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='tb-headline'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <div class='tb-order-items'>\n      {{#event.ticket_types}}\n        <div class='tb-order-item tb-ticket'>\n          <strong class='tb-title'>{{title}}</strong>\n          <span class='tb-price'>{{price_label}}</span>\n          <div class='tb-quantity'>\n            <input type='number' name='{{input_quantity_name}}' value='0'>\n          </div>\n        </div>\n      {{/event.ticket_types}}\n    </div>\n\n    <div class='tb-action'>\n      <button type='submit' class='tb-submit'>Order</button>\n    </div>\n\n  </form>\n</div>\n",
 
   /*
    * loads data and renders
