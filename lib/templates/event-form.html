@@ -1,27 +1,27 @@
-<div class='tb-event-form'>
+<div class='{{tb}}-event-form'>
   <form method="post" action="{{event.order_action_url}}">
     {{{event.form_hidden}}}
 
-    <h1 class='tb-headline'>
+    <h1 class='{{tb}}-headline'>
       <a href='{{event.url}}'>
         {{event.title}}
       </a>
     </h1>
 
-    <div class='tb-order-items'>
+    <div class='{{tb}}-order-items'>
       {{#event.ticket_types}}
-        <div class='tb-order-item tb-ticket'>
-          <strong class='tb-title'>{{title}}</strong>
-          <span class='tb-price'>{{price_label}}</span>
-          <div class='tb-quantity'>
+        <div class='{{../tb}}-order-item {{../tb}}-ticket'>
+          <strong class='{{../tb}}-title'>{{title}}</strong>
+          <span class='{{../tb}}-price'>{{price_label}}</span>
+          <div class='{{../tb}}-quantity'>
             <input type='number' name='{{input_quantity_name}}' value='0'>
           </div>
         </div>
       {{/event.ticket_types}}
     </div>
 
-    <div class='tb-action'>
-      <button type='submit' class='tb-submit'>Order</button>
+    <div class='{{tb}}-action'>
+      <button type='submit' class='{{tb}}-submit'>Order</button>
     </div>
 
   </form>

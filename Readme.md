@@ -12,7 +12,7 @@ Embed into your page like so:
 ```html
 <div
   data-tb='event-tickets'
-  data-event='768'>
+  data-tb-event-id='768'>
 
   <a href='http://ticketbase.com/event/yourevent'>Event here</a>
 </div>
