@@ -9,7 +9,7 @@ beforeEach(function() {
   apimock
     .get('/v1/events/101')
     .reply(200, {
-      title: 'My event',
+      title: 'Ticket & Base',
       url: 'http://google.com',
       ticket_types: [
         {
@@ -32,10 +32,15 @@ describe('TB', function () {
   });
 
   before(function (next) {
-    $('body').append("<div id='w' data-tb='event-form' data-event-id='101'></div>");
+    $('body').html(
+      "<div id='w' data-tb='event-form' data-event-id='101'></div>");
     TB.go();
 
-    setTimeout(next, 20);
+    setTimeout(next, 100);
+  });
+
+  it('print', function () {
+    console.log('[body]', $('body').html());
   });
 
   it('works', function () {
@@ -43,8 +48,13 @@ describe('TB', function () {
   });
 
   it('has event name', function () {
-    expect($('#w h1 a')).to.have.text('My event');
+    expect($('#w h1 a')).to.contain('Ticket & Base');
   });
+
+  it('escapes', function () {
+    expect($('#w h1 a').html()).to.contain('Ticket &amp; Base');
+  });
+
 
   it('has ticket types', function () {
     expect($('#w')).to.contain('VIP');

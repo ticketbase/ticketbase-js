@@ -1,0 +1,16 @@
+<div>
+  <h1>
+    <a href='{{event.url}}'>
+      {{event.title}}
+    </a>
+
+    <ul>
+      {{#event.ticket_types}}
+      <li>
+        <b>{{title}}</b>
+        <a>{{price}}</a>
+      </li>
+      {{/event.ticket_types}}
+    </ul>
+  </h1>
+</div>
