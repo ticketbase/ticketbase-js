@@ -3,31 +3,7 @@ require('./setup');
 describe('TB (ok):', function () {
   beforeEach(function() {
     apimock.get('/v1/events/101')
-      .reply(200, {
-        title: 'Ticket & Base',
-        url: 'http://google.com',
-        currency: 'usd',
-        ticket_types: [
-          {
-            title: 'VIP',
-            price: '200.0',
-            ticket_type: 'paid',
-            status: 'live'
-          },
-          {
-            title: 'General attendee',
-            price: '0',
-            ticket_type: 'free',
-            status: 'live'
-          },
-          {
-            title: 'Sold out ticket',
-            price: '0',
-            ticket_type: 'free',
-            status: 'dead' /* ?? */
-          }
-        ]
-      });
+      .reply(200, require('./fixtures/event_ok.json'));
   });
 
   beforeEach(function () {

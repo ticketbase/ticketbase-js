@@ -1,0 +1,25 @@
+{
+  "title": "Ticket & Base",
+  "url": "http://google.com",
+  "currency": "usd",
+  "ticket_types": [
+    {
+      "title": "VIP",
+      "price": "200.0",
+      "ticket_type": "paid",
+      "status": "live"
+    },
+    {
+      "title": "General attendee",
+      "price": "0",
+      "ticket_type": "free",
+      "status": "live"
+    },
+    {
+      "title": "Sold out ticket",
+      "price": "0",
+      "ticket_type": "free",
+      "status": "dead"
+    }
+  ]
+}
