@@ -13,3 +13,7 @@ before(function setTB () {
   global.TB = require('../index');
 });
 
+afterEach(function () {
+  apimock.done();
+});
+

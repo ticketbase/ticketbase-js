@@ -1,10 +1,8 @@
 require('./setup');
 
 describe('TB (ok):', function () {
-  var m;
-
   beforeEach(function() {
-    m = apimock.get('/v1/events/101')
+    apimock.get('/v1/events/101')
       .reply(200, {
         title: 'Ticket & Base',
         url: 'http://google.com',
@@ -30,10 +28,6 @@ describe('TB (ok):', function () {
           }
         ]
       });
-  });
-
-  afterEach(function () {
-    m.done();
   });
 
   beforeEach(function () {
