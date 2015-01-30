@@ -5,7 +5,9 @@ features:
  * lightweight
  * no dependencies (no jQuery!!)
  * little effort to get started as possible
- * super configurable
+ * flexible configuration
+
+[![Status](http://img.shields.io/travis/ticketbase/ticketbase-js/master.svg?style=flat)](https://travis-ci.org/ticketbase/ticketbase-js "See test builds")
 
 <br>
 
