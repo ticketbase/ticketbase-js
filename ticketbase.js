@@ -1,7 +1,7 @@
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.TB=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
 
-},{"./lib":3}],2:[function(require,module,exports){
+},{"./lib":4}],2:[function(require,module,exports){
 /*
  * getData() : getData(el)
  * Returns data attributes as a plain object.
@@ -39,10 +39,23 @@ function camelize (str) {
 module.exports = getData;
 
 },{}],3:[function(require,module,exports){
+function injectCss (data, id) {
+  if (document.getElementById(id)) return;
+
+  var styl = document.createElement('style');
+  styl.id = id;
+  styl.innerHTML = data;
+  document.getElementsByTagName('head')[0].appendChild(styl);
+}
+
+module.exports = injectCss;
+
+},{}],4:[function(require,module,exports){
 var getData = require('./helpers/get_data');
 var ajaxapi = require('ajaxapi');
 var ready = require('dom101/ready');
 var each = require('dom101/each');
+
 var qa = require('dom101/query-selector-all');
 var q = require('dom101/query-selector');
 
@@ -91,19 +104,31 @@ TB.widget = function (el) {
   var EventForm = require('./widgets/event_form');
 
   // skip if already widgetized
-  if (el.__tbInstance) return;
+  if (el.__tbInstance)
+    return el.__tbInstance;
 
   var data = getData(el, 'data-tb-');
   return new EventForm(el, data);
+};
+
+/**
+ * injectCss : IB.injectCss()
+ * (Internal) adds Ticketbase CSS.
+ */
+
+TB.injectCss = function () {
+  var css = "body {\n  background: red !important;\n}\n\n.tb-spinner:before {\n  content: 'Loading...';\n  text-align: center;\n  display: block;\n}\n\n.tb-event-form {\n  max-width: 500px;\n  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20);\n}\n\n.tb-headline {\n  margin: 0;\n  padding: 30px;\n}\n\n.tb-headline a {\n  color: #111;\n  font-weight: normal;\n  text-decoration: none;\n}\n\n.tb-order-items {\n  border-top: solid 1px #f0f0f0;\n}\n\n.tb-order-item {\n  border-bottom: solid 1px #f0f0f0;\n  padding: 15px 30px;\n  overflow: hidden;\n}\n\n/*\n * order item\n */\n\n.tb-info {\n  display: inline;\n}\n\n.tb-order-item {\n  display: table;\n  table-layout: fixed;\n  width: 100%;\n}\n\n.tb-title {\n  display: table-cell;\n  width: 70%;\n}\n\n.tb-price {\n  display: table-cell;\n  width: 15%;\n\n  font-size: 1.5em;\n  color: #888;\n  text-align: right;\n  font-weight: normal;\n}\n\n.tb-quantity {\n  display: table-cell;\n  width: 15%;\n  text-align: right;\n}\n\n.tb-quantity input {\n  width: 50px;\n  height: 26px;\n  text-align: center;\n}\n\n/*\n * button\n */\n\n.tb-action {\n  padding: 30px;\n}\n\n.tb-submit {\n  width: 120px;\n  height: 40px;\n\n  background: dodgerblue;\n  border-radius: 3px;\n\n  color: white;\n  font-size: 1.1em;\n  font-weight: bold;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  cursor: pointer;\n}\n";
+  require('./helpers/inject_css')(css, 'ticketbase-css');
 };
 
 /*
  * Run upon inclusion.
  */
 
+ready(TB.injectCss);
 ready(TB.go);
 
-},{"./helpers/get_data":2,"./widgets/event_form":5,"ajaxapi":6,"dom101/each":23,"dom101/query-selector":26,"dom101/query-selector-all":25,"dom101/ready":27}],4:[function(require,module,exports){
+},{"./helpers/get_data":2,"./helpers/inject_css":3,"./widgets/event_form":6,"ajaxapi":7,"dom101/each":24,"dom101/query-selector":27,"dom101/query-selector-all":26,"dom101/ready":28}],5:[function(require,module,exports){
 
 /* event presenter */
 
@@ -174,7 +199,7 @@ function getCurrency (code) {
   return curr;
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var presentEvent = require('../presenters/event');
 var removeClass = require('dom101/remove-class');
 var addClass = require('dom101/add-class');
@@ -191,7 +216,9 @@ var TB = require('..');
 function EventForm (el, data) {
   el.__tbInstance = this;
   extend(this, data, { el: el });
+
   this.el = el;
+  this.promise = undefined;
   this.load();
 }
 
@@ -213,7 +240,7 @@ EventForm.prototype = {
     this.el.innerHTML = '<div class="tb-spinner"></div>';
     addClass(this.el, 'tb-loading');
 
-    TB.api.get('/v1/events/'+this.eventId)
+    this.promise = TB.api.get('/v1/events/'+this.eventId)
       .then(function (event) {
         self.event = event;
         self.render();
@@ -221,6 +248,7 @@ EventForm.prototype = {
       .catch(self.onerror.bind(this))
       .done();
   },
+
 
   /*
    * renders
@@ -249,7 +277,7 @@ EventForm.prototype = {
 
 module.exports = EventForm;
 
-},{"..":3,"../presenters/event":4,"dom101/add-class":22,"dom101/extend":24,"dom101/remove-class":28,"templayed":29}],6:[function(require,module,exports){
+},{"..":4,"../presenters/event":5,"dom101/add-class":23,"dom101/extend":25,"dom101/remove-class":29,"templayed":30}],7:[function(require,module,exports){
 /*
  * API
  */
@@ -410,7 +438,7 @@ Api.prototype.saveResponse = function (res) {
 
 module.exports = Api;
 
-},{"then-request":7}],7:[function(require,module,exports){
+},{"then-request":8}],8:[function(require,module,exports){
 'use strict';
 
 var Promise = require('promise');
@@ -494,7 +522,7 @@ function doRequest(method, url, options, callback) {
   return result.nodeify(callback);
 }
 
-},{"./lib/handle-qs.js":8,"http-response-object":9,"promise":10}],8:[function(require,module,exports){
+},{"./lib/handle-qs.js":9,"http-response-object":10,"promise":11}],9:[function(require,module,exports){
 'use strict';
 
 var parse = require('qs').parse;
@@ -518,7 +546,7 @@ function handleQs(url, query) {
   return start + qs + end;
 }
 
-},{"qs":16}],9:[function(require,module,exports){
+},{"qs":17}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = Response;
@@ -560,14 +588,14 @@ Response.prototype.getBody = function (encoding) {
   return encoding ? this.body.toString(encoding) : this.body;
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/core.js')
 require('./lib/done.js')
 require('./lib/es6-extensions.js')
 require('./lib/node-extensions.js')
-},{"./lib/core.js":11,"./lib/done.js":12,"./lib/es6-extensions.js":13,"./lib/node-extensions.js":14}],11:[function(require,module,exports){
+},{"./lib/core.js":12,"./lib/done.js":13,"./lib/es6-extensions.js":14,"./lib/node-extensions.js":15}],12:[function(require,module,exports){
 'use strict';
 
 var asap = require('asap')
@@ -674,7 +702,7 @@ function doResolve(fn, onFulfilled, onRejected) {
   }
 }
 
-},{"asap":15}],12:[function(require,module,exports){
+},{"asap":16}],13:[function(require,module,exports){
 'use strict';
 
 var Promise = require('./core.js')
@@ -689,7 +717,7 @@ Promise.prototype.done = function (onFulfilled, onRejected) {
     })
   })
 }
-},{"./core.js":11,"asap":15}],13:[function(require,module,exports){
+},{"./core.js":12,"asap":16}],14:[function(require,module,exports){
 'use strict';
 
 //This file contains the ES6 extensions to the core Promises/A+ API
@@ -799,7 +827,7 @@ Promise.prototype['catch'] = function (onRejected) {
   return this.then(null, onRejected);
 }
 
-},{"./core.js":11,"asap":15}],14:[function(require,module,exports){
+},{"./core.js":12,"asap":16}],15:[function(require,module,exports){
 'use strict';
 
 //This file contains then/promise specific extensions that are only useful for node.js interop
@@ -864,7 +892,7 @@ Promise.prototype.nodeify = function (callback, ctx) {
   })
 }
 
-},{"./core.js":11,"asap":15}],15:[function(require,module,exports){
+},{"./core.js":12,"asap":16}],16:[function(require,module,exports){
 (function (process){
 
 // Use the fastest possible means to execute a task in a future turn
@@ -981,10 +1009,10 @@ module.exports = asap;
 
 
 }).call(this,require('_process'))
-},{"_process":21}],16:[function(require,module,exports){
+},{"_process":22}],17:[function(require,module,exports){
 module.exports = require('./lib/');
 
-},{"./lib/":17}],17:[function(require,module,exports){
+},{"./lib/":18}],18:[function(require,module,exports){
 // Load modules
 
 var Stringify = require('./stringify');
@@ -1001,7 +1029,7 @@ module.exports = {
     parse: Parse
 };
 
-},{"./parse":18,"./stringify":19}],18:[function(require,module,exports){
+},{"./parse":19,"./stringify":20}],19:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -1160,7 +1188,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-},{"./utils":20}],19:[function(require,module,exports){
+},{"./utils":21}],20:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -1239,7 +1267,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-},{"./utils":20}],20:[function(require,module,exports){
+},{"./utils":21}],21:[function(require,module,exports){
 // Load modules
 
 
@@ -1373,7 +1401,7 @@ exports.isBuffer = function (obj) {
         obj.constructor.isBuffer(obj));
 };
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1432,7 +1460,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /**
  * addClass : addClass(el, className)
  * Adds a class name to an element. Compare with `$.fn.addClass`.
@@ -1451,7 +1479,7 @@ function addClass (el, className) {
 
 module.exports = addClass;
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /**
  * each : each(list, fn)
  * Iterates through `list` (an array or an object). This is useful when dealing
@@ -1484,7 +1512,7 @@ function each (list, fn) {
 
 module.exports = each;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /**
  * extend() : extend(dest, src1, [src2 ...])
  * Extends object `dest` with properties from sources `src`.
@@ -1518,7 +1546,7 @@ function extend (out) {
 
 module.exports = extend;
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * querySelectorAll : querySelectorAll(query)
  * Convenience function to access `document.querySelectorAll`.
@@ -1537,7 +1565,7 @@ function querySelectorAll (query) {
 
 module.exports = querySelectorAll;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * querySelector : querySelector(query)
  * Convenience function to access `document.querySelector`.
@@ -1552,7 +1580,7 @@ function querySelector (query) {
 
 module.exports = querySelector;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * ready : ready(fn)
  * Executes `fn` when the DOM is ready.
@@ -1576,7 +1604,7 @@ function ready (fn) {
 
 module.exports = ready;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * removeClass : removeClass(el, className)
  * Removes a classname.
@@ -1603,7 +1631,7 @@ function removeClass (el, className) {
 
 module.exports = removeClass;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 // * templayed.js 0.2.1
 // * The fastest and smallest Mustache compliant Javascript templating library written in 1806 bytes (uncompressed)
 // *

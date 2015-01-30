@@ -1,53 +1,46 @@
-var expect = require('chai').expect;
-var nock = require('nock');
-var apimock = nock('http://api.ticketbase.com');
-var TB, $;
+require('./setup');
 
-require('mocha-jsdom')();
+describe('TB (ok):', function () {
+  var m;
 
-beforeEach(function() {
-  apimock
-    .get('/v1/events/101')
-    .reply(200, {
-      title: 'Ticket & Base',
-      url: 'http://google.com',
-      currency: 'usd',
-      ticket_types: [
-        {
-          title: 'VIP',
-          price: '200.0',
-          ticket_type: 'paid',
-          status: 'live'
-        },
-        {
-          title: 'General attendee',
-          price: '0',
-          ticket_type: 'free',
-          status: 'live'
-        },
-        {
-          title: 'Sold out ticket',
-          price: '0',
-          ticket_type: 'free',
-          status: 'dead' /* ?? */
-        }
-      ]
-    });
-});
-
-describe('TB', function () {
-  before(function () {
-    global.jQuery = $ = require('jquery');
-    require('chai').use(require('chai-jquery'));
-    TB = require('../index');
+  beforeEach(function() {
+    m = apimock.get('/v1/events/101')
+      .reply(200, {
+        title: 'Ticket & Base',
+        url: 'http://google.com',
+        currency: 'usd',
+        ticket_types: [
+          {
+            title: 'VIP',
+            price: '200.0',
+            ticket_type: 'paid',
+            status: 'live'
+          },
+          {
+            title: 'General attendee',
+            price: '0',
+            ticket_type: 'free',
+            status: 'live'
+          },
+          {
+            title: 'Sold out ticket',
+            price: '0',
+            ticket_type: 'free',
+            status: 'dead' /* ?? */
+          }
+        ]
+      });
   });
 
-  before(function (next) {
-    $('body').html(
-      "<div id='w' data-tb='event-form' data-tb-event-id='101'></div>");
-    TB.go();
+  afterEach(function () {
+    m.done();
+  });
 
-    setTimeout(next, 100);
+  beforeEach(function () {
+    $w = $("<div id='w' data-tb='event-form' data-tb-event-id='101'></div>");
+    $('body').append($w);
+    var widget = TB.widget($w[0]);
+    return widget.promise;
   });
 
   it('print', function () {
