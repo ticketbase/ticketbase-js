@@ -8,7 +8,7 @@ Add this bit of HTML (replace the event-id):
 
 ```html
 <div
-  data-tb='event-tickets'
+  data-tb='event-form'
   data-tb-event-id='768'>
 
   <a href='http://ticketbase.com/event/yourevent'>Event here</a>
