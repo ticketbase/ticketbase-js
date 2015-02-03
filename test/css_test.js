@@ -14,7 +14,7 @@ describe('CSS:', function () {
 
   it('has .tb classnames', function () {
     expect($style.html()).to.contain('.tb-spinner');
-    expect($style.html()).to.contain('.tb-title');
+    expect($style.html()).to.contain('.tb-price');
     expect($style.html()).to.contain('.tb-quantity');
   });
 });

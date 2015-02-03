@@ -120,7 +120,7 @@ TB.widget = function (el) {
   if (el.__tbInstance)
     return el.__tbInstance;
 
-  var data = getData(el, 'data-tb-');
+  var data = getData(el);
   return new EventForm(el, data);
 };
 
@@ -208,8 +208,12 @@ function EventForm (el, data) {
   el.__tbInstance = this;
   extend(this, data, { el: el });
 
+  if (!data.event)
+    throw new Error("Ticketbase: no event ID found");
+
   this.el = el;
   this.promise = undefined;
+  this.eventId = data.event;
   this.load();
 }
 

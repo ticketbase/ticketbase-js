@@ -1,21 +1,31 @@
 require('./setup');
 
 describe('TB (ok):', function () {
+  var widget;
+
   beforeEach(function() {
     apimock.get('/v1/events/101')
       .reply(200, require('./fixtures/event_ok.json'));
   });
 
   beforeEach(function () {
-    $w = $("<div id='w' data-tb='event-form' data-tb-event-id='101'></div>");
+    $w = $("<div id='w' data-tb='event-form' data-headline='true' data-event='101'></div>");
     $('body').append($w);
-    var widget = TB.widget($w[0]);
+    widget = TB.widget($w[0]);
     return widget.promise;
   });
 
   it('print', function () {
     if (process.env.print)
       console.log('[body]', $('body').html());
+  });
+
+  it('saves the data\'s eventId', function () {
+    expect(widget.eventId).eql(101);
+  });
+
+  it('saves the data\'s headline option', function () {
+    expect(widget.headline).eql(true);
   });
 
   it('works', function () {
