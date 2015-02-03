@@ -24,7 +24,16 @@
       <div class='{{tb}}-order-items'>
         {{#event.ticket_types}}
           <div class='{{../tb}}-order-item {{../tb}}-ticket'>
-            <strong class='{{../tb}}-title'>{{title}}</strong>
+            <div class='{{../tb}}-ticket-info'>
+              <strong class='{{../tb}}-title'>
+                {{title}}
+              </strong>
+              {{#has_description}}
+                <div class='{{../tb}}-ticket-description'>
+                  {{{description}}}
+                </div>
+              {{/has_description}}
+            </div>
 
             {{#is_free}}
               <span class='{{../tb}}-price {{../tb}}-price-free'>
