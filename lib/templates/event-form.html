@@ -1,47 +1,61 @@
-<div class='{{tb}}-event-form'>
-  <form method="post" action="{{event.order_action_url}}">
-    {{{event.form_hidden}}}
+<div class='{{tb}}-container'>
+  {{#error}}
+    <div class='{{tb}}-event-form {{tb}}-event-form-error'>
+      Something went wrong.
+    </div>
+  {{/error}}
 
-    <h1 class='{{tb}}-headline'>
-      <a href='{{event.url}}'>
-        {{event.title}}
-      </a>
-    </h1>
+  {{#event.is_closed}}
+    <div class='{{tb}}-event-form {{tb}}-event-form-closed'>
+      Tickets are not available at this time.
+    </div>
+  {{/event.is_closed}}
 
-    <div class='{{tb}}-order-items'>
-      {{#event.ticket_types}}
-        <div class='{{../tb}}-order-item {{../tb}}-ticket'>
-          <strong class='{{../tb}}-title'>{{title}}</strong>
+  {{#event.is_live}}
+  <form method="post" action="{{event.order_action_url}}" class='{{tb}}-event-form {{tb}}-event-form-live'>
+      {{{event.form_hidden}}}
 
-          {{#is_free}}
-            <span class='{{../tb}}-price {{../tb}}-price-free'>
-              <span class='{{../tb}}-amount'>
-                Free
+      <h1 class='{{tb}}-headline'>
+        <a href='{{event.url}}'>
+          {{event.title}}
+        </a>
+      </h1>
+
+      <div class='{{tb}}-order-items'>
+        {{#event.ticket_types}}
+          <div class='{{../tb}}-order-item {{../tb}}-ticket'>
+            <strong class='{{../tb}}-title'>{{title}}</strong>
+
+            {{#is_free}}
+              <span class='{{../tb}}-price {{../tb}}-price-free'>
+                <span class='{{../tb}}-amount'>
+                  Free
+                </span>
               </span>
-            </span>
-          {{/is_free}}
+            {{/is_free}}
 
-          {{#is_paid}}
-            <span class='{{../tb}}-price {{../tb}}-price-paid'>
-              <span class='{{../tb}}-amount'>
-                {{prices.formatted_amount}}
+            {{#is_paid}}
+              <span class='{{../tb}}-price {{../tb}}-price-paid'>
+                <span class='{{../tb}}-amount'>
+                  {{prices.formatted_amount}}
+                </span>
+                <span class='{{../tb}}-fees'>
+                  + {{prices.formatted_fee}} fees
+                </span>
               </span>
-              <span class='{{../tb}}-fees'>
-                + {{prices.formatted_fee}} fees
-              </span>
-            </span>
-          {{/is_paid}}
+            {{/is_paid}}
 
-          <div class='{{../tb}}-quantity'>
-            <input type='number' name='{{input_quantity_name}}' value='0'>
+            <div class='{{../tb}}-quantity'>
+              <input type='number' name='{{input_quantity_name}}' value='0'>
+            </div>
           </div>
-        </div>
-      {{/event.ticket_types}}
-    </div>
+        {{/event.ticket_types}}
+      </div>
 
-    <div class='{{tb}}-action'>
-      <button type='submit' class='{{tb}}-submit'>Order</button>
-    </div>
+      <div class='{{tb}}-action'>
+        <button type='submit' class='{{tb}}-submit'>Order</button>
+      </div>
 
-  </form>
+    </form>
+  {{/event.is_live}}
 </div>

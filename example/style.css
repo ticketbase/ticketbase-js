@@ -10,6 +10,7 @@ html {
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 body, td, input, textarea {
@@ -21,6 +22,14 @@ body {
   line-height: 1.5;
 }
 
-.mywidget > * {
-  margin: 50px auto;
+body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.mywidget {
+  width: 500px;
+  margin: auto;
 }
