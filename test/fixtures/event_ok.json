@@ -2,10 +2,16 @@
   "title": "Ticket & Base",
   "url": "http://google.com",
   "currency": "usd",
+  "status": "live",
   "ticket_types": [
     {
       "title": "VIP",
-      "price": "200.0",
+      "prices": {
+        "amount": 200,
+        "formatted_amount": "$200",
+        "fee": 1.15,
+        "formatted_fee": "$1.15"
+      },
       "ticket_type": "paid",
       "status": "live"
     },
