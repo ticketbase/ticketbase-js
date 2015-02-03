@@ -235,7 +235,7 @@ EventForm.prototype = {
     this.el.innerHTML = '<div class="tb-spinner"></div>';
     addClass(this.el, 'tb-loading');
 
-    this.promise = TB.api.get('/v1/events/'+this.eventId)
+    this.promise = TB.api.get('/xv1/events/'+this.eventId)
       .then(function (event) {
         self.event = event;
         self.render();
@@ -267,6 +267,12 @@ EventForm.prototype = {
    */
 
   onerror: function (err) {
+    var tpl = template(this.template);
+    this.el.innerHTML = tpl({
+      error: err,
+      widget: this,
+      event: {}
+    });
     throw err;
   }
 };
@@ -402,7 +408,7 @@ Api.prototype.parseBody = function (res) {
     body = res.getBody(),
     type = res.headers['content-type'];
 
-  if (type.match(/^application\/json/))
+  if (type && type.match(/^application\/json/))
     return JSON.parse(body);
   else
     return body;
