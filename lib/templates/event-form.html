@@ -12,7 +12,26 @@
       {{#event.ticket_types}}
         <div class='{{../tb}}-order-item {{../tb}}-ticket'>
           <strong class='{{../tb}}-title'>{{title}}</strong>
-          <span class='{{../tb}}-price'>{{price_label}}</span>
+
+          {{#is_free}}
+            <span class='{{../tb}}-price {{../tb}}-price-free'>
+              <span class='{{../tb}}-amount'>
+                Free
+              </span>
+            </span>
+          {{/is_free}}
+
+          {{#is_paid}}
+            <span class='{{../tb}}-price {{../tb}}-price-paid'>
+              <span class='{{../tb}}-amount'>
+                {{prices.formatted_amount}}
+              </span>
+              <span class='{{../tb}}-fees'>
+                + {{prices.formatted_fee}} fees
+              </span>
+            </span>
+          {{/is_paid}}
+
           <div class='{{../tb}}-quantity'>
             <input type='number' name='{{input_quantity_name}}' value='0'>
           </div>

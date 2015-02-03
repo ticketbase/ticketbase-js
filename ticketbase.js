@@ -59,7 +59,7 @@ var each = require('dom101/each');
 var qa = require('dom101/query-selector-all');
 var q = require('dom101/query-selector');
 
-/**
+/***
  * TB:
  * Ticketbase widget library.
  */
@@ -117,7 +117,7 @@ TB.widget = function (el) {
  */
 
 TB.injectCss = function () {
-  var css = ".tb-spinner:before {\n  content: 'Loading...';\n  text-align: center;\n  display: block;\n}\n\n.tb-event-form {\n  max-width: 500px;\n  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20);\n}\n\n.tb-headline {\n  margin: 0;\n  padding: 30px;\n}\n\n.tb-headline a {\n  color: #111;\n  font-weight: normal;\n  text-decoration: none;\n}\n\n.tb-order-items {\n  border-top: solid 1px #f0f0f0;\n}\n\n.tb-order-item {\n  border-bottom: solid 1px #f0f0f0;\n  padding: 15px 30px;\n  overflow: hidden;\n}\n\n/*\n * order item\n */\n\n.tb-info {\n  display: inline;\n}\n\n.tb-order-item {\n  display: table;\n  table-layout: fixed;\n  width: 100%;\n}\n\n.tb-title {\n  display: table-cell;\n  width: 70%;\n}\n\n.tb-price {\n  display: table-cell;\n  width: 15%;\n\n  font-size: 1.5em;\n  color: #888;\n  text-align: right;\n  font-weight: normal;\n}\n\n.tb-quantity {\n  display: table-cell;\n  width: 15%;\n  text-align: right;\n}\n\n.tb-quantity input {\n  width: 50px;\n  height: 26px;\n  text-align: center;\n}\n\n/*\n * button\n */\n\n.tb-action {\n  padding: 30px;\n}\n\n.tb-submit {\n  width: 120px;\n  height: 40px;\n\n  background: dodgerblue;\n  border-radius: 3px;\n\n  color: white;\n  font-size: 1.1em;\n  font-weight: bold;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  cursor: pointer;\n}\n";
+  var css = ".tb-spinner:before {\n  content: 'Loading...';\n  text-align: center;\n  display: block;\n}\n\n.tb-event-form {\n  max-width: 500px;\n  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20);\n}\n\n.tb-headline {\n  margin: 0;\n  padding: 30px;\n}\n\n.tb-headline a {\n  color: #111;\n  font-weight: normal;\n  text-decoration: none;\n}\n\n.tb-order-items {\n  border-top: solid 1px #f0f0f0;\n}\n\n.tb-order-item {\n  border-bottom: solid 1px #f0f0f0;\n  padding: 15px 30px;\n  overflow: hidden;\n}\n\n/*\n * order item\n */\n\n.tb-info {\n  display: inline;\n}\n\n.tb-order-item {\n  display: table;\n  table-layout: fixed;\n  width: 100%;\n}\n\n.tb-title {\n  display: table-cell;\n  width: 70%;\n}\n\n.tb-price {\n  display: table-cell;\n  width: 30%;\n  padding-right: 15px;\n\n  text-align: right;\n  font-weight: normal;\n  line-height: 1.3;\n}\n\n.tb-amount {\n  display: block;\n  font-size: 1.5em;\n  color: #888;\n}\n\n.tb-fees {\n  display: block;\n  white-space: nowrap;\n  color: #aaa;\n  font-size: 0.9em;\n}\n\n.tb-quantity {\n  display: table-cell;\n  width: 15%;\n  text-align: right;\n}\n\n.tb-quantity input {\n  width: 50px;\n  height: 26px;\n  text-align: center;\n}\n\n/*\n * button\n */\n\n.tb-action {\n  padding: 30px;\n}\n\n.tb-submit {\n  width: 120px;\n  height: 40px;\n\n  background: dodgerblue;\n  border-radius: 3px;\n\n  color: white;\n  font-size: 1.1em;\n  font-weight: bold;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  cursor: pointer;\n}\n";
   require('./helpers/inject_css')(css, 'ticketbase-css');
 };
 
@@ -146,8 +146,6 @@ function getHiddenFields (event) {
   var types = event.ticket_types;
   for (var i = 0, len = types.length; i < len; i++) {
     var ticket = types[i];
-
-    // hide dead tickets
     if (ticket.status !== 'live') continue;
 
     re.push("<input type='hidden' name='order[order_items_attributes]["+i+"][item_id]' value='"+ticket.id+"'>");
@@ -159,44 +157,20 @@ function getHiddenFields (event) {
 function presentTicketTypes (types, event) {
   var re = [];
 
-  var curr = getCurrency(event.currency || 'usd');
-
   for (var i = 0, len = types.length; i < len; i++) {
     var ticket = types[i];
 
     // hide dead tickets
     if (ticket.status !== 'live') continue;
 
-    ticket.price_label = formatPrice(ticket.price, curr);
+    ticket.is_paid = ticket.ticket_type === 'paid';
+    ticket.is_free = ticket.ticket_type === 'free';
     ticket.input_quantity_name = 'order[order_items_attributes]['+i+'][quantity]';
 
     re.push(ticket);
   }
 
   return re;
-}
-
-function formatPrice (price, curr) {
-  var priceStr = parseFloat(price, 10).toFixed(2);
-
-  if (priceStr.match(/00$/))
-    priceStr = parseFloat(price, 10).toFixed(0);
-
-  return '' +
-    curr.symbol +
-    priceStr;
-}
-
-function getCurrency (code) {
-  var currencies = {
-    usd: { symbol: '$' },
-    aud: { symbol: 'AU$' },
-    btc: { symbol: 'B' }
-  };
-
-  var curr = currencies[code.toLowerCase()];
-  if (!curr) throw new Error("Unknown currency '"+code+"'");
-  return curr;
 }
 
 },{}],6:[function(require,module,exports){
@@ -228,7 +202,7 @@ EventForm.prototype = {
    */
 
   template:
-    "<div class='{{tb}}-event-form'>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='{{tb}}-headline'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <div class='{{tb}}-order-items'>\n      {{#event.ticket_types}}\n        <div class='{{../tb}}-order-item {{../tb}}-ticket'>\n          <strong class='{{../tb}}-title'>{{title}}</strong>\n          <span class='{{../tb}}-price'>{{price_label}}</span>\n          <div class='{{../tb}}-quantity'>\n            <input type='number' name='{{input_quantity_name}}' value='0'>\n          </div>\n        </div>\n      {{/event.ticket_types}}\n    </div>\n\n    <div class='{{tb}}-action'>\n      <button type='submit' class='{{tb}}-submit'>Order</button>\n    </div>\n\n  </form>\n</div>\n",
+    "<div class='{{tb}}-event-form'>\n  <form method=\"post\" action=\"{{event.order_action_url}}\">\n    {{{event.form_hidden}}}\n\n    <h1 class='{{tb}}-headline'>\n      <a href='{{event.url}}'>\n        {{event.title}}\n      </a>\n    </h1>\n\n    <div class='{{tb}}-order-items'>\n      {{#event.ticket_types}}\n        <div class='{{../tb}}-order-item {{../tb}}-ticket'>\n          <strong class='{{../tb}}-title'>{{title}}</strong>\n\n          {{#is_free}}\n            <span class='{{../tb}}-price {{../tb}}-price-free'>\n              <span class='{{../tb}}-amount'>\n                Free\n              </span>\n            </span>\n          {{/is_free}}\n\n          {{#is_paid}}\n            <span class='{{../tb}}-price {{../tb}}-price-paid'>\n              <span class='{{../tb}}-amount'>\n                {{prices.formatted_amount}}\n              </span>\n              <span class='{{../tb}}-fees'>\n                + {{prices.formatted_fee}} fees\n              </span>\n            </span>\n          {{/is_paid}}\n\n          <div class='{{../tb}}-quantity'>\n            <input type='number' name='{{input_quantity_name}}' value='0'>\n          </div>\n        </div>\n      {{/event.ticket_types}}\n    </div>\n\n    <div class='{{tb}}-action'>\n      <button type='submit' class='{{tb}}-submit'>Order</button>\n    </div>\n\n  </form>\n</div>\n",
 
   /*
    * loads data and renders
