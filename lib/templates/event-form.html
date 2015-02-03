@@ -1,12 +1,14 @@
 <div class='{{tb}}-container'>
-  {{#error}}
+  {{#is_error}}
     <div class='{{tb}}-event-form {{tb}}-event-form-error'>
-      Something went wrong.
+      <i class='{{tb}}-icon'></i>
+      Sorry, tickets cannot be loaded at this time.
     </div>
-  {{/error}}
+  {{/is_error}}
 
   {{#event.is_closed}}
     <div class='{{tb}}-event-form {{tb}}-event-form-closed'>
+      <i class='{{tb}}-icon'></i>
       Tickets are not available at this time.
     </div>
   {{/event.is_closed}}

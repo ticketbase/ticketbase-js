@@ -223,7 +223,7 @@ EventForm.prototype = {
    */
 
   template:
-    "<div class='{{tb}}-container'>\n  {{#error}}\n    <div class='{{tb}}-event-form {{tb}}-event-form-error'>\n      Something went wrong.\n    </div>\n  {{/error}}\n\n  {{#event.is_closed}}\n    <div class='{{tb}}-event-form {{tb}}-event-form-closed'>\n      Tickets are not available at this time.\n    </div>\n  {{/event.is_closed}}\n\n  {{#event.is_live}}\n  <form method=\"post\" action=\"{{event.order_action_url}}\" class='{{tb}}-event-form {{tb}}-event-form-live'>\n      {{{event.form_hidden}}}\n\n      {{#widget.headline}}\n        <h1 class='{{tb}}-headline'>\n          <a href='{{event.url}}'>\n            {{event.title}}\n          </a>\n        </h1>\n      {{/widget.headline}}\n\n      <div class='{{tb}}-order-items'>\n        {{#event.ticket_types}}\n          <div class='{{../tb}}-order-item {{../tb}}-ticket'>\n            <div class='{{../tb}}-ticket-info'>\n              <strong class='{{../tb}}-title'>\n                {{title}}\n              </strong>\n              {{#has_description}}\n                <div class='{{../tb}}-ticket-description'>\n                  {{{description}}}\n                </div>\n              {{/has_description}}\n            </div>\n\n            {{#is_free}}\n              <span class='{{../tb}}-price {{../tb}}-price-free'>\n                <span class='{{../tb}}-amount'>\n                  Free\n                </span>\n              </span>\n            {{/is_free}}\n\n            {{#is_paid}}\n              <span class='{{../tb}}-price {{../tb}}-price-paid'>\n                <span class='{{../tb}}-amount'>\n                  {{prices.formatted_amount}}\n                </span>\n                <span class='{{../tb}}-fees'>\n                  + {{prices.formatted_fee}} fees\n                </span>\n              </span>\n            {{/is_paid}}\n\n            <div class='{{../tb}}-quantity'>\n              <select name='{{input_quantity_name}}'>\n                <option>0</option>\n                <option>1</option>\n                <option>2</option>\n                <option>3</option>\n                <option>4</option>\n                <option>5</option>\n                <option>6</option>\n                <option>7</option>\n                <option>8</option>\n                <option>9</option>\n                <option>10</option>\n              </select>\n            </div>\n          </div>\n        {{/event.ticket_types}}\n      </div>\n\n      <div class='{{tb}}-action'>\n        <button type='submit' class='{{tb}}-submit'>Order</button>\n      </div>\n\n    </form>\n  {{/event.is_live}}\n</div>\n",
+    "<div class='{{tb}}-container'>\n  {{#is_error}}\n    <div class='{{tb}}-event-form {{tb}}-event-form-error'>\n      <i class='{{tb}}-icon'></i>\n      Sorry, tickets cannot be loaded at this time.\n    </div>\n  {{/is_error}}\n\n  {{#event.is_closed}}\n    <div class='{{tb}}-event-form {{tb}}-event-form-closed'>\n      <i class='{{tb}}-icon'></i>\n      Tickets are not available at this time.\n    </div>\n  {{/event.is_closed}}\n\n  {{#event.is_live}}\n  <form method=\"post\" action=\"{{event.order_action_url}}\" class='{{tb}}-event-form {{tb}}-event-form-live'>\n      {{{event.form_hidden}}}\n\n      {{#widget.headline}}\n        <h1 class='{{tb}}-headline'>\n          <a href='{{event.url}}'>\n            {{event.title}}\n          </a>\n        </h1>\n      {{/widget.headline}}\n\n      <div class='{{tb}}-order-items'>\n        {{#event.ticket_types}}\n          <div class='{{../tb}}-order-item {{../tb}}-ticket'>\n            <div class='{{../tb}}-ticket-info'>\n              <strong class='{{../tb}}-title'>\n                {{title}}\n              </strong>\n              {{#has_description}}\n                <div class='{{../tb}}-ticket-description'>\n                  {{{description}}}\n                </div>\n              {{/has_description}}\n            </div>\n\n            {{#is_free}}\n              <span class='{{../tb}}-price {{../tb}}-price-free'>\n                <span class='{{../tb}}-amount'>\n                  Free\n                </span>\n              </span>\n            {{/is_free}}\n\n            {{#is_paid}}\n              <span class='{{../tb}}-price {{../tb}}-price-paid'>\n                <span class='{{../tb}}-amount'>\n                  {{prices.formatted_amount}}\n                </span>\n                <span class='{{../tb}}-fees'>\n                  + {{prices.formatted_fee}} fees\n                </span>\n              </span>\n            {{/is_paid}}\n\n            <div class='{{../tb}}-quantity'>\n              <select name='{{input_quantity_name}}'>\n                <option>0</option>\n                <option>1</option>\n                <option>2</option>\n                <option>3</option>\n                <option>4</option>\n                <option>5</option>\n                <option>6</option>\n                <option>7</option>\n                <option>8</option>\n                <option>9</option>\n                <option>10</option>\n              </select>\n            </div>\n          </div>\n        {{/event.ticket_types}}\n      </div>\n\n      <div class='{{tb}}-action'>\n        <button type='submit' class='{{tb}}-submit'>Order</button>\n      </div>\n\n    </form>\n  {{/event.is_live}}\n</div>\n",
 
   /*
    * loads data and renders
@@ -235,13 +235,12 @@ EventForm.prototype = {
     this.el.innerHTML = '<div class="tb-spinner"></div>';
     addClass(this.el, 'tb-loading');
 
-    this.promise = TB.api.get('/xv1/events/'+this.eventId)
+    this.promise = TB.api.get('/v1/events/'+this.eventId)
       .then(function (event) {
         self.event = event;
         self.render();
       })
       .catch(self.onerror.bind(this))
-      .done();
   },
 
 
@@ -267,13 +266,20 @@ EventForm.prototype = {
    */
 
   onerror: function (err) {
+    removeClass(this.el, 'tb-loading');
+    addClass(this.el, 'tb-error');
+
     var tpl = template(this.template);
     this.el.innerHTML = tpl({
+      tb: (this.prefix || 'tb'),
+      is_error: true,
       error: err,
       widget: this,
       event: {}
     });
-    throw err;
+
+    if (!TB.quiet)
+      console.error(err);
   }
 };
 
@@ -339,6 +345,7 @@ Api.prototype.request = function (method, url, data) {
 
   // apply after hooks (defaults)
   pro = pro
+    .then(this.catchCorsError.bind(this))
     .then(this.saveResponse.bind(this))
     .then(this.parseBody.bind(this));
 
@@ -431,6 +438,16 @@ Api.prototype.prefix = function (url) {
 
 Api.prototype.saveResponse = function (res) {
   this.response = this.res = res;
+  return res;
+};
+
+/*
+ * (internal) catches cross origin request errors
+ */
+
+Api.prototype.catchCorsError = function (res) {
+  if (res && res.statusCode === 0)
+    throw new Error("API failed due to cross-origin error");
   return res;
 };
 

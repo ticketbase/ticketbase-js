@@ -1,7 +1,7 @@
 require('./setup');
 
 describe('TB (ok):', function () {
-  var widget;
+  var widget, $w;
 
   beforeEach(function() {
     apimock.get('/v1/events/101')
@@ -13,6 +13,10 @@ describe('TB (ok):', function () {
     $('body').append($w);
     widget = TB.widget($w[0]);
     return widget.promise;
+  });
+
+  afterEach(function (){
+    $w.remove();
   });
 
   it('print', function () {
@@ -29,24 +33,24 @@ describe('TB (ok):', function () {
   });
 
   it('works', function () {
-    expect($('#w')).to.have.class('tb-loaded');
+    expect($w).to.have.class('tb-loaded');
   });
 
   it('has event name', function () {
-    expect($('#w h1 a')).to.contain('Ticket & Base');
+    expect($w.find('h1 a')).to.contain('Ticket & Base');
   });
 
   it('escapes', function () {
-    expect($('#w h1 a').html()).to.contain('Ticket &amp; Base');
+    expect($w.find('h1 a').html()).to.contain('Ticket &amp; Base');
   });
 
 
   it('has ticket types', function () {
-    expect($('#w')).to.contain('VIP');
-    expect($('#w')).to.contain('General attendee');
+    expect($w).to.contain('VIP');
+    expect($w).to.contain('General attendee');
   });
 
   it('hides tickets that are sold out', function () {
-    expect($('#w')).not.to.contain('Sold out ticket');
+    expect($w).not.to.contain('Sold out ticket');
   });
 });
