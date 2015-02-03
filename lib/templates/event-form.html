@@ -15,11 +15,13 @@
   <form method="post" action="{{event.order_action_url}}" class='{{tb}}-event-form {{tb}}-event-form-live'>
       {{{event.form_hidden}}}
 
-      <h1 class='{{tb}}-headline'>
-        <a href='{{event.url}}'>
-          {{event.title}}
-        </a>
-      </h1>
+      {{#widget.headline}}
+        <h1 class='{{tb}}-headline'>
+          <a href='{{event.url}}'>
+            {{event.title}}
+          </a>
+        </h1>
+      {{/widget.headline}}
 
       <div class='{{tb}}-order-items'>
         {{#event.ticket_types}}

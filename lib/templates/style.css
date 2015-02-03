@@ -5,8 +5,9 @@
 .tb-spinner {
   display: block;
   margin: 20px auto;
-  width: 32px;
-  height: 32px;
+  width: 96px;
+  height: 96px;
+  padding: 32px;
   -webkit-animation: tb-rotate 400ms linear infinite;
   animation: tb-rotate 400ms linear infinite;
 }
@@ -27,8 +28,7 @@
  */
 
 .tb-event-form {
-  max-width: 1000px;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20);
+  /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20); */
 }
 
 .tb-event-form-error,
@@ -40,16 +40,13 @@
 .tb-headline {
   margin: 0;
   padding: 30px;
+  border-bottom: solid 1px #f0f0f0;
 }
 
 .tb-headline a {
   color: #111;
   font-weight: normal;
   text-decoration: none;
-}
-
-.tb-order-items {
-  border-top: solid 1px #f0f0f0;
 }
 
 .tb-order-item {
