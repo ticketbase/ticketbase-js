@@ -29,3 +29,5 @@ Available options
 * `data-event` (String | Number) — the event ID.
 
 * `data-headline` (Boolean) - shows the event name headline when true. (default *false*)
+
+* `data-prefix` (String) - The string to prefix the classnames with. Change this if you'd like to customize the styles. (default *tb*)
