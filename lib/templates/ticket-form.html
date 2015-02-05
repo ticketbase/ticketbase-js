@@ -1,20 +1,20 @@
 <div class='{{tb}}-container'>
   {{#is_error}}
-    <div class='{{tb}}-event-form {{tb}}-event-form-error'>
+    <div class='{{tb}}-ticket-form {{tb}}-ticket-form-error'>
       <i class='{{tb}}-icon'></i>
       Sorry, tickets cannot be loaded at this time.
     </div>
   {{/is_error}}
 
   {{#event.is_closed}}
-    <div class='{{tb}}-event-form {{tb}}-event-form-closed'>
+    <div class='{{tb}}-ticket-form {{tb}}-ticket-form-closed'>
       <i class='{{tb}}-icon'></i>
       Tickets are not available at this time.
     </div>
   {{/event.is_closed}}
 
   {{#event.is_live}}
-  <form method="post" action="{{event.order_action_url}}" class='{{tb}}-event-form {{tb}}-event-form-live'>
+  <form method="post" action="{{event.order_action_url}}" class='{{tb}}-ticket-form {{tb}}-ticket-form-live'>
       {{{event.form_hidden}}}
 
       {{#widget.headline}}

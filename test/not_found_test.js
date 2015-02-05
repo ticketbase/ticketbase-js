@@ -10,7 +10,7 @@ describe('TB (not found):', function () {
   });
 
   beforeEach(function () {
-    $w = $("<div id='w' data-tb='event-form' data-headline='true' data-event='102'></div>");
+    $w = $("<div id='w' data-tb='ticket-form' data-headline='true' data-event='102'></div>");
     $('body').append($w);
     widget = TB.widget($w[0]);
     return widget.promise;

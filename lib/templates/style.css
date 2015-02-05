@@ -27,12 +27,12 @@
  * event form
  */
 
-.tb-event-form {
+.tb-ticket-form {
   /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20); */
 }
 
-.tb-event-form-error,
-.tb-event-form-closed {
+.tb-ticket-form-error,
+.tb-ticket-form-closed {
   padding: 40px;
   text-align: center;
 }
