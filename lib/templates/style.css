@@ -17,6 +17,8 @@
   content: '';
   width: 28px;
   height: 28px;
+  margin: 0;
+  padding: 0;
   border: solid 2px transparent;
   border-left-color: dodgerblue;
   border-top-color: dodgerblue;
@@ -28,6 +30,9 @@
  */
 
 .tb-ticket-form {
+  background: white;
+  color: #333;
+  border-radius: 3px;
   /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20); */
 }
 
