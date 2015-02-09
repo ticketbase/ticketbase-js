@@ -1,2 +1,34 @@
 <div class='{{tb}}-container'>
+  {{#is_error}}
+    <div class='{{tb}}-ticket-form {{tb}}-ticket-form-error'>
+      <i class='{{tb}}-icon'></i>
+      Sorry, donations cannot be loaded at this time.
+    </div>
+  {{/is_error}}
+
+  {{#event.is_closed}}
+    <div class='{{tb}}-ticket-form {{tb}}-ticket-form-closed'>
+      <i class='{{tb}}-icon'></i>
+      Donations are not available at this time.
+    </div>
+  {{/event.is_closed}}
+
+  {{#event.is_live}}
+  <form method="post" action="{{event.order_action_url}}" class='{{tb}}-ticket-form {{tb}}-ticket-form-live'>
+      {{{event.form_hidden}}}
+
+      {{#widget.headline}}
+        <h1 class='{{tb}}-headline'>
+          <a href='{{event.url}}'>
+            {{event.title}}
+          </a>
+        </h1>
+      {{/widget.headline}}
+
+      <div class='{{tb}}-action'>
+        <button type='submit' class='{{tb}}-submit'>Order</button>
+      </div>
+
+    </form>
+  {{/event.is_live}}
 </div>
