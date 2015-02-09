@@ -34,7 +34,7 @@
     "dom101": "^0.6.0",
     "jsdom": "^3.1.0",
     "mocha-jsdom": "^0.2.0",
-    "simpler-extend": "^1.0.0",
+    "simpler-extend": "^1.0.1",
     "templayed": "^0.2.3"
   }
 }
