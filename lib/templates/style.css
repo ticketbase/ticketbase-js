@@ -54,7 +54,8 @@
   text-decoration: none;
 }
 
-.tb-order-item {
+.tb-donation,
+.tb-ticket {
   border-bottom: solid 1px #f0f0f0;
   padding: 15px 30px;
   overflow: hidden;
@@ -68,12 +69,13 @@
   display: inline;
 }
 
-.tb-order-item {
+.tb-ticket {
   display: table;
   table-layout: fixed;
   width: 100%;
 }
 
+.tb-donation-info,
 .tb-ticket-info {
   display: table-cell;
   width: 70%;

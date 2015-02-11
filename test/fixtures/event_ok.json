@@ -27,5 +27,59 @@
       "ticket_type": "free",
       "status": "dead"
     }
+  ],
+  "donation_types": [
+    {
+      "id": 3,
+      "event_id": 1,
+      "title": "Donate $25",
+      "description": "",
+      "status": "live",
+      "prices": {
+        "amount": 25.0,
+        "fee": 0.99,
+        "amount_with_fees": 25.99,
+        "formatted_amount": "$25.00",
+        "formatted_fee": "$0.99",
+        "formatted_amount_with_fees": "$25.99"
+      },
+      "created_at": "2015-02-11T06:42:06.907Z",
+      "updated_at": "2015-02-11T06:42:06.907Z",
+      "donation_type": "fixed"
+    }, {
+      "id": 2,
+      "event_id": 1,
+      "title": "Donate $10",
+      "description": "",
+      "status": "live",
+      "prices": {
+        "amount": 10.0,
+        "fee": 0.99,
+        "amount_with_fees": 10.99,
+        "formatted_amount": "$10.00",
+        "formatted_fee": "$0.99",
+        "formatted_amount_with_fees": "$10.99"
+      },
+      "created_at": "2015-02-11T06:41:58.208Z",
+      "updated_at": "2015-02-11T06:41:58.208Z",
+      "donation_type": "fixed"
+    }, {
+      "id": 1,
+      "event_id": 1,
+      "title": "Donation",
+      "description": null,
+      "status": "live",
+      "prices": {
+        "amount": 0.0,
+        "fee": 0.99,
+        "amount_with_fees": 0.0,
+        "formatted_amount": "$0.00",
+        "formatted_fee": "$0.99",
+        "formatted_amount_with_fees": "$0.00"
+      },
+      "created_at": "2015-02-11T06:41:39.863Z",
+      "updated_at": "2015-02-11T06:41:39.863Z",
+      "donation_type": "open"
+    }
   ]
 }
