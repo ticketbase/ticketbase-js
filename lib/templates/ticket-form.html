@@ -13,9 +13,9 @@
     </div>
   {{/event.is_closed}}
 
-  {{#event.is_live}}
+  {{#event.is_live}}{{#event}}
   <form method="post" action="{{event.order_action_url}}" class='{{tb}}-ticket-form {{tb}}-ticket-form-live'>
-      {{{event.form_hidden}}}
+      {{{form_hidden}}}
 
       {{#widget.headline}}
         <h1 class='{{tb}}-headline'>
@@ -26,39 +26,39 @@
       {{/widget.headline}}
 
       <div class='{{tb}}-ticket-items'>
-        {{#event.tickets}}
-          <div class='{{../tb}}-ticket'>
-            <div class='{{../tb}}-ticket-info'>
-              <strong class='{{../tb}}-title'>
+        {{#tickets}}
+          <div class='{{tb}}-ticket'>
+            <div class='{{tb}}-ticket-info'>
+              <strong class='{{tb}}-title'>
                 {{title}}
               </strong>
               {{#has_description}}
-                <div class='{{../tb}}-ticket-description'>
+                <div class='{{tb}}-ticket-description'>
                   {{{description}}}
                 </div>
               {{/has_description}}
             </div>
 
             {{#is_free}}
-              <span class='{{../tb}}-price {{../tb}}-price-free'>
-                <span class='{{../tb}}-amount'>
+              <span class='{{tb}}-price {{tb}}-price-free'>
+                <span class='{{tb}}-amount'>
                   Free
                 </span>
               </span>
             {{/is_free}}
 
             {{#is_paid}}
-              <span class='{{../tb}}-price {{../tb}}-price-paid'>
-                <span class='{{../tb}}-amount'>
+              <span class='{{tb}}-price {{tb}}-price-paid'>
+                <span class='{{tb}}-amount'>
                   {{prices.formatted_amount}}
                 </span>
-                <span class='{{../tb}}-fees'>
+                <span class='{{tb}}-fees'>
                   + {{prices.formatted_fee}} fees
                 </span>
               </span>
             {{/is_paid}}
 
-            <div class='{{../tb}}-quantity'>
+            <div class='{{tb}}-quantity'>
               <select name='{{input_quantity_name}}'>
                 <option>0</option>
                 <option>1</option>
@@ -74,7 +74,7 @@
               </select>
             </div>
           </div>
-        {{/event.tickets}}
+        {{/tickets}}
       </div>
 
       <div class='{{tb}}-action'>
@@ -82,5 +82,5 @@
       </div>
 
     </form>
-  {{/event.is_live}}
+  {{/event}}{{/event.is_live}}
 </div>
