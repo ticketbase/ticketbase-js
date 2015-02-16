@@ -1,4 +1,5 @@
 <div class='{{tb}}-container'>
+{{#event}}
   {{#error}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-error'>
       <i class='{{tb}}-icon'></i>
@@ -6,14 +7,14 @@
     </div>
   {{/error}}
 
-  {{#event.is_closed}}
+  {{#is_closed}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-closed'>
       <i class='{{tb}}-icon'></i>
       Donations are not available at this time.
     </div>
-  {{/event.is_closed}}
+  {{/is_closed}}
 
-  {{#event.is_live}}{{#event}}
+  {{#is_live}}
   <form method="post" action="{{event.order_action_url}}" class='{{tb}}-ticket-form {{tb}}-ticket-form-live'>
       {{{form_hidden}}}
 
@@ -35,11 +36,11 @@
               <strong class='{{tb}}-title'>
                 {{title}}
               </strong>
-              {{#has_description}}
+              {{#description}}
                 <div class='{{tb}}-donation-description'>
                   {{{description}}}
                 </div>
-              {{/has_description}}
+              {{/description}}
             </div>
 
             {{#is_open}}
@@ -70,5 +71,6 @@
       </div>
 
     </form>
-  {{/event}}{{/event.is_live}}
+  {{/is_live}}
+{{/event}}
 </div>
