@@ -24,7 +24,7 @@ Paste this just before the `<body>`:
 Available options
 -----------------
 
-* `data-tb` (String) — this should always be `"ticket-form"`.
+* `data-tb` (String) — this can be `"ticket-form"` or `"donation-form"`.
 
 * `data-event` (String | Number) — the event ID.
 
