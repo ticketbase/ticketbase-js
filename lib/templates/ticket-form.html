@@ -1,86 +1,88 @@
 <div class='{{tb}}-container'>
-  {{#is_error}}
+{{#event}}
+  {{#error}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-error'>
       <i class='{{tb}}-icon'></i>
       Sorry, tickets cannot be loaded at this time.
     </div>
-  {{/is_error}}
+  {{/error}}
 
-  {{#event.is_closed}}
+  {{#is_closed}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-closed'>
       <i class='{{tb}}-icon'></i>
       Tickets are not available at this time.
     </div>
-  {{/event.is_closed}}
+  {{/is_closed}}
 
-  {{#event.is_live}}
+  {{#is_live}}
   <form method="post" action="{{event.order_action_url}}" class='{{tb}}-ticket-form {{tb}}-ticket-form-live'>
-      {{{event.form_hidden}}}
+    {{{form_hidden}}}
 
-      {{#widget.headline}}
-        <h1 class='{{tb}}-headline'>
-          <a href='{{event.url}}'>
-            {{event.title}}
-          </a>
-        </h1>
-      {{/widget.headline}}
+    {{#widget.headline}}
+      <h1 class='{{tb}}-headline'>
+        <a href='{{event.url}}'>
+          {{event.title}}
+        </a>
+      </h1>
+    {{/widget.headline}}
 
-      <div class='{{tb}}-order-items'>
-        {{#event.ticket_types}}
-          <div class='{{../tb}}-order-item {{../tb}}-ticket'>
-            <div class='{{../tb}}-ticket-info'>
-              <strong class='{{../tb}}-title'>
-                {{title}}
-              </strong>
-              {{#has_description}}
-                <div class='{{../tb}}-ticket-description'>
-                  {{{description}}}
-                </div>
-              {{/has_description}}
-            </div>
-
-            {{#is_free}}
-              <span class='{{../tb}}-price {{../tb}}-price-free'>
-                <span class='{{../tb}}-amount'>
-                  Free
-                </span>
-              </span>
-            {{/is_free}}
-
-            {{#is_paid}}
-              <span class='{{../tb}}-price {{../tb}}-price-paid'>
-                <span class='{{../tb}}-amount'>
-                  {{prices.formatted_amount}}
-                </span>
-                <span class='{{../tb}}-fees'>
-                  + {{prices.formatted_fee}} fees
-                </span>
-              </span>
-            {{/is_paid}}
-
-            <div class='{{../tb}}-quantity'>
-              <select name='{{input_quantity_name}}'>
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select>
-            </div>
+    <div class='{{tb}}-ticket-items'>
+      {{#tickets}}
+        <div class='{{tb}}-ticket'>
+          <div class='{{tb}}-ticket-info'>
+            <strong class='{{tb}}-title'>
+              {{title}}
+            </strong>
+            {{#description}}
+              <div class='{{tb}}-ticket-description'>
+                {{{description}}}
+              </div>
+            {{/description}}
           </div>
-        {{/event.ticket_types}}
-      </div>
 
-      <div class='{{tb}}-action'>
-        <button type='submit' class='{{tb}}-submit'>Order</button>
-      </div>
+          {{#is_free}}
+            <span class='{{tb}}-price {{tb}}-price-free'>
+              <span class='{{tb}}-amount'>
+                Free
+              </span>
+            </span>
+          {{/is_free}}
 
-    </form>
-  {{/event.is_live}}
+          {{#is_paid}}
+            <span class='{{tb}}-price {{tb}}-price-paid'>
+              <span class='{{tb}}-amount'>
+                {{prices.formatted_amount}}
+              </span>
+              <span class='{{tb}}-fees'>
+                + {{prices.formatted_fee}} fees
+              </span>
+            </span>
+          {{/is_paid}}
+
+          <div class='{{tb}}-quantity'>
+            <select name='{{input_quantity_name}}'>
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+          </div>
+        </div>
+      {{/tickets}}
+    </div>
+
+    <div class='{{tb}}-action'>
+      <button type='submit' class='{{tb}}-submit'>Order</button>
+    </div>
+
+  </form>
+  {{/is_live}}
+{{/event}}
 </div>

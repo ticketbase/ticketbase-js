@@ -54,7 +54,8 @@
   text-decoration: none;
 }
 
-.tb-order-item {
+.tb-donation,
+.tb-ticket {
   border-bottom: solid 1px #f0f0f0;
   padding: 15px 30px;
   overflow: hidden;
@@ -68,12 +69,19 @@
   display: inline;
 }
 
-.tb-order-item {
+.tb-donation,
+.tb-ticket {
   display: table;
   table-layout: fixed;
   width: 100%;
 }
 
+.tb-donation-radio {
+  width: 10%;
+  display: table-cell;
+}
+
+.tb-donation-info,
 .tb-ticket-info {
   display: table-cell;
   width: 70%;
@@ -145,4 +153,8 @@
 @keyframes tb-rotate {
   0% { -webkit-transform: rotate(0); -ms-transform: rotate(0); transform: rotate(0); }
   100% { -webkit-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+.tb-donation-amount {
+  white-space: nowrap;
 }

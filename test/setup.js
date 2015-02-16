@@ -16,4 +16,3 @@ before(function setTB () {
 afterEach(function () {
   apimock.done();
 });
-
