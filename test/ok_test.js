@@ -36,21 +36,24 @@ describe('TB (ok):', function () {
     expect($w).to.have.class('tb-loaded');
   });
 
-  it('has event name', function () {
-    expect($w.find('h1 a')).to.contain('Ticket & Base');
+  describe('header', function () {
+    it('has event name', function () {
+      expect($w.find('h1 a')).to.contain('Ticket & Base');
+    });
+
+    it('escapes', function () {
+      expect($w.find('h1 a').html()).to.contain('Ticket &amp; Base');
+    });
   });
 
-  it('escapes', function () {
-    expect($w.find('h1 a').html()).to.contain('Ticket &amp; Base');
-  });
+  describe('tickets', function () {
+    it('has ticket types', function () {
+      expect($w).to.contain('VIP');
+      expect($w).to.contain('General attendee');
+    });
 
-
-  it('has ticket types', function () {
-    expect($w).to.contain('VIP');
-    expect($w).to.contain('General attendee');
-  });
-
-  it('hides tickets that are sold out', function () {
-    expect($w).not.to.contain('Sold out ticket');
+    it('hides tickets that are sold out', function () {
+      expect($w).not.to.contain('Sold out ticket');
+    });
   });
 });
