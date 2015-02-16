@@ -27,7 +27,10 @@
 
       <div class='{{tb}}-donation-items'>
         {{#donations}}
-          <div class='{{tb}}-donation'>
+          <label class='{{tb}}-donation'>
+            <div class='{{tb}}-donation-radio'>
+              <input type='radio' name='donation_id' value='{{id}}'>
+            </div>
             <div class='{{tb}}-donation-info'>
               <strong class='{{tb}}-title'>
                 {{title}}
@@ -57,28 +60,12 @@
                   + {{prices.formatted_fee}} fees
                 </span>
               </span>
-
-              <div class='{{tb}}-quantity'>
-                <select name='{{input_quantity_name}}'>
-                  <option>0</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                </select>
-              </div>
             {{/is_fixed}}
-          </div>
+          </label>
         {{/donations}}
       </div>
 
-      </div><div class='{{tb}}-action'>
+      <div class='{{tb}}-action'>
         <button type='submit' class='{{tb}}-submit'>Order</button>
       </div>
 
