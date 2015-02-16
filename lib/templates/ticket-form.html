@@ -1,10 +1,10 @@
 <div class='{{tb}}-container'>
-  {{#is_error}}
+  {{#error}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-error'>
       <i class='{{tb}}-icon'></i>
       Sorry, tickets cannot be loaded at this time.
     </div>
-  {{/is_error}}
+  {{/error}}
 
   {{#event.is_closed}}
     <div class='{{tb}}-ticket-form {{tb}}-ticket-form-closed'>
