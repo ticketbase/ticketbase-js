@@ -1,7 +1,7 @@
 {
   "name": "ticketbase-widget",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha",
     "prepublish": "make -B"
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ticketbase/ticketbase-widget",
   "devDependencies": {
+    "babel": "^4.4.6",
+    "babelify": "^5.0.3",
     "browserify": "^8.1.1",
     "browserify-versionify": "^1.0.3",
     "chai": "^1.10.0",
