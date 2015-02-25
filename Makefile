@@ -2,7 +2,7 @@ PORT  ?= 3001
 bin   := ./node_modules/.bin
 files := $(shell find lib -name '*.js')
 
-bfy_opts := -s TB -t brfs -t browserify-versionify -t babelify
+bfy_opts := -s TB -t babelify -t brfs -t browserify-versionify
 
 ticketbase.js: ticketbase.dev.js
 	cat $< | $(bin)/uglifyjs -m > $@
