@@ -1,8 +1,9 @@
-## v0.1.1 - unreleased
+## v0.1.1 - Mar 2, 2015
 
  * Internal: update to ES6, and build using Babel.
+ * Internal: add support for Ticketbase subdomains.
 
-## v0.1.0 - Feb 16, 2014
+## v0.1.0 - Feb 16, 2015
 
  * Implement donations (`data-tb='donations-form'`).
  * Internal: upgrade to `ministache` template engine.
