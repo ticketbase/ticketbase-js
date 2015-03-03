@@ -1,6 +1,7 @@
 ## v0.1.2
 
  * Internal: refactor CSS to use Stylus internally. ([#5])
+ * Markup: fix donation forms using `tb-price-free` instead of `tb-price-{open,fixed}`.
 
 ## v0.1.1 - Mar 2, 2015
 
