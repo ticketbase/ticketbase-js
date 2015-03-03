@@ -4,8 +4,8 @@
 
 ## v0.1.1 - Mar 2, 2015
 
- * Internal: update to ES6, and build using Babel.
- * Internal: add support for Ticketbase subdomains.
+ * Internal: update to ES6, and build using Babel. ([#3])
+ * Internal: add support for Ticketbase subdomains. ([#4])
 
 ## v0.1.0 - Feb 16, 2015
 
@@ -17,4 +17,6 @@
 
 Initial preview release.
 
+[#3]: https://github.com/ticketbase/ticketbase-js/issues/3
+[#4]: https://github.com/ticketbase/ticketbase-js/issues/4
 [#5]: https://github.com/ticketbase/ticketbase-js/issues/5
