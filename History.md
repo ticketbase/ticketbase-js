@@ -1,3 +1,7 @@
+## v0.1.3 - unreleased
+
+ * Adds a "Powered by Ticketbase" badge ([#7])
+
 ## v0.1.2 - Mar 3, 2015
 
 This release improves CSS compatibilty for legacy sites, especially those without doctypes.
