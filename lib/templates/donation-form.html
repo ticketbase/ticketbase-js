@@ -44,7 +44,7 @@
             </div>
 
             {{#is_open}}
-              <span class='{{tb}}-price {{tb}}-price-free'>
+              <span class='{{tb}}-price {{tb}}-price-open'>
                 <span class='{{tb}}-donation-amount'>
                   <span class='{{tb}}-prefix'>$</span>
                   <input type='text' name='{{input_amount_name}}'></input>
@@ -53,7 +53,7 @@
             {{/is_open}}
 
             {{#is_fixed}}
-              <span class='{{tb}}-price {{tb}}-price-paid'>
+              <span class='{{tb}}-price {{tb}}-price-fixed'>
                 <span class='{{tb}}-amount'>
                   {{prices.formatted_amount}}
                 </span>

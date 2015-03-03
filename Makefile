@@ -2,6 +2,12 @@ PORT  ?= 3001
 bin   := ./node_modules/.bin
 files := $(shell find lib -name '*.js')
 
+bfy_opts := \
+	-t [ babelify --loose all ] \
+	-t [ stylify --use nib ] \
+	-t brfs \
+	-t browserify-versionify
+
 uglify_opts := \
 	--compress warnings=false \
 	--mangle
@@ -17,7 +23,7 @@ petlanthropy.js: ticketbase.dev.js
 	@ls -la $@
 
 ticketbase.dev.js: lib/index.js $(files)
-	node ./support/browserify.js $< > $@
+	$(bin)/browserify $(bfy_opts) $< -o $@
 
 watch:
 	$(bin)/watch "make -B" lib test & $(bin)/serve --port $(PORT)
