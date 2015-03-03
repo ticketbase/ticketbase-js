@@ -24,6 +24,15 @@ Paste this just before the `<body>`:
 Available options
 -----------------
 
+You can change any of the options by supplying `data` attributes.
+
+```html
+<!-- example: -->
+<div
+  data-headline='true'
+  data-powered-by='false'>
+```
+
 * `data-tb` (String) — this can be `"ticket-form"` or `"donation-form"`.
 
 * `data-event` (String | Number) — the event ID.
@@ -31,3 +40,5 @@ Available options
 * `data-headline` (Boolean) - shows the event name headline when true. (default *false*)
 
 * `data-prefix` (String) - The string to prefix the classnames with. Change this if you'd like to customize the styles. (default *tb*)
+
+* `data-powered-by` (Boolean) - shows the "Powered by Ticketbase" if true. (default *true*)

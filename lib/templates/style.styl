@@ -44,13 +44,21 @@ $line = rgba(black, 0.1)
  *     
  *       .tb-action
  *         button.tb-submit Order
+ *         img.tb-powered-by
  */
     
 .tb
 
+  /*
+   * resets
+   */
+
   &-container
     div, span, strong, h1, label, button, a, i
       box-sizing: border-box
+
+    a img
+      border: 0
 
   /*
    * spinner
@@ -167,10 +175,12 @@ $line = rgba(black, 0.1)
 
   &-action
     padding: 30px
+    overflow: hidden
 
   &-submit
     width: 120px
     height: 40px
+    float: left
 
     background: dodgerblue
     border-radius: 3px
@@ -182,6 +192,17 @@ $line = rgba(black, 0.1)
     padding: 0
     border: 0
     cursor: pointer
+
+  &-powered-by img
+    display: block
+    height: 30px
+    margin-top: 5px
+    float: right
+    margin-left: 20px
+
+  /*
+   * misc
+   */
 
   &-donation-amount
     white-space: nowrap
