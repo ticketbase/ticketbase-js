@@ -1,4 +1,4 @@
-## v0.1.3 - unreleased
+## v0.1.3 - Mar 3, 2015
 
  * Adds a "Powered by Ticketbase" badge ([#7])
 
@@ -35,3 +35,4 @@ Initial preview release
 [#4]: https://github.com/ticketbase/ticketbase-js/issues/4
 [#5]: https://github.com/ticketbase/ticketbase-js/issues/5
 [#6]: https://github.com/ticketbase/ticketbase-js/issues/6
+[#7]: https://github.com/ticketbase/ticketbase-js/issues/7
