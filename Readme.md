@@ -1,11 +1,11 @@
-# ticketbase widgets
+# Ticketbase Widgets
 
-features:
+Integrate [Ticketbase](http://www.ticketbase.com) forms into your site.
 
- * lightweight
- * no dependencies (no jQuery!!)
- * little effort to get started as possible
- * flexible configuration
+ * Lightweight.
+ * No dependencies. (no jQuery)
+ * Flexible configuration.
+ * Very styleable (you can bring your own CSS)
 
 [![Status](http://img.shields.io/travis/ticketbase/ticketbase-js/master.svg?style=flat)](https://travis-ci.org/ticketbase/ticketbase-js "See test builds")
 
