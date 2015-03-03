@@ -1,0 +1,145 @@
+@require 'nib'
+
+.tb
+
+  /*
+   * spinner
+   */
+
+  &-spinner
+    display: block
+    margin: 20px auto
+    width: 96px
+    height: 96px
+    padding: 32px
+    animation: tb-rotate 400ms linear infinite
+
+  &-spinner:before
+    display: block
+    content: ''
+    width: 28px
+    height: 28px
+    margin: 0
+    padding: 0
+    border: solid 2px transparent
+    border-left-color: dodgerblue
+    border-top-color: dodgerblue
+    border-radius: 50%
+
+  /*
+   * event form
+   */
+
+  &-ticket-form
+    background: white
+    color: #333
+    border-radius: 3px
+    /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20); */
+
+  &-ticket-form-error,
+  &-ticket-form-closed
+    padding: 40px
+    text-align: center
+
+  &-headline
+    margin: 0
+    padding: 30px
+    border-bottom: solid 1px #f0f0f0
+
+  &-headline a
+    color: #111
+    font-weight: normal
+    text-decoration: none
+
+  &-donation,
+  &-ticket
+    border-bottom: solid 1px #f0f0f0
+    padding: 15px 30px
+    overflow: hidden
+
+  /*
+   * order item
+   */
+
+  &-info
+    display: inline
+
+  &-donation,
+  &-ticket
+    display: table
+    table-layout: fixed
+    width: 100%
+
+  &-donation-radio
+    width: 10%
+    display: table-cell
+
+  &-donation-info,
+  &-ticket-info
+    display: table-cell
+    width: 70%
+
+  &-price
+    display: table-cell
+    width: 30%
+    padding-right: 15px
+
+    text-align: right
+    font-weight: normal
+    line-height: 1.3
+
+  &-amount
+    display: block
+    font-size: 1.5em
+    color: #888
+
+  &-fees
+    display: block
+    white-space: nowrap
+    color: #aaa
+    font-size: 0.9em
+
+  &-quantity
+    display: table-cell
+    width: 15%
+    text-align: right
+
+  &-quantity input
+    width: 50px
+    height: 26px
+    text-align: center
+
+  /*
+   * button
+   */
+
+  &-action
+    padding: 30px
+
+  &-submit
+    width: 120px
+    height: 40px
+
+    background: dodgerblue
+    border-radius: 3px
+
+    color: white
+    font-size: 1.1em
+    font-weight: bold
+    margin: 0
+    padding: 0
+    border: 0
+    cursor: pointer
+
+  &-donation-amount
+    white-space: nowrap
+
+/*
+ * animations
+ */
+
+@keyframes tb-rotate
+  0%
+    transform: rotate(0)
+  100%
+    transform: rotate(360deg)

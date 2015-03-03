@@ -1,3 +1,7 @@
+## v0.1.2
+
+ * Internal: refactor CSS to use Stylus internally. ([#5])
+
 ## v0.1.1 - Mar 2, 2015
 
  * Internal: update to ES6, and build using Babel.
@@ -13,3 +17,4 @@
 
 Initial preview release.
 
+[#5]: https://github.com/ticketbase/ticketbase-js/issues/5
