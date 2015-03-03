@@ -1,4 +1,4 @@
-## v0.1.2
+## v0.1.2 - Mar 3, 2015
 
 This release improves CSS compatibilty for legacy sites, especially those without doctypes.
 
