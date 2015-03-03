@@ -32,7 +32,7 @@ describe('Donations:', function () {
   });
 
   describe('radio buttons', function () {
-    var $qtys;
+    var $qtys, $radios;
 
     beforeEach(function () {
       $radios = $w.find('[type="radio"]');
