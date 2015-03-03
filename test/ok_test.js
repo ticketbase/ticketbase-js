@@ -56,4 +56,20 @@ describe('TB (ok):', function () {
       expect($w).not.to.contain('Sold out ticket');
     });
   });
+
+  describe('other artifacts', function () {
+    it('has a powered by logo', function () {
+      expect($w.find('.tb-powered-by')).have.length(1);
+    });
+
+    it('loads logo from cdn', function () {
+      var img = $w.find('.tb-powered-by img');
+      expect(img.attr('src')).match(/cdn\.ticketbase\.com/);
+    });
+
+    it('has an alt attribute', function () {
+      var img = $w.find('.tb-powered-by img');
+      expect(img).have.attr('alt');
+    });
+  });
 });
