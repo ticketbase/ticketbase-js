@@ -1,5 +1,5 @@
 {
-  "name": "ticketbase-widget",
+  "name": "ticketbase-js",
   "version": "0.1.1",
   "main": "lib/index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ticketbase/ticketbase-widget.git"
+    "url": "https://github.com/ticketbase/ticketbase-js.git"
   },
   "bugs": {
-    "url": "https://github.com/ticketbase/ticketbase-widget/issues"
+    "url": "https://github.com/ticketbase/ticketbase-js/issues"
   },
-  "homepage": "https://github.com/ticketbase/ticketbase-widget",
+  "homepage": "https://github.com/ticketbase/ticketbase-js",
   "devDependencies": {
     "babel": "*",
     "babelify": "*",
