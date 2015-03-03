@@ -1,7 +1,11 @@
 ## v0.1.2
 
+This release improves CSS compatibilty for legacy sites, especially those without doctypes.
+
  * Internal: refactor CSS to use Stylus internally. ([#5])
- * Markup: fix donation forms using `tb-price-free` instead of `tb-price-{open,fixed}`.
+ * Markup: fix donation forms using `tb-price-free` instead of `tb-price-{open,fixed}`. ([#6])
+ * CSS: apply `box-sizing: border-box` throughout. This fixes problems with the spinner and table misalignments. ([#6])
+ * CSS: make lines (`.tb-donation`) work on any background. ([#6])
 
 ## v0.1.1 - Mar 2, 2015
 
@@ -21,3 +25,4 @@ Initial preview release.
 [#3]: https://github.com/ticketbase/ticketbase-js/issues/3
 [#4]: https://github.com/ticketbase/ticketbase-js/issues/4
 [#5]: https://github.com/ticketbase/ticketbase-js/issues/5
+[#6]: https://github.com/ticketbase/ticketbase-js/issues/6
