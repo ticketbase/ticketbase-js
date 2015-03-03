@@ -1,5 +1,44 @@
 @require 'nib'
 
+/*
+ * Reference
+ * ---------
+ * 
+ *   .tb-container
+ *     .tb-ticket-form
+ *       i.tb-icon
+ *       Sorry, not available at this time
+ *   
+ *   
+ *     form.tb-ticket-form
+ *       h1.tb-headline
+ *         a This is the event title
+ *     
+ *       // for donations
+ *       .tb-donation-items
+ *         label.tb-donation
+ *           .tb-donation-radio
+ *             input(type='radio')
+ *     
+ *           .tb-donation-info
+ *             .tb-title Donate $25
+ *             .tb-donation-description ...
+ *     
+ *           // price (free-text input)
+ *           .tb-price.tb-price-open
+ *             .tb-donation-amount
+ *               .tb-prefix $
+ *               input(type='text')
+ *     
+ *           // price (fixed)
+ *           .tb-price.tb-price-fixed
+ *             .tb-amount $25.00
+ *             .tb-fees + $0.99 fees
+ *     
+ *       .tb-action
+ *         button.tb-submit Order
+ */
+    
 .tb
 
   /*
