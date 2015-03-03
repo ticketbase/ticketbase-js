@@ -1,0 +1,160 @@
+/*
+ * spinner
+ */
+
+.tb-spinner {
+  display: block;
+  margin: 20px auto;
+  width: 96px;
+  height: 96px;
+  padding: 32px;
+  -webkit-animation: tb-rotate 400ms linear infinite;
+  animation: tb-rotate 400ms linear infinite;
+}
+
+.tb-spinner:before {
+  display: block;
+  content: '';
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: solid 2px transparent;
+  border-left-color: dodgerblue;
+  border-top-color: dodgerblue;
+  border-radius: 50%;
+}
+
+/*
+ * event form
+ */
+
+.tb-ticket-form {
+  background: white;
+  color: #333;
+  border-radius: 3px;
+  /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.20); */
+}
+
+.tb-ticket-form-error,
+.tb-ticket-form-closed {
+  padding: 40px;
+  text-align: center;
+}
+
+.tb-headline {
+  margin: 0;
+  padding: 30px;
+  border-bottom: solid 1px #f0f0f0;
+}
+
+.tb-headline a {
+  color: #111;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.tb-donation,
+.tb-ticket {
+  border-bottom: solid 1px #f0f0f0;
+  padding: 15px 30px;
+  overflow: hidden;
+}
+
+/*
+ * order item
+ */
+
+.tb-info {
+  display: inline;
+}
+
+.tb-donation,
+.tb-ticket {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tb-donation-radio {
+  width: 10%;
+  display: table-cell;
+}
+
+.tb-donation-info,
+.tb-ticket-info {
+  display: table-cell;
+  width: 70%;
+}
+
+.tb-price {
+  display: table-cell;
+  width: 30%;
+  padding-right: 15px;
+
+  text-align: right;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+.tb-amount {
+  display: block;
+  font-size: 1.5em;
+  color: #888;
+}
+
+.tb-fees {
+  display: block;
+  white-space: nowrap;
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+.tb-quantity {
+  display: table-cell;
+  width: 15%;
+  text-align: right;
+}
+
+.tb-quantity input {
+  width: 50px;
+  height: 26px;
+  text-align: center;
+}
+
+/*
+ * button
+ */
+
+.tb-action {
+  padding: 30px;
+}
+
+.tb-submit {
+  width: 120px;
+  height: 40px;
+
+  background: dodgerblue;
+  border-radius: 3px;
+
+  color: white;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+@-webkit-keyframes tb-rotate {
+  0% { -webkit-transform: rotate(0); transform: rotate(0); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes tb-rotate {
+  0% { -webkit-transform: rotate(0); -ms-transform: rotate(0); transform: rotate(0); }
+  100% { -webkit-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+.tb-donation-amount {
+  white-space: nowrap;
+}

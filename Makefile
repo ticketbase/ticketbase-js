@@ -2,8 +2,16 @@ PORT  ?= 3001
 bin   := ./node_modules/.bin
 files := $(shell find lib -name '*.js')
 
-bfy_opts := --standalone TB -t [ babelify --loose all ] -t brfs -t browserify-versionify
-uglify_opts := --compress warnings=false --mangle
+bfy_opts := \
+	-t [ babelify --loose all ] \
+	-t stylify \
+	-t brfs \
+	-t browserify-versionify \
+	--standalone TB
+
+uglify_opts := \
+	--compress warnings=false \
+	--mangle
 
 all: ticketbase.js petlanthropy.js
 
