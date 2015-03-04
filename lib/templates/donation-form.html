@@ -19,14 +19,16 @@
       {{{form_hidden}}}
 
       {{#widget.headline}}
-        <h1 class='{{tb}}-headline'>
-          <a href='{{event.url}}'>
-            {{event.title}}
-          </a>
-        </h1>
-        {{#campaign_recepient}}
-          <h5 class='{{tb}}-subheadline'>{{campaign_recepient}}</h5>
-        {{/campaign_recepient}}
+        <div class='{{tb}}-header'>
+          <h1 class='{{tb}}-headline'>
+            <a href='{{event.url}}'>
+              {{event.title}}
+            </a>
+          </h1>
+          {{#campaign_recepient}}
+            <h5 class='{{tb}}-subheadline'>{{campaign_recepient}}</h5>
+          {{/campaign_recepient}}
+        </div>
       {{/widget.headline}}
 
       <div class='{{tb}}-donation-items'>

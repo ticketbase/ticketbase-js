@@ -67,6 +67,25 @@ $spinner-size = 28px
     a img
       border: 0
 
+  &-header,
+  &-headline,
+  &-subheadline,
+  &-action,
+  &-submit,
+  &-powered-by,
+  &-donation-items,
+  &-donation,
+  &-donation-info,
+  &-price,
+  &-donation-amount,
+  &-prefix,
+  &-amount,
+  &-fees
+    margin: 0
+    padding: 0
+    border: 0
+    font-size: 1em
+
   /*
    * spinner
    */
@@ -108,10 +127,17 @@ $spinner-size = 28px
     padding: 40px
     text-align: center
 
-  &-headline
+  /*
+   * header
+   */
+
+  &-header
     margin: 0
     padding: 30px
     border-bottom: solid 1px $line
+
+  &-headline /*h1*/
+    font-size: 1.5em
 
   &-headline a
     color: $darktext
@@ -149,11 +175,11 @@ $spinner-size = 28px
   &-price
     display: table-cell
     width: 30%
-    padding-right: 15px
 
     text-align: right
     font-weight: normal
     line-height: 1.3
+    padding-left: 15px
 
   &-amount
     display: block
@@ -170,6 +196,7 @@ $spinner-size = 28px
     display: table-cell
     width: 15%
     text-align: right
+    padding-left: 15px
 
   &-quantity input
     width: 50px
@@ -193,7 +220,7 @@ $spinner-size = 28px
     border-radius: 3px
 
     color: white
-    font-size: 1.1em
+    font-size: 1.2em
     font-weight: bold
     margin: 0
     padding: 0
