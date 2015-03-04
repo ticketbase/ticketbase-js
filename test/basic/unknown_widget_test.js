@@ -1,4 +1,4 @@
-require('./setup');
+require('../setup');
 
 describe('TB (unknown widget):', function () {
   var widget, $w;

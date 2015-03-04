@@ -1,7 +1,7 @@
-require('./setup');
+require('../setup');
 var pquire = require('proxyquire');
 
-var presentEvent = pquire('../lib/presenters/event', {
+var presentEvent = pquire('../../lib/presenters/event', {
   '..': {
     '@noCallThru': true,
     getSiteURL: function () { return "http://ticketbase.com"; }
@@ -9,7 +9,7 @@ var presentEvent = pquire('../lib/presenters/event', {
 });
 
 var extend = require('deep-extend');
-var original = require('./fixtures/event_ok.json');
+var original = require('../fixtures/event_ok.json');
 
 describe('presenter', function () {
   var data, event;

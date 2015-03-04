@@ -1,4 +1,4 @@
-require('./setup');
+require('../setup');
 
 describe('Donations:', function () {
   mockWidget({
@@ -6,7 +6,7 @@ describe('Donations:', function () {
       "<div id='w' data-tb='donation-form' "+
       "data-headline='true' "+
       "data-event='101'></div>",
-    reply: require('./fixtures/event_ok.json')
+    reply: require('../fixtures/event_ok.json')
   });
 
   it('works', function () {

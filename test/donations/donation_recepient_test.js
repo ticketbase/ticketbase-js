@@ -1,5 +1,4 @@
-require('./setup');
-var mockWidget = require('./helpers/mock_widget');
+require('../setup');
 
 describe('Donation recepient:', function () {
 
@@ -9,7 +8,7 @@ describe('Donation recepient:', function () {
       "data-headline='true' "+
       "data-tb='donation-form' "+
       "data-powered-by='false'></div>",
-    reply: require('./fixtures/event_ok.json')
+    reply: require('../fixtures/event_ok.json')
   });
 
   describe("with campaign_recepient:", function () {

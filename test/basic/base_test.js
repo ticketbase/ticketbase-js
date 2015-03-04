@@ -1,4 +1,4 @@
-require('./setup');
+require('../setup');
 
 describe('Base:', function () {
   var $meta;

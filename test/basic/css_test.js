@@ -1,4 +1,4 @@
-require('./setup');
+require('../setup');
 
 describe('CSS:', function () {
   var $style;
