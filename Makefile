@@ -25,10 +25,11 @@ v%:
 	@wget http://rawgit.com/ticketbase/ticketbase-js/v${version}/petlanthropy.js -O ${dir}/v${version}/petlanthropy.js
 	@cp ${dir}/v${version}/petlanthropy.js ${dir}/v${major}.${minor}/petlanthropy.js
 	@cp ${dir}/v${version}/petlanthropy.js ${dir}/v${major}/petlanthropy.js
-	@# powered-by.png
+	@# assets
 	@wget http://rawgit.com/ticketbase/ticketbase-js/v${version}/assets/powered-by.png -O ${dir}/v${version}/assets/powered-by.png
-	@cp ${dir}/v${version}/assets/powered-by.png ${dir}/v${major}.${minor}/assets/powered-by.png
-	@cp ${dir}/v${version}/assets/powered-by.png ${dir}/v${major}/assets/powered-by.png
+	@wget http://rawgit.com/ticketbase/ticketbase-js/v${version}/assets/powered-by-pet.png -O ${dir}/v${version}/assets/powered-by-pet.png
+	@cp ${dir}/v${version}/assets/* ${dir}/v${major}.${minor}/assets
+	@cp ${dir}/v${version}/assets/* ${dir}/v${major}/assets
 	@# results
 	@echo ✓ ${dir}/v${version}
 	@echo ✓ ${dir}/v${major}.${minor}
