@@ -25,12 +25,17 @@ $pad = 15px
  *   
  *   
  *     form.tb-ticket-form
- *       h1.tb-headline
- *         a This is the event title
- *       h5.tb-subheadline
- *         | Subheadline goes here
+ *       .tb-header
+ *         h1.tb-headline
+ *           a This is the event title
+ *         h5.tb-subheadline
+ *           | Subheadline goes here
+ *
+ *       // Campaign goal meter
+ *       .tb-goalmeter
  *     
  *       // ...items go here
+ *
  *       .tb-action
  *         button.tb-submit Order
  *         img.tb-powered-by
@@ -78,14 +83,25 @@ $pad = 15px
   &-action,
   &-submit,
   &-powered-by,
-  &-donation-items,
+  &-ticket-items,
+  &-ticket,
+  &-ticket-info,
+  &-ticket-description,
   &-donation,
+  &-donation-items,
   &-donation-info,
-  &-price,
   &-donation-amount,
+  &-price,
   &-prefix,
   &-amount,
-  &-fees
+  &-fees,
+  &-goalmeter,
+  &-goalmeter-description,
+  &-goalmeter-raised,
+  &-goalmeter-text,
+  &-goalmeter-total,
+  &-progressbar,
+  &-progressbar-fill
     margin: 0
     padding: 0
     border: 0
@@ -144,7 +160,6 @@ $pad = 15px
   &-header
     margin: 0
     padding: 30px
-    border-bottom: solid 1px $line
 
   &-headline /*h1*/
     font-size: 1.5em
@@ -166,6 +181,14 @@ $pad = 15px
     border-bottom: solid 1px $line
     padding: $pad 2*$pad
     overflow: hidden
+
+  /*
+   * items
+   */
+
+  &-donation-items,
+  &-ticket-items
+    border-top: solid 1px $line
 
   /*
    * order item
@@ -264,6 +287,58 @@ $pad = 15px
 
   &-donation-amount
     white-space: nowrap
+
+  /*
+   * campaign goal meter
+   */
+
+  $goalmeter-height = 20px
+
+  &-goalmeter
+    text-align: right
+    overflow: hidden
+    padding: 0 30px 15px 30px
+    margin-top: -15px
+
+  &-progressbar,
+  &-progressbar-fill
+    border-radius: 4px
+
+  &-progressbar
+    float: left
+    width: 200px
+    height: 10px
+    background: rgba($text, 0.08)
+    box-shadow: inset 1px 1px 0 rgba(black, 0.05)
+    padding: 2px
+
+    margin-top: (($goalmeter-height - 10px) * 0.5)
+
+  &-progressbar-fill
+    height: 6px
+    background: $accent
+    min-width: 4px
+
+  &-goalmeter-description
+    float: right
+    margin-left: $gut
+    font-weight: normal
+    display: inline-block
+    line-height: $goalmeter-height
+    white-space: nowrap
+
+  &-goalmeter-raised
+    font-weight: bold
+    color: $darktext
+
+  &-goalmeter-total
+    font-weight: normal
+
+  &-goalmeter-text
+    color: $gray
+
+  // &-goalmeter-total
+
 
 /*
  * animations
