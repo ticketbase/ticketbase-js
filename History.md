@@ -7,6 +7,7 @@
  * CSS: Improve margin/padding resets, improving compatibility with sites
  * Add support for Campaign Recepients
  * Adds a `Function.bind` polyfill, solving some legacy IE issues
+ * The "powered by" badge now depends on which version of the JS you're using
 
 ## v0.1.3 - Mar 3, 2015
 
