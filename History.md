@@ -1,4 +1,4 @@
-## v0.1.4 - unreleased
+## v0.1.4 - Mar 4, 2015
 
  * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
  * Docs: document Bower and npm support ([#8])
