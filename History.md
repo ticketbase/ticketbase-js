@@ -3,6 +3,7 @@
  * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
  * Docs: document Bower and npm support ([#8])
  * CSS: Fix 'wiggling spinner' minor glitch
+ * CSS: Improve margin/padding resets, improving compatibility with sites
  * Add support for Campaign Recepients
 
 ## v0.1.3 - Mar 3, 2015

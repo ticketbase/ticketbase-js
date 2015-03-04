@@ -1,11 +1,16 @@
 $bg = white
-$darktext = #111
 $text = #333
-$gray = #888
-$lightgray = #aaa
+$darktext = $text - 50%
+$gray = rgba($text, 0.7)
+$lightgray = rgba($text, 0.4)
 $accent = dodgerblue
 $line = rgba(black, 0.1)
+
 $spinner-size = 28px
+$spinner-padding = 40px
+
+$gut = 20px
+$pad = 15px
 
 @require 'nib'
 
@@ -93,13 +98,18 @@ $spinner-size = 28px
   &-spinner
     box-sizing: border-box
     display: block
-    margin: 50px auto
-    width: $spinner-size
+    margin: 0 auto
+    width: $spinner-size + 2 * $spinner-padding
     height: @width
     border: 0
     animation: tb-rotate 400ms linear infinite
+    position: relative
 
   &-spinner:before
+    position: absolute
+    top: $spinner-padding
+    left: $spinner-padding
+
     box-sizing: border-box
     display: block
     content: ''
@@ -138,16 +148,23 @@ $spinner-size = 28px
 
   &-headline /*h1*/
     font-size: 1.5em
+    line-height: 1.4
 
   &-headline a
     color: $darktext
     font-weight: normal
     text-decoration: none
 
+  &-subheadline /*h5*/
+    font-size: 1.2em
+    font-weight: normal
+    color: $gray
+    margin-top: 0.3em
+
   &-donation,
   &-ticket
     border-bottom: solid 1px $line
-    padding: 15px 30px
+    padding: $pad 2*$pad
     overflow: hidden
 
   /*
@@ -179,7 +196,7 @@ $spinner-size = 28px
     text-align: right
     font-weight: normal
     line-height: 1.3
-    padding-left: 15px
+    padding-left: $gut
 
   &-amount
     display: block
@@ -196,7 +213,7 @@ $spinner-size = 28px
     display: table-cell
     width: 15%
     text-align: right
-    padding-left: 15px
+    padding-left: $gut
 
   &-quantity input
     width: 50px
