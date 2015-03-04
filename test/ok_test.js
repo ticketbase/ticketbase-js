@@ -14,16 +14,22 @@ describe('TB (ok):', function () {
       console.log('[body]', $('body').html());
   });
 
-  it('saves the data\'s eventId', function () {
-    expect(widget.eventId).eql(101);
-  });
-
-  it('saves the data\'s headline option', function () {
-    expect(widget.headline).eql(true);
-  });
-
   it('works', function () {
     expect($w).to.have.class('tb-loaded');
+  });
+
+  describe('options', function () {
+    it('saves the data\'s eventId', function () {
+      expect(widget.eventId).eql(101);
+    });
+
+    it('saves the data\'s headline option', function () {
+      expect(widget.headline).eql(true);
+    });
+
+    it('defaults poweredBy to true', function () {
+      expect(widget.poweredBy).eql(true);
+    });
   });
 
   describe('header', function () {

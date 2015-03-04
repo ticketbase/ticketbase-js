@@ -9,16 +9,22 @@ describe('Donations:', function () {
     reply: require('./fixtures/event_ok.json')
   });
 
-  it('saves the data\'s eventId', function () {
-    expect(widget.eventId).eql(101);
-  });
-
-  it('saves the data\'s headline option', function () {
-    expect(widget.headline).eql(true);
-  });
-
   it('works', function () {
     expect($w).to.have.class('tb-loaded');
+  });
+
+  describe('options', function () {
+    it('defaults goalmeter option to true', function () {
+      expect(widget.goalmeter).eql(true);
+    });
+
+    it('saves the data\'s eventId', function () {
+      expect(widget.eventId).eql(101);
+    });
+
+    it('saves the data\'s headline option', function () {
+      expect(widget.headline).eql(true);
+    });
   });
 
   describe('radio buttons', function () {
