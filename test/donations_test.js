@@ -1,22 +1,12 @@
 require('./setup');
 
 describe('Donations:', function () {
-  var widget, $w;
-
-  beforeEach(function() {
-    apimock.get('/v1/events/101')
-      .reply(200, require('./fixtures/event_ok.json'));
-  });
-
-  beforeEach(function () {
-    $w = $("<div id='w' data-tb='donation-form' data-headline='true' data-event='101'></div>");
-    $('body').append($w);
-    widget = TB.widget($w[0]);
-    return widget.promise;
-  });
-
-  afterEach(function (){
-    $w.remove();
+  mockWidget({
+    html:
+      "<div id='w' data-tb='donation-form' "+
+      "data-headline='true' "+
+      "data-event='101'></div>",
+    reply: require('./fixtures/event_ok.json')
   });
 
   it('saves the data\'s eventId', function () {

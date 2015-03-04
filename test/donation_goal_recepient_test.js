@@ -28,7 +28,7 @@ describe('Donation, powered by:', function () {
       campaign_goal_recepient: undefined
     });
 
-    it('has no a campaign goal recepient text', function () {
+    it('has no campaign goal recepient text', function () {
       expect($w.find('h5.tb-subheadline'))
         .have.length(0);
     });
