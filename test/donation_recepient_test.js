@@ -1,7 +1,7 @@
 require('./setup');
 var mockWidget = require('./helpers/mock_widget');
 
-describe('Donation, powered by:', function () {
+describe('Donation recepient:', function () {
 
   var mock = mockWidget.bind(this, {
     html:
@@ -12,9 +12,9 @@ describe('Donation, powered by:', function () {
     reply: require('./fixtures/event_ok.json')
   });
 
-  describe("with campaign_goal_recepient:", function () {
+  describe("with campaign_recepient:", function () {
     mock({
-      campaign_goal_recepient: 'Sherlock Holmes'
+      campaign_recepient: 'Sherlock Holmes'
     });
 
     it('has a campaign goal recepient text', function () {
@@ -25,10 +25,10 @@ describe('Donation, powered by:', function () {
 
   describe("without campaign_goal_recepient:", function () {
     mock({
-      campaign_goal_recepient: undefined
+      campaign_recepient: undefined
     });
 
-    it('has no campaign goal recepient text', function () {
+    it('has no campaign recepient text', function () {
       expect($w.find('h5.tb-subheadline'))
         .have.length(0);
     });
