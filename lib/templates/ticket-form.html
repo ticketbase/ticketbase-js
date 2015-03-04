@@ -83,9 +83,11 @@
     <div class='{{tb}}-action'>
       <button type='submit' class='{{tb}}-submit'>Order</button>
       {{#widget.poweredBy}}
-        <a class='{{tb}}-powered-by' href='{{site_url}}'>
-          <img src='{{assets}}/powered-by.png' alt='Powered by Ticketbase' />
-        </a>
+        {{#config}}
+          <a class='{{tb}}-powered-by' href='{{url}}'>
+            <img src='{{powered_by_img}}' alt='Powered by {{site_name}}' />
+          </a>
+        {{/config}}
       {{/widget.poweredBy}}
     </div>
 
