@@ -11,6 +11,20 @@ Integrate [Ticketbase](http://www.ticketbase.com) forms into your site.
 
 <br>
 
+## Distribution
+
+See the [Integration instructions →](docs/Integration.md) for documentation on how to use it.
+
+Versions are officially distributed though the Ticketbase's CDN in the following locations:
+
+- [](#version) `http://cdn.ticketbase.com/widgets/v0.1.3/ticketbase.js`
+- `http://cdn.ticketbase.com/widgets/v0.1/ticketbase.js`
+- `http://cdn.ticketbase.com/widgets/v0/ticketbase.js`
+
+This package is available on Bower and npm as `ticketbase/ticketbase-js` (*not recommended*).
+
+<br>
+
 ## Documentation
 
 - [Integration instructions →](docs/Integration.md)
