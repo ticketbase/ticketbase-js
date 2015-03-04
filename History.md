@@ -5,6 +5,7 @@
  * CSS: Fix 'wiggling spinner' minor glitch
  * CSS: Improve margin/padding resets, improving compatibility with sites
  * Add support for Campaign Recepients
+ * Adds a `Function.bind` polyfill, solving some legacy IE issues
 
 ## v0.1.3 - Mar 3, 2015
 
