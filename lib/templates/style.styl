@@ -3,7 +3,9 @@ $darktext = #111
 $text = #333
 $gray = #888
 $lightgray = #aaa
+$accent = dodgerblue
 $line = rgba(black, 0.1)
+$spinner-size = 28px
 
 @require 'nib'
 
@@ -72,23 +74,23 @@ $line = rgba(black, 0.1)
   &-spinner
     box-sizing: border-box
     display: block
-    margin: 20px auto
-    width: 96px
-    height: 96px
-    padding: 32px
+    margin: 50px auto
+    width: $spinner-size
+    height: @width
+    border: 0
     animation: tb-rotate 400ms linear infinite
 
   &-spinner:before
     box-sizing: border-box
     display: block
     content: ''
-    width: 28px
-    height: 28px
+    width: $spinner-size
+    height: $spinner-size
     margin: 0
     padding: 0
     border: solid 2px transparent
-    border-left-color: dodgerblue
-    border-top-color: dodgerblue
+    border-left-color: $accent
+    border-top-color: $accent
     border-radius: 50%
 
   /*
@@ -187,7 +189,7 @@ $line = rgba(black, 0.1)
     height: 40px
     float: left
 
-    background: dodgerblue
+    background: $accent
     border-radius: 3px
 
     color: white
@@ -197,6 +199,13 @@ $line = rgba(black, 0.1)
     padding: 0
     border: 0
     cursor: pointer
+
+  &-submit:hover,
+  &-submit:focus
+    color: $accent + 5%
+
+  &-submit:active
+    color: $accent - 5%
 
   &-powered-by img
     display: block
