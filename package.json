@@ -6,7 +6,10 @@
     "test": "mocha",
     "prepublish": "make -B"
   },
-  "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
+  "authors": [
+    "Ticketbase team <support@ticketbase.com>",
+    "Rico Sta. Cruz <hi@ricostacruz.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
