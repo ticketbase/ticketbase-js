@@ -1,3 +1,8 @@
+## v0.1.4 - unreleased
+
+ * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
+ * Docs: document Bower and npm support ([#8])
+
 ## v0.1.3 - Mar 3, 2015
 
  * Adds a "Powered by Ticketbase" badge ([#7])
@@ -36,3 +41,4 @@ Initial preview release
 [#5]: https://github.com/ticketbase/ticketbase-js/issues/5
 [#6]: https://github.com/ticketbase/ticketbase-js/issues/6
 [#7]: https://github.com/ticketbase/ticketbase-js/issues/7
+[#8]: https://github.com/ticketbase/ticketbase-js/issues/8
