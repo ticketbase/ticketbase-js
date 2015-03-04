@@ -1,3 +1,7 @@
+## v0.1.5 - Mar 4, 2015
+
+ * Disable https for Petlanthropy
+
 ## v0.1.4 - Mar 4, 2015
 
  * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
