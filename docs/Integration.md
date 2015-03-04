@@ -37,8 +37,14 @@ You can change any of the options by supplying `data` attributes.
 
 * `data-event` (String | Number) — the event ID.
 
-* `data-headline` (Boolean) - shows the event name headline when true. (default *false*)
+* `data-headline` (Boolean) - shows the event name headline when true. (default *true*)
 
 * `data-prefix` (String) - The string to prefix the classnames with. Change this if you'd like to customize the styles. (default *tb*)
 
-* `data-powered-by` (Boolean) - shows the "Powered by Ticketbase" if true. (default *true*)
+* `data-powered-by` (Boolean) - shows the "Powered by Ticketbase" badge if true. (default *true*)
+
+### Options for donation-form
+
+These options are exclusive to `data-tb='donation-form'` wigets.
+
+* `data-goalmeter` (Boolean) - shows the campaign goal meter if a funding goal is set. (default *true*)

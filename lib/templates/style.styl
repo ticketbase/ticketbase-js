@@ -1,9 +1,16 @@
 $bg = white
-$darktext = #111
 $text = #333
-$gray = #888
-$lightgray = #aaa
+$darktext = $text - 50%
+$gray = rgba($text, 0.7)
+$lightgray = rgba($text, 0.4)
+$accent = dodgerblue
 $line = rgba(black, 0.1)
+
+$spinner-size = 28px
+$spinner-padding = 40px
+
+$gut = 20px
+$pad = 15px
 
 @require 'nib'
 
@@ -18,9 +25,29 @@ $line = rgba(black, 0.1)
  *   
  *   
  *     form.tb-ticket-form
- *       h1.tb-headline
- *         a This is the event title
+ *       .tb-header
+ *         h1.tb-headline
+ *           a This is the event title
+ *         h5.tb-subheadline
+ *           | Subheadline goes here
+ *
+ *       // Campaign goal meter
+ *       .tb-goalmeter
+ *         .tb-progressbar
+ *           .tb-progressbar-fill(style="width:30%")
+ *         .tb-goalmeter-description
+ *           strong.tb-goalmeter-raised $2,000
+ *           span.tb-goalmeter-text raised of
+ *           span.tb-goalmeter-total $10,000
  *     
+ *       // ...items go here
+ *
+ *       .tb-action
+ *         button.tb-submit Order
+ *         img.tb-powered-by
+ *
+ * Items:
+ *
  *       // for donations
  *       .tb-donation-items
  *         label.tb-donation
@@ -41,10 +68,6 @@ $line = rgba(black, 0.1)
  *           .tb-price.tb-price-fixed
  *             .tb-amount $25.00
  *             .tb-fees + $0.99 fees
- *     
- *       .tb-action
- *         button.tb-submit Order
- *         img.tb-powered-by
  */
     
 .tb
@@ -60,6 +83,36 @@ $line = rgba(black, 0.1)
     a img
       border: 0
 
+  &-header,
+  &-headline,
+  &-subheadline,
+  &-action,
+  &-submit,
+  &-powered-by,
+  &-ticket-items,
+  &-ticket,
+  &-ticket-info,
+  &-ticket-description,
+  &-donation,
+  &-donation-items,
+  &-donation-info,
+  &-donation-amount,
+  &-price,
+  &-prefix,
+  &-amount,
+  &-fees,
+  &-goalmeter,
+  &-goalmeter-description,
+  &-goalmeter-raised,
+  &-goalmeter-text,
+  &-goalmeter-total,
+  &-progressbar,
+  &-progressbar-fill
+    margin: 0
+    padding: 0
+    border: 0
+    font-size: 1em
+
   /*
    * spinner
    */
@@ -67,23 +120,28 @@ $line = rgba(black, 0.1)
   &-spinner
     box-sizing: border-box
     display: block
-    margin: 20px auto
-    width: 96px
-    height: 96px
-    padding: 32px
+    margin: 0 auto
+    width: $spinner-size + 2 * $spinner-padding
+    height: @width
+    border: 0
     animation: tb-rotate 400ms linear infinite
+    position: relative
 
   &-spinner:before
+    position: absolute
+    top: $spinner-padding
+    left: $spinner-padding
+
     box-sizing: border-box
     display: block
     content: ''
-    width: 28px
-    height: 28px
+    width: $spinner-size
+    height: $spinner-size
     margin: 0
     padding: 0
     border: solid 2px transparent
-    border-left-color: dodgerblue
-    border-top-color: dodgerblue
+    border-left-color: $accent
+    border-top-color: $accent
     border-radius: 50%
 
   /*
@@ -101,21 +159,42 @@ $line = rgba(black, 0.1)
     padding: 40px
     text-align: center
 
-  &-headline
+  /*
+   * header
+   */
+
+  &-header
     margin: 0
     padding: 30px
-    border-bottom: solid 1px $line
+
+  &-headline /*h1*/
+    font-size: 1.5em
+    line-height: 1.4
 
   &-headline a
     color: $darktext
     font-weight: normal
     text-decoration: none
 
+  &-subheadline /*h5*/
+    font-size: 1.2em
+    font-weight: normal
+    color: $gray
+    margin-top: 0.3em
+
   &-donation,
   &-ticket
     border-bottom: solid 1px $line
-    padding: 15px 30px
+    padding: $pad 2*$pad
     overflow: hidden
+
+  /*
+   * items
+   */
+
+  &-donation-items,
+  &-ticket-items
+    border-top: solid 1px $line
 
   /*
    * order item
@@ -142,11 +221,11 @@ $line = rgba(black, 0.1)
   &-price
     display: table-cell
     width: 30%
-    padding-right: 15px
 
     text-align: right
     font-weight: normal
     line-height: 1.3
+    padding-left: $gut
 
   &-amount
     display: block
@@ -163,6 +242,7 @@ $line = rgba(black, 0.1)
     display: table-cell
     width: 15%
     text-align: right
+    padding-left: $gut
 
   &-quantity input
     width: 50px
@@ -182,16 +262,23 @@ $line = rgba(black, 0.1)
     height: 40px
     float: left
 
-    background: dodgerblue
+    background: $accent
     border-radius: 3px
 
     color: white
-    font-size: 1.1em
+    font-size: 1.2em
     font-weight: bold
     margin: 0
     padding: 0
     border: 0
     cursor: pointer
+
+  &-submit:hover,
+  &-submit:focus
+    color: $accent + 5%
+
+  &-submit:active
+    color: $accent - 5%
 
   &-powered-by img
     display: block
@@ -206,6 +293,58 @@ $line = rgba(black, 0.1)
 
   &-donation-amount
     white-space: nowrap
+
+  /*
+   * campaign goal meter
+   */
+
+  $goalmeter-height = 20px
+
+  &-goalmeter
+    text-align: right
+    overflow: hidden
+    padding: 0 30px 15px 30px
+    margin-top: -15px
+
+  &-progressbar,
+  &-progressbar-fill
+    border-radius: 4px
+
+  &-progressbar
+    float: left
+    width: 200px
+    height: 10px
+    background: rgba($text, 0.08)
+    box-shadow: inset 1px 1px 0 rgba(black, 0.05)
+    padding: 2px
+
+    margin-top: (($goalmeter-height - 10px) * 0.5)
+
+  &-progressbar-fill
+    height: 6px
+    background: $accent
+    min-width: 4px
+
+  &-goalmeter-description
+    float: right
+    margin-left: $gut
+    font-weight: normal
+    display: inline-block
+    line-height: $goalmeter-height
+    white-space: nowrap
+
+  &-goalmeter-raised
+    font-weight: bold
+    color: $darktext
+
+  &-goalmeter-total
+    font-weight: normal
+
+  &-goalmeter-text
+    color: $gray
+
+  // &-goalmeter-total
+
 
 /*
  * animations

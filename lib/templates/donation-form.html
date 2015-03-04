@@ -19,12 +19,33 @@
       {{{form_hidden}}}
 
       {{#widget.headline}}
-        <h1 class='{{tb}}-headline'>
-          <a href='{{event.url}}'>
-            {{event.title}}
-          </a>
-        </h1>
+        <div class='{{tb}}-header'>
+          <h1 class='{{tb}}-headline'>
+            <a href='{{event.url}}'>
+              {{event.title}}
+            </a>
+          </h1>
+          {{#campaign_recepient}}
+            <h5 class='{{tb}}-subheadline'>{{campaign_recepient}}</h5>
+          {{/campaign_recepient}}
+        </div>
       {{/widget.headline}}
+
+      {{#widget.goalmeter}}
+      {{#has_goal}}
+        <div class='{{tb}}-goalmeter'>
+          <div class='{{tb}}-progressbar'>
+            <div class='{{tb}}-progressbar-fill' style='width: {{campaign_goal_percent * 100}}%'>
+            </div>
+          </div>
+          <div class='{{tb}}-goalmeter-description'>
+            <strong class='{{tb}}-goalmeter-raised'>{{campaign_goal_raised}}</strong>
+            <span class='{{tb}}-goalmeter-text'>raised of</span>
+            <span class='{{tb}}-goalmeter-total'>{{campaign_goal}}</span>
+          </div>
+        </div>
+      {{/has_goal}}
+      {{/widget.goalmeter}}
 
       <div class='{{tb}}-donation-items'>
         {{#donations}}
