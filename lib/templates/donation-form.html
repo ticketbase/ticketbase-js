@@ -32,10 +32,10 @@
       {{/widget.headline}}
 
       {{#widget.goalmeter}}
-      {{#campaign-goal}}
+      {{#has_goal}}
         <div class='{{tb}}-goalmeter'>
           <div class='{{tb}}-progressbar'>
-            <div class='{{tb}}-progressbar-fill' style='width: 30%'>
+            <div class='{{tb}}-progressbar-fill' style='width: {{campaign_goal_percent * 100}}%'>
             </div>
           </div>
           <div class='{{tb}}-goalmeter-description'>
@@ -44,7 +44,7 @@
             <span class='{{tb}}-goalmeter-total'>{{campaign_goal}}</span>
           </div>
         </div>
-      {{/campaign-goal}}
+      {{/has_goal}}
       {{/widget.goalmeter}}
 
       <div class='{{tb}}-donation-items'>
