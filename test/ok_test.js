@@ -1,5 +1,4 @@
 require('./setup');
-var mockWidget = require('./helpers/mock_widget');
 
 describe('TB (ok):', function () {
 

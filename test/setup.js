@@ -3,6 +3,7 @@ require('babel/register');
 global.expect = require('chai').expect;
 global.nock = require('nock');
 global.apimock = nock('http://api.ticketbase.com');
+global.mockWidget = require('./helpers/mock_widget');
 
 require('mocha-jsdom')();
 

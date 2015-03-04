@@ -1,7 +1,7 @@
 require('./setup');
 var mockWidget = require('./helpers/mock_widget');
 
-describe('Powered by:', function () {
+describe('Donation, powered by:', function () {
 
   mockWidget({
     html:
