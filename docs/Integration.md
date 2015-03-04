@@ -37,7 +37,7 @@ You can change any of the options by supplying `data` attributes.
 
 * `data-event` (String | Number) — the event ID.
 
-* `data-headline` (Boolean) - shows the event name headline when true. (default *false*)
+* `data-headline` (Boolean) - shows the event name headline when true. (default *true*)
 
 * `data-prefix` (String) - The string to prefix the classnames with. Change this if you'd like to customize the styles. (default *tb*)
 
