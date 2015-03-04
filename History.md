@@ -2,6 +2,7 @@
 
  * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
  * Docs: document Bower and npm support ([#8])
+ * Add a campaign goal progress bar when available ([#10])
  * CSS: Fix 'wiggling spinner' minor glitch
  * CSS: Improve margin/padding resets, improving compatibility with sites
  * Add support for Campaign Recepients
@@ -46,3 +47,5 @@ Initial preview release
 [#6]: https://github.com/ticketbase/ticketbase-js/issues/6
 [#7]: https://github.com/ticketbase/ticketbase-js/issues/7
 [#8]: https://github.com/ticketbase/ticketbase-js/issues/8
+[#9]: https://github.com/ticketbase/ticketbase-js/issues/9
+[#10]: https://github.com/ticketbase/ticketbase-js/issues/10
