@@ -6,7 +6,8 @@ bfy_opts := \
 	-t [ babelify --loose all ] \
 	-t [ stylify --use nib ] \
 	-t brfs \
-	-t browserify-versionify
+	-t browserify-versionify \
+	--standalone TB
 
 uglify_opts := \
 	--compress warnings=false \
