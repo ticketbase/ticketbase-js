@@ -1,3 +1,8 @@
+## v0.1.6 - Mar 5, 2015
+
+ * Fix the module not being exported as `window.TB` ([#11])<br>
+   This bug affects the Ticketbase.com widget builder, and anything that may access the library programatically.
+
 ## v0.1.5 - Mar 4, 2015
 
  * Disable https for Petlanthropy
@@ -54,3 +59,4 @@ Initial preview release
 [#8]: https://github.com/ticketbase/ticketbase-js/issues/8
 [#9]: https://github.com/ticketbase/ticketbase-js/issues/9
 [#10]: https://github.com/ticketbase/ticketbase-js/issues/10
+[#11]: https://github.com/ticketbase/ticketbase-js/issues/11
