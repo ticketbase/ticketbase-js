@@ -3,6 +3,8 @@ require('./setup');
 describe('Distribution versions: TB', function () {
   var TB;
 
+  this.timeout(10000);
+
   before(function () {
     TB = require('../ticketbase.js');
   });
