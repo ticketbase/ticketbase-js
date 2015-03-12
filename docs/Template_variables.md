@@ -24,6 +24,18 @@ In addition to the attributes in the `event` object as returned by Ticketbase, t
    * `tickets`
    * `donations`
 
+* `event.donations`:
+   * `is_fixed`
+   * `is_open`
+   * `has_fees` - true if it has fees
+   * `input_amount_name` - the name for the `<input>` for the amount box
+
+* `event.tickets`:
+   * `is_paid`
+   * `is_free`
+   * `has_fees` - true if it has fees
+   * `input_quantity_name` - the name for the `<input>` for the quantity box
+
 ## `config`
 
 Some useful constants.

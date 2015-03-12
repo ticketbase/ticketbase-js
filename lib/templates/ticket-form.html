@@ -55,9 +55,11 @@
               <span class='{{tb}}-amount'>
                 {{prices.formatted_amount}}
               </span>
-              <span class='{{tb}}-fees'>
-                + {{prices.formatted_fee}} fees
-              </span>
+              {{#has_fees}}
+                <span class='{{tb}}-fees'>
+                  + {{prices.formatted_fee}} fees
+                </span>
+              {{/has_fees}}
             </span>
           {{/is_paid}}
 
