@@ -1,3 +1,7 @@
+## v0.1.7 - Mar 12, 2015
+
+* Hide fees when not available
+
 ## v0.1.6 - Mar 5, 2015
 
  * Fix the module not being exported as `window.TB` ([#11])<br>
