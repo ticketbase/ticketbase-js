@@ -1,81 +1,77 @@
-$bg = white
-$text = #333
-$darktext = $text - 50%
-$gray = rgba($text, 0.7)
-$lightgray = rgba($text, 0.4)
-$accent = dodgerblue
-$line = rgba(black, 0.1)
+// vim:foldmethod=indent
 
-$spinner-size = 28px
-$spinner-padding = 40px
+// Variables
+  $bg = white
+  $text = #333
+  $darktext = $text - 50%
+  $gray = rgba($text, 0.7)
+  $lightgray = rgba($text, 0.4)
+  $accent = dodgerblue
+  $line = rgba(black, 0.1)
 
-$gut = 20px
-$pad = 15px
+  $spinner-size = 28px
+  $spinner-padding = 40px
 
-@require 'nib'
+  $gut = 20px
+  $pad = 15px
 
-/*
- * Reference
- * ---------
- * 
- *   .tb-container
- *     .tb-ticket-form
- *       i.tb-icon
- *       Sorry, not available at this time
- *   
- *   
- *     form.tb-ticket-form
- *       .tb-header
- *         h1.tb-headline
- *           a This is the event title
- *         h5.tb-subheadline
- *           | Subheadline goes here
- *
- *       // Campaign goal meter
- *       .tb-goalmeter
- *         .tb-progressbar
- *           .tb-progressbar-fill(style="width:30%")
- *         .tb-goalmeter-description
- *           strong.tb-goalmeter-raised $2,000
- *           span.tb-goalmeter-text raised of
- *           span.tb-goalmeter-total $10,000
- *     
- *       // ...items go here
- *
- *       .tb-action
- *         button.tb-submit Order
- *         img.tb-powered-by
- *
- * Items:
- *
- *       // for donations
- *       .tb-donation-items
- *         label.tb-donation
- *           .tb-donation-radio
- *             input(type='radio')
- *     
- *           .tb-donation-info
- *             .tb-title Donate $25
- *             .tb-donation-description ...
- *     
- *           // price (free-text input)
- *           .tb-price.tb-price-open
- *             .tb-donation-amount
- *               .tb-prefix $
- *               input(type='text')
- *     
- *           // price (fixed)
- *           .tb-price.tb-price-fixed
- *             .tb-amount $25.00
- *             .tb-fees + $0.99 fees
- */
-    
-.tb
+  @require 'nib'
 
+// Reference
   /*
-   * resets
+   *   .tb-container
+   *     .tb-ticket-form
+   *       i.tb-icon
+   *       Sorry, not available at this time
+   *   
+   *   
+   *     form.tb-ticket-form
+   *       .tb-header
+   *         h1.tb-headline
+   *           a This is the event title
+   *         h5.tb-subheadline
+   *           | Subheadline goes here
+   *
+   *       // Campaign goal meter
+   *       .tb-goalmeter
+   *         .tb-progressbar
+   *           .tb-progressbar-fill(style="width:30%")
+   *         .tb-goalmeter-description
+   *           strong.tb-goalmeter-raised $2,000
+   *           span.tb-goalmeter-text raised of
+   *           span.tb-goalmeter-total $10,000
+   *     
+   *       // ...items go here
+   *
+   *       .tb-action
+   *         button.tb-submit Order
+   *         img.tb-powered-by
+   *
+   * Items:
+   *
+   *       // for donations
+   *       .tb-donation-items
+   *         label.tb-donation
+   *           .tb-donation-radio
+   *             input(type='radio')
+   *     
+   *           .tb-donation-info
+   *             .tb-title Donate $25
+   *             .tb-donation-description ...
+   *     
+   *           // price (free-text input)
+   *           .tb-price.tb-price-open
+   *             .tb-donation-amount.tb-prefixed-input
+   *               .tb-prefix $
+   *               input.tb-input(type='text')
+   *     
+   *           // price (fixed)
+   *           .tb-price.tb-price-fixed
+   *             .tb-amount $25.00
+   *             .tb-fees + $0.99 fees
    */
-
+    
+.tb // Resets
   &-container
     div, span, strong, h1, label, button, a, i
       box-sizing: border-box
@@ -113,9 +109,7 @@ $pad = 15px
     border: 0
     font-size: 1em
 
-  /*
-   * spinner
-   */
+.tb // Spinner
 
   &-spinner
     box-sizing: border-box
@@ -144,9 +138,7 @@ $pad = 15px
     border-top-color: $accent
     border-radius: 50%
 
-  /*
-   * event form
-   */
+.tb // Event form
 
   &-ticket-form
     background: $bg
@@ -159,9 +151,7 @@ $pad = 15px
     padding: 40px
     text-align: center
 
-  /*
-   * header
-   */
+.tb // Header
 
   &-header
     margin: 0
@@ -188,17 +178,13 @@ $pad = 15px
     padding: $pad 2*$pad
     overflow: hidden
 
-  /*
-   * items
-   */
+.tb // Items
 
   &-donation-items,
   &-ticket-items
     border-top: solid 1px $line
 
-  /*
-   * order item
-   */
+.tb // Order item (donation, ticket)
 
   &-info
     display: inline
@@ -216,11 +202,12 @@ $pad = 15px
   &-donation-info,
   &-ticket-info
     display: table-cell
-    width: 70%
+    width: 65%
 
   &-price
     display: table-cell
-    width: 30%
+    width: 35%
+    min-width: 150px
 
     text-align: right
     font-weight: normal
@@ -249,9 +236,7 @@ $pad = 15px
     height: 26px
     text-align: center
 
-  /*
-   * button
-   */
+.tb // Button
 
   &-action
     padding: 30px
@@ -287,16 +272,12 @@ $pad = 15px
     float: right
     margin-left: 20px
 
-  /*
-   * misc
-   */
+.tb // Misc
 
   &-donation-amount
     white-space: nowrap
 
-  /*
-   * campaign goal meter
-   */
+.tb // Campaign goal meter
 
   $goalmeter-height = 20px
 
@@ -344,14 +325,46 @@ $pad = 15px
     color: $gray
 
   // &-goalmeter-total
+.tb // Prefixed input
+  $height = 36px
 
+  &-prefixed-input,
+  &-prefix,
+  &-input
+    margin: 0
+    padding: 0
+    border: 0
+    outline: 0
+    height: $height
+    line-height: $height
+    display: inline-block
 
-/*
- * animations
- */
+  &-prefix,
+  &-input
+    vertical-align: top
 
-@keyframes tb-rotate
-  0%
-    transform: rotate(0)
-  100%
-    transform: rotate(360deg)
+  &-prefixed-input
+    width: 120px
+    background: white
+    border: solid 1px #ddd
+    border-radius: 4px
+    height: $height + 2px
+
+  &-prefix
+    padding: 0 10px
+    background: rgba(black, 0.05)
+
+  &-input,
+  &-input:focus
+    background: transparent
+    padding: 3px 6px
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+    font-size: 1.2em
+
+// Animations
+  @keyframes tb-rotate
+    0%
+      transform: rotate(0)
+    100%
+      transform: rotate(360deg)
