@@ -1,5 +1,7 @@
 require('../setup');
 
+// Don't run more than once in case of --watch
+if (runs === 0)
 describe('Base:', function () {
   var $meta;
 
