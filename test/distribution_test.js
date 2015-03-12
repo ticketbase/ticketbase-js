@@ -26,6 +26,8 @@ describe('Distribution versions: TB', function () {
 describe('Distribution versions: TB', function () {
   var TB;
 
+  this.timeout(10000);
+
   before(function () {
     TB = require('../petlanthropy.js');
   });
