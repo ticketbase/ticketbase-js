@@ -1,6 +1,6 @@
 ## v0.1.7 - Mar 12, 2015
 
-* Hide fees when not available
+* Hide fees when not available ([#12])
 
 ## v0.1.6 - Mar 5, 2015
 
@@ -64,3 +64,4 @@ Initial preview release
 [#9]: https://github.com/ticketbase/ticketbase-js/issues/9
 [#10]: https://github.com/ticketbase/ticketbase-js/issues/10
 [#11]: https://github.com/ticketbase/ticketbase-js/issues/11
+[#12]: https://github.com/ticketbase/ticketbase-js/issues/12
