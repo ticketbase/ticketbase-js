@@ -12,8 +12,8 @@ describe('Donation recepient:', function () {
   });
 
   describe("with campaign_recepient:", function () {
-    mock({
-      campaign_recepient: 'Sherlock Holmes'
+    mock(function (event) {
+      event.campaign_recepient = 'Sherlock Holmes';
     });
 
     it('has a campaign goal recepient text', function () {
@@ -23,8 +23,8 @@ describe('Donation recepient:', function () {
   });
 
   describe("without campaign_goal_recepient:", function () {
-    mock({
-      campaign_recepient: undefined
+    mock(function (event) {
+      event.campaign_recepient = undefined;
     });
 
     it('has no campaign recepient text', function () {

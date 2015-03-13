@@ -11,8 +11,8 @@ describe('Donation fees:', function () {
   });
 
   describe("fixed, with fees:", function () {
-    mock({
-      donation_types: [
+    mock(function (event) {
+      event.donation_types = [
         { id: 3,
           title: 'Donate here',
           description: 'Donation description',
@@ -27,7 +27,7 @@ describe('Donation fees:', function () {
           },
           donation_type: 'fixed'
         }
-      ]
+      ];
     });
 
     beforeEach(function () {
@@ -52,8 +52,8 @@ describe('Donation fees:', function () {
   });
 
   describe("fixed, with fees as 0:", function () {
-    mock({
-      donation_types: [
+    mock(function (event) {
+      event.donation_types = [
         { id: 3,
           title: 'Donate here',
           description: 'Donation description',
@@ -68,7 +68,7 @@ describe('Donation fees:', function () {
           },
           donation_type: 'fixed'
         }
-      ]
+      ];
     });
 
     beforeEach(function () {
@@ -77,6 +77,36 @@ describe('Donation fees:', function () {
 
     it('has fees hidden', function () {
       expect($item.find('.tb-fees')).have.length(0);
+    });
+  });
+
+  describe("fixed, with fee_payee as owner:", function () {
+    mock(function (event) {
+      event.fee_payer = 'owner';
+      event.donation_types[0].prices.fee = 0.99;
+    });
+
+    beforeEach(function () {
+      $item = $w.find('.tb-donation').eq(0);
+    });
+
+    it('has fees hidden', function () {
+      expect($item.find('.tb-fees')).have.length(0);
+    });
+  });
+
+  describe("fixed, with fee_payee as someone_else:", function () {
+    mock(function (event) {
+      event.fee_payer = 'someone_else';
+      event.donation_types[0].prices.fee = 0.99;
+    });
+
+    beforeEach(function () {
+      $item = $w.find('.tb-donation').eq(0);
+    });
+
+    it('shows fees', function () {
+      expect($item.find('.tb-fees')).have.length(1);
     });
   });
 });

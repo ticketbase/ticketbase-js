@@ -11,12 +11,13 @@ describe('Ticket types:', function () {
   });
 
   describe("with fees:", function () {
-    mock({
-      ticket_types: [
+    mock(function (event) {
+      event.ticket_types = [
         { id: 3,
           title: 'VIP ticket',
-          description: 'Donation description',
+          description: 'Ticket description',
           status: 'live',
+          ticket_type: 'paid',
           prices: {
             amount: 25,
             fee: 0.99,
@@ -24,10 +25,9 @@ describe('Ticket types:', function () {
             formatted_amount: "$25",
             formatted_fee: "$0.99",
             formatted_amount_with_fees: "$25.99"
-          },
-          donation_type: 'fixed'
+          }
         }
-      ]
+      ];
     });
 
     beforeEach(function () {
@@ -39,7 +39,7 @@ describe('Ticket types:', function () {
     });
 
     it('has description', function () {
-      expect($item.find('.tb-ticket-description').text().trim()).eql('Donation description');
+      expect($item.find('.tb-ticket-description').text().trim()).eql('Ticket description');
     });
 
     it('has amount', function () {

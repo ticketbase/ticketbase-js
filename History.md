@@ -1,3 +1,7 @@
+## v0.1.8 - Mar 13, 2015
+
+* Hide fees when an event's fee payer is set to "owner" ([#13])
+
 ## v0.1.7 - Mar 12, 2015
 
 * Hide fees when not available ([#12])
@@ -65,3 +69,4 @@ Initial preview release
 [#10]: https://github.com/ticketbase/ticketbase-js/issues/10
 [#11]: https://github.com/ticketbase/ticketbase-js/issues/11
 [#12]: https://github.com/ticketbase/ticketbase-js/issues/12
+[#13]: https://github.com/ticketbase/ticketbase-js/issues/13
