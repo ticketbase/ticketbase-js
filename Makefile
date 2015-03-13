@@ -1,7 +1,7 @@
 dir := widgets
 
 deploy:
-	s3cmd sync --acl-public --recursive ./${dir} s3://ticketbase-cdn/
+	s3cmd sync --cf-invalidate --acl-public --recursive ./${dir} s3://ticketbase-cdn/
 
 version = $(patsubst v%,%,$@)
 parts = $(subst ., ,${version})
