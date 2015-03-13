@@ -11,8 +11,8 @@ describe('Donation fees:', function () {
   });
 
   describe("fixed, with fees:", function () {
-    mock({
-      donation_types: [
+    mock(function (event) {
+      event.donation_types = [
         { id: 3,
           title: 'Donate here',
           description: 'Donation description',
@@ -27,7 +27,7 @@ describe('Donation fees:', function () {
           },
           donation_type: 'fixed'
         }
-      ]
+      ];
     });
 
     beforeEach(function () {
@@ -52,8 +52,8 @@ describe('Donation fees:', function () {
   });
 
   describe("fixed, with fees as 0:", function () {
-    mock({
-      donation_types: [
+    mock(function (event) {
+      event.donation_types = [
         { id: 3,
           title: 'Donate here',
           description: 'Donation description',
@@ -68,7 +68,7 @@ describe('Donation fees:', function () {
           },
           donation_type: 'fixed'
         }
-      ]
+      ];
     });
 
     beforeEach(function () {

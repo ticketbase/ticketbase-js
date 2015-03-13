@@ -17,11 +17,12 @@ var dextend = require('deep-extend');
  */
 
 module.exports = function mockWidget(options, overrides) {
-  var reply = options.reply;
+  var reply = dextend({}, options.reply);
   var html = options.html;
 
-  if (overrides)
-    reply = dextend({}, reply, overrides);
+  if (typeof overrides === 'function') {
+    overrides(reply);
+  }
 
   beforeEach(function() {
     apimock.get('/v1/events/101').reply(200, reply);

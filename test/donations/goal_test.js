@@ -12,9 +12,9 @@ describe('Donation goal:', function () {
   });
 
   describe("with campaign goal:", function () {
-    mock({
-      campaign_goal: 800,
-      campaign_goal_raised: 100
+    mock(function (event) {
+      event.campaign_goal = 800;
+      event.campaign_goal_raised = 100;
     });
 
     it('has .tb-goalmeter', function () {
