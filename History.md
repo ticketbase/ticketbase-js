@@ -1,7 +1,7 @@
-## v0.1.9
+## v0.1.9 - Apr 9, 2015
 
-* Ticket forms: Honor a ticket's `min` and `max` quantities ([#14])
-* Ticket forms: default the quantity to `1` if it's the only ticket available ([#14])
+* Ticket forms: Honor a ticket's `min` and `max` quantities ([#15])
+* Ticket forms: default the quantity to `1` if it's the only ticket available ([#15])
 
 ## v0.1.8 - Mar 13, 2015
 
@@ -76,3 +76,4 @@ Initial preview release
 [#12]: https://github.com/ticketbase/ticketbase-js/issues/12
 [#13]: https://github.com/ticketbase/ticketbase-js/issues/13
 [#14]: https://github.com/ticketbase/ticketbase-js/issues/14
+[#15]: https://github.com/ticketbase/ticketbase-js/issues/14
