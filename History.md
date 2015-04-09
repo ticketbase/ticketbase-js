@@ -1,3 +1,8 @@
+## v0.1.9
+
+* Ticket forms: Honor a ticket's `min` and `max` quantities ([#14])
+* Ticket forms: default the quantity to `1` if it's the only ticket available ([#14])
+
 ## v0.1.8 - Mar 13, 2015
 
 * Hide fees when an event's fee payer is set to "owner" ([#13])
@@ -70,3 +75,4 @@ Initial preview release
 [#11]: https://github.com/ticketbase/ticketbase-js/issues/11
 [#12]: https://github.com/ticketbase/ticketbase-js/issues/12
 [#13]: https://github.com/ticketbase/ticketbase-js/issues/13
+[#14]: https://github.com/ticketbase/ticketbase-js/issues/14

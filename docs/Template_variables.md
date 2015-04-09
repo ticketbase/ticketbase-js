@@ -35,6 +35,7 @@ In addition to the attributes in the `event` object as returned by Ticketbase, t
    * `is_free`
    * `has_fees` - true if it has fees
    * `input_quantity_name` - the name for the `<input>` for the quantity box
+   * `quantity_options_html` - a bunch of `<option>` tags
 
 ## `config`
 

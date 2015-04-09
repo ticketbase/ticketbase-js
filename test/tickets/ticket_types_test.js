@@ -1,5 +1,5 @@
 require('../setup');
-var $item;
+var $item, $select;
 
 describe('Ticket types:', function () {
 
@@ -18,6 +18,8 @@ describe('Ticket types:', function () {
           description: 'Ticket description',
           status: 'live',
           ticket_type: 'paid',
+          min_purchase: 1,
+          max_purchase: 10,
           prices: {
             amount: 25,
             fee: 0.99,
