@@ -14,19 +14,25 @@
         "formatted_fee": "$1.15"
       },
       "ticket_type": "paid",
-      "status": "live"
+      "status": "live",
+      "min_purchase": 1,
+      "max_purchase": 10
     },
     {
       "title": "General attendee",
       "price": "0",
       "ticket_type": "free",
-      "status": "live"
+      "status": "live",
+      "min_purchase": 1,
+      "max_purchase": 10
     },
     {
       "title": "Sold out ticket",
       "price": "0",
       "ticket_type": "free",
-      "status": "dead"
+      "status": "dead",
+      "min_purchase": 1,
+      "max_purchase": 10
     }
   ],
   "donation_types": [
