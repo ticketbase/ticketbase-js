@@ -1,31 +1,31 @@
-## v0.1.10 - Apr 16, 2015
+## [v0.1.10] - Apr 16, 2015
 
 * Ticket forms: fix issue with deleted tickets ([#17], [#18])
 * Ticket forms: prevent the display of invisible tickets ([#16], [#18])
 
-## v0.1.9 - Apr 9, 2015
+## [v0.1.9] - Apr 9, 2015
 
 * Ticket forms: Honor a ticket's `min` and `max` quantities ([#15])
 * Ticket forms: default the quantity to `1` if it's the only ticket available ([#15])
 
-## v0.1.8 - Mar 13, 2015
+## [v0.1.8] - Mar 13, 2015
 
 * Hide fees when an event's fee payer is set to "owner" ([#13])
 
-## v0.1.7 - Mar 12, 2015
+## [v0.1.7] - Mar 12, 2015
 
 * Hide fees when not available ([#12])
 
-## v0.1.6 - Mar 5, 2015
+## [v0.1.6] - Mar 5, 2015
 
  * Fix the module not being exported as `window.TB` ([#11])<br>
    This bug affects the Ticketbase.com widget builder, and anything that may access the library programatically.
 
-## v0.1.5 - Mar 4, 2015
+## [v0.1.5] - Mar 4, 2015
 
  * Disable https for Petlanthropy
 
-## v0.1.4 - Mar 4, 2015
+## [v0.1.4] - Mar 4, 2015
 
  * Docs: document official distribution site (cdn.ticketbase.com) ([#8])
  * Docs: document Bower and npm support ([#8])
@@ -36,11 +36,11 @@
  * Add support for Campaign Recepients
  * Adds a `Function.bind` polyfill, solving some legacy IE issues
 
-## v0.1.3 - Mar 3, 2015
+## [v0.1.3] - Mar 3, 2015
 
  * Adds a "Powered by Ticketbase" badge ([#7])
 
-## v0.1.2 - Mar 3, 2015
+## [v0.1.2] - Mar 3, 2015
 
 This release improves CSS compatibilty for legacy sites, especially those without doctypes.
 
@@ -50,14 +50,14 @@ This release improves CSS compatibilty for legacy sites, especially those withou
  * CSS: make lines (`.tb-donation`) work on any background ([#6])
  * package.json: fix GitHub references to refer to the correct repo (ticketbase/ticketbase-js)
 
-## v0.1.1 - Mar 2, 2015
+## [v0.1.1] - Mar 2, 2015
 
 Lots of internal spring-cleaning.
 
  * Internal: update to ES6, and build using Babel ([#3])
  * Internal: add support for Ticketbase subdomains ([#4])
 
-## v0.1.0 - Feb 16, 2015
+## [v0.1.0] - Feb 16, 2015
 
 Donation forms are now supported.
 
@@ -85,3 +85,14 @@ Initial preview release
 [#16]: https://github.com/ticketbase/ticketbase-js/issues/16
 [#17]: https://github.com/ticketbase/ticketbase-js/issues/17
 [#18]: https://github.com/ticketbase/ticketbase-js/issues/18
+[v0.1.10]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.9...v0.1.10
+[v0.1.9]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.8...v0.1.9
+[v0.1.8]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.7...v0.1.8
+[v0.1.7]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.6...v0.1.7
+[v0.1.6]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.5...v0.1.6
+[v0.1.5]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.4...v0.1.5
+[v0.1.4]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.3...v0.1.4
+[v0.1.3]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.2...v0.1.3
+[v0.1.2]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.1...v0.1.2
+[v0.1.1]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.0...v0.1.1
+[v0.1.0]: https://github.com/ticketbase/ticketbase-js/compare/v0.0.0-1...v0.1.0
