@@ -1,3 +1,8 @@
+## v0.1.10 - Apr 16, 2015
+
+* Ticket forms: fix issue with deleted tickets ([#17], [#18])
+* Ticket forms: prevent the display of invisible tickets ([#16], [#18])
+
 ## v0.1.9 - Apr 9, 2015
 
 * Ticket forms: Honor a ticket's `min` and `max` quantities ([#15])
@@ -76,4 +81,7 @@ Initial preview release
 [#12]: https://github.com/ticketbase/ticketbase-js/issues/12
 [#13]: https://github.com/ticketbase/ticketbase-js/issues/13
 [#14]: https://github.com/ticketbase/ticketbase-js/issues/14
-[#15]: https://github.com/ticketbase/ticketbase-js/issues/14
+[#15]: https://github.com/ticketbase/ticketbase-js/issues/15
+[#16]: https://github.com/ticketbase/ticketbase-js/issues/16
+[#17]: https://github.com/ticketbase/ticketbase-js/issues/17
+[#18]: https://github.com/ticketbase/ticketbase-js/issues/18
