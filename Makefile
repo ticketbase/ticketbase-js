@@ -1,6 +1,10 @@
 dir := widgets
 
 deploy:
+	@# deploy the /widgets/v0.1 first.
+	@# this is a workaround for a bug where --cf-invalidate works for, say, /v0.1.10 but not /v0.1.
+	@# see: https://github.com/s3tools/s3cmd/issues/525
+	s3cmd sync --cf-invalidate --acl-public --preserve --recursive ./${dir}/v0.? s3://ticketbase-cdn/
 	s3cmd sync --cf-invalidate --acl-public --preserve --recursive ./${dir} s3://ticketbase-cdn/
 
 version = $(patsubst v%,%,$@)
