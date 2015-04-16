@@ -23,3 +23,22 @@ describe('deleted tickets', function () {
     expect(data.tickets[0].title).eql("Live ticket 1");
   });
 });
+
+describe('invisible tickets', function () {
+  beforeEach(function () {
+    event = extend({}, original);
+    ticket = extend({}, event.ticket_types[0]);
+
+    event.ticket_types = [
+      extend({}, ticket, { title: "Live ticket 1", status: "live" }),
+      extend({}, ticket, { title: "Deleted ticket", visibility: false })
+    ];
+
+    data = presentEvent(event, 'ticket');
+  });
+
+  it('only list live tickets', function () {
+    expect(data.tickets).have.length(1);
+    expect(data.tickets[0].title).eql("Live ticket 1");
+  });
+});
