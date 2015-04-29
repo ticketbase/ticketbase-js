@@ -1,6 +1,6 @@
 require('./setup');
 
-describe('TB (not found):', function () {
+describe('TB (not found):', () => {
   var widget, $w;
 
   beforeEach(function() {
@@ -9,18 +9,18 @@ describe('TB (not found):', function () {
       .reply(404);
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     $w = $("<div id='w' data-tb='ticket-form' data-headline='true' data-event='102'></div>");
     $('body').append($w);
     widget = TB.widget($w[0]);
     return widget.promise;
   });
 
-  afterEach(function () {
+  afterEach(() => {
     $w.remove();
   });
 
-  it('has error message', function () {
+  it('has error message', () => {
     expect($w).to.contain('Sorry, tickets cannot be loaded at this time');
   });
 });

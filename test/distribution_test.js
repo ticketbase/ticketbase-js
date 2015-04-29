@@ -5,16 +5,16 @@ describe('Distribution versions: TB', function () {
 
   this.timeout(10000);
 
-  before(function () {
+  before(() => {
     TB = require('../ticketbase.js');
   });
 
-  it('is exported via UMD', function () {
+  it('is exported via UMD', () => {
     expect(TB).be.an('object');
     expect(TB.go).be.a('function');
   });
 
-  it('has the correct config()', function () {
+  it('has the correct config()', () => {
     var config = TB.config();
 
     expect(config.site_name).eql("Ticketbase");
@@ -28,16 +28,16 @@ describe('Distribution versions: TB', function () {
 
   this.timeout(10000);
 
-  before(function () {
+  before(() => {
     TB = require('../petlanthropy.js');
   });
 
-  it('is exported via UMD', function () {
+  it('is exported via UMD', () => {
     expect(TB).be.an('object');
     expect(TB.go).be.a('function');
   });
 
-  it('has the correct config()', function () {
+  it('has the correct config()', () => {
     var config = TB.config();
 
     expect(config.site_name).eql("Petlanthropy");
