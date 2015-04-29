@@ -16,15 +16,15 @@ uglify_opts := \
 all: ticketbase.js petlanthropy.js
 
 ticketbase.js: ticketbase.dev.js
-	$(bin)/uglifyjs $< $(uglify_opts) --define MODE=null -o $@
+	@$(bin)/uglifyjs $< $(uglify_opts) --define MODE=null -o $@
 	@ls -la $@
 
 petlanthropy.js: ticketbase.dev.js
-	$(bin)/uglifyjs $< $(uglify_opts) --define MODE='"pet"' -o $@
+	@$(bin)/uglifyjs $< $(uglify_opts) --define MODE='"pet"' -o $@
 	@ls -la $@
 
 ticketbase.dev.js: lib/index.js $(files)
-	$(bin)/browserify $(bfy_opts) $< -o $@
+	@$(bin)/browserifyinc -v $(bfy_opts) $< -o $@
 
 watch:
 	$(bin)/watch "make -B" lib test & $(bin)/serve --port $(PORT)
