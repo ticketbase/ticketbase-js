@@ -9,6 +9,9 @@ bfy_opts := \
 	-t browserify-versionify \
 	--standalone TB
 
+bfyinc_opts := \
+	-v --cachefile node_modules/.browserify-cache.json
+
 uglify_opts := \
 	--compress warnings=false \
 	--mangle
@@ -24,7 +27,7 @@ petlanthropy.js: ticketbase.dev.js
 	@ls -la $@
 
 ticketbase.dev.js: lib/index.js $(files)
-	@$(bin)/browserifyinc -v $(bfy_opts) $< -o $@
+	@$(bin)/browserifyinc $(bfyinc_opts) $(bfy_opts) $< -o $@
 
 watch:
 	$(bin)/watch "make -B" lib test & $(bin)/serve --port $(PORT)
