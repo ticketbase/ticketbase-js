@@ -5,10 +5,10 @@ var extend = require('deep-extend');
 var original = require('../fixtures/event_ok.json');
 var data, event;
 
-describe('presenter goalmeter', function () {
+describe('presenter goalmeter', () => {
 
-  describe('with goal', function () {
-    beforeEach(function () {
+  describe('with goal', () => {
+    beforeEach(() => {
       event = extend({}, original, {
         campaign_goal: 800,
         campaign_goal_raised: 100
@@ -16,17 +16,17 @@ describe('presenter goalmeter', function () {
       data = presentEvent(event, 'donation');
     });
 
-    it('has has_goal', function () {
+    it('has has_goal', () => {
       expect(data.has_goal).be.true;
     });
 
-    it('has campaign_goal_percent', function () {
+    it('has campaign_goal_percent', () => {
       expect(data.campaign_goal_percent).eql(0.125);
     });
   });
 
-  describe('without goal', function () {
-    beforeEach(function () {
+  describe('without goal', () => {
+    beforeEach(() => {
       event = extend({}, original, {
         campaign_goal: undefined,
         campaign_goal_raised: undefined
@@ -34,17 +34,17 @@ describe('presenter goalmeter', function () {
       data = presentEvent(event, 'donation');
     });
 
-    it('has no has_goal', function () {
+    it('has no has_goal', () => {
       expect(data.has_goal).be.falsy;
     });
 
-    it('has no campaign_goal_percent', function () {
+    it('has no campaign_goal_percent', () => {
       expect(data.campaign_goal_percent).be.undefined;
     });
   });
 
-  describe('when goal is surpassed', function () {
-    beforeEach(function () {
+  describe('when goal is surpassed', () => {
+    beforeEach(() => {
       event = extend({}, original, {
         campaign_goal: 800,
         campaign_goal_raised: 2000
@@ -52,11 +52,11 @@ describe('presenter goalmeter', function () {
       data = presentEvent(event, 'donation');
     });
 
-    it('has has_goal', function () {
+    it('has has_goal', () => {
       expect(data.has_goal).be.true;
     });
 
-    it('has campaign_goal_percent', function () {
+    it('has campaign_goal_percent', () => {
       expect(data.campaign_goal_percent).eql(1.0);
     });
   });

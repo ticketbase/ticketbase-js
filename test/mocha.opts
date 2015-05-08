@@ -1,3 +1,2 @@
---require mocha-clean/brief
 --recursive
 -R progress

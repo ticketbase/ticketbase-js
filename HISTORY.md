@@ -1,3 +1,8 @@
+## [v0.1.11]
+
+* Internal: instances are now saved in `el.tbInstance` instead of `__tbInstance`
+* Internal: ES6 cleanups
+
 ## [v0.1.10] - Apr 16, 2015
 
 * Ticket forms: fix issue with deleted tickets ([#17], [#18])
@@ -85,6 +90,7 @@ Initial preview release
 [#16]: https://github.com/ticketbase/ticketbase-js/issues/16
 [#17]: https://github.com/ticketbase/ticketbase-js/issues/17
 [#18]: https://github.com/ticketbase/ticketbase-js/issues/18
+[v0.1.11]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.10...v0.1.11
 [v0.1.10]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.9...v0.1.10
 [v0.1.9]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.8...v0.1.9
 [v0.1.8]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.7...v0.1.8
