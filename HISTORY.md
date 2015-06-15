@@ -3,6 +3,7 @@
 * Internal: instances are now saved in `el.tbInstance` instead of `__tbInstance`
 * Internal: ES6 cleanups
 * Improve compatibility with legacy IE
+* Show 'tickets are not available' when no tickets are for sale
 
 ## [v0.1.10] - Apr 16, 2015
 
