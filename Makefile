@@ -3,14 +3,11 @@ bin   := ./node_modules/.bin
 files := $(shell find lib -name '*.js')
 
 bfy_opts := \
-	-t [ babelify --loose all ] \
+	-t [ babelify --loose all --optional spec.protoToAssign ] \
 	-t [ stylify --use nib ] \
 	-t brfs \
 	-t browserify-versionify \
 	--standalone TB
-
-bfyinc_opts := \
-	-v --cachefile node_modules/.browserify-cache.json
 
 uglify_opts := \
 	--compress warnings=false \
@@ -27,7 +24,7 @@ petlanthropy.js: ticketbase.dev.js
 	@ls -la $@
 
 ticketbase.dev.js: lib/index.js $(files)
-	@$(bin)/browserifyinc $(bfyinc_opts) $(bfy_opts) $< -o $@
+	@$(bin)/browserify $(bfy_opts) $< -o $@
 
 watch:
 	$(bin)/watch "make -B" lib test & $(bin)/serve --port $(PORT)
