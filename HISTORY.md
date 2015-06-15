@@ -1,4 +1,4 @@
-## [v0.1.11]
+## [v0.1.11] - Jun 15, 2015
 
 * Internal: instances are now saved in `el.tbInstance` instead of `__tbInstance`
 * Internal: ES6 cleanups

@@ -5,7 +5,7 @@
 ### Preparing a release
 
  * `vim History.md` - make sure it's up to date
- * `bump *.json Readme.md` - update version numbers ([bump-cli](https://www.npmjs.com/package/bump-cli))
+ * `bump package.json Readme.md` - update version numbers ([bump-cli](https://www.npmjs.com/package/bump-cli))
  * `npm test` - ensure tests pass
  * `npm run prepublish` - produce ticketbase.js build
  * `git release v0.2.0` - commit, tag, and push ([git-extras](https://github.com/tj/git-extras))
