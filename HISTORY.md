@@ -2,6 +2,7 @@
 
 * Internal: instances are now saved in `el.tbInstance` instead of `__tbInstance`
 * Internal: ES6 cleanups
+* Improve compatibility with legacy IE
 
 ## [v0.1.10] - Apr 16, 2015
 
