@@ -1,7 +1,9 @@
+/* global describe, it, beforeEach, expect, presentEvent */
+/* jshint expr: true */
+
 require('../setup');
 require('./setup');
 
-var extend = require('deep-extend');
 var original = require('../fixtures/event_ok.json');
 var data, event;
 

@@ -1,3 +1,4 @@
+/* global describe, it, beforeEach, expect, presentEvent */
 require('../setup');
 require('./setup');
 
@@ -11,8 +12,8 @@ describe('deleted tickets', function () {
     ticket = extend({}, event.ticket_types[0]);
 
     event.ticket_types = [
-      extend({}, ticket, { title: "Live ticket 1", status: "live" }),
-      extend({}, ticket, { title: "Deleted ticket", status: "deleted" })
+      extend({}, ticket, { title: 'Live ticket 1', status: 'live' }),
+      extend({}, ticket, { title: 'Deleted ticket', status: 'deleted' })
     ];
 
     data = presentEvent(event, 'ticket');
@@ -20,7 +21,7 @@ describe('deleted tickets', function () {
 
   it('only list live tickets', function () {
     expect(data.tickets).have.length(1);
-    expect(data.tickets[0].title).eql("Live ticket 1");
+    expect(data.tickets[0].title).eql('Live ticket 1');
   });
 });
 
@@ -30,8 +31,8 @@ describe('invisible tickets', function () {
     ticket = extend({}, event.ticket_types[0]);
 
     event.ticket_types = [
-      extend({}, ticket, { title: "Live ticket 1", status: "live" }),
-      extend({}, ticket, { title: "Deleted ticket", visibility: false })
+      extend({}, ticket, { title: 'Live ticket 1', status: 'live' }),
+      extend({}, ticket, { title: 'Deleted ticket', visibility: false })
     ];
 
     data = presentEvent(event, 'ticket');
@@ -39,6 +40,6 @@ describe('invisible tickets', function () {
 
   it('only list live tickets', function () {
     expect(data.tickets).have.length(1);
-    expect(data.tickets[0].title).eql("Live ticket 1");
+    expect(data.tickets[0].title).eql('Live ticket 1');
   });
 });

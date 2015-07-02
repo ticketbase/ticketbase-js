@@ -1,3 +1,4 @@
+/* global describe, it, expect, before */
 require('./setup');
 
 describe('Distribution versions: TB', function () {
@@ -17,7 +18,7 @@ describe('Distribution versions: TB', function () {
   it('has the correct config()', () => {
     var config = TB.config();
 
-    expect(config.site_name).eql("Ticketbase");
+    expect(config.site_name).eql('Ticketbase');
     expect(config.url).match(/www.ticketbase.com/);
     expect(config.powered_by_img).match(/powered-by.png/);
   });
@@ -40,7 +41,7 @@ describe('Distribution versions: TB', function () {
   it('has the correct config()', () => {
     var config = TB.config();
 
-    expect(config.site_name).eql("Petlanthropy");
+    expect(config.site_name).eql('Petlanthropy');
     expect(config.url).match(/pet.ticketbase.com/);
     expect(config.powered_by_img).match(/powered-by-pet.png/);
   });

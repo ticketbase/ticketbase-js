@@ -1,17 +1,19 @@
+/* global describe, it, mockWidget, expect, widget, $w, $ */
 require('./setup');
 
 describe('TB (ok):', () => {
 
   mockWidget({
     html:
-      "<div id='w' data-tb='ticket-form' "+
+      "<div id='w' data-tb='ticket-form' " +
       "data-headline='true' data-event='101'></div>",
     reply: require('./fixtures/event_ok.json')
   });
 
   it('print', () => {
-    if (process.env.print)
+    if (process.env.print) {
       console.log('[body]', $('body').html());
+    }
   });
 
   it('works', () => {

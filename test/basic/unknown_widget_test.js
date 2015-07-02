@@ -1,17 +1,18 @@
+/* global describe, it, expect, $, TB, afterEach */
 require('../setup');
 
-describe('TB (unknown widget):', function () {
-  var widget, $w;
+describe('TB (unknown widget):', () => {
+  var $w;
 
-  it("throws an error", function () {
-    expect(function () {
+  it('throws an error', () => {
+    expect(() => {
       $w = $("<div id='w' data-tb='aoeu'>");
       $('body').append($w);
-      widget = TB.widget($w[0]);
+      TB.widget($w[0]);
     }).to.throw(/unknown widget type 'aoeu'/i);
   });
 
-  afterEach(function (){
+  afterEach(() => {
     $w.remove();
   });
 });

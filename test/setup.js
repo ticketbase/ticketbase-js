@@ -1,19 +1,21 @@
+/* global before, afterEach */
 require('babel/register');
 
 global.expect = require('chai').expect;
 global.nock = require('nock');
-global.apimock = nock('http://api.ticketbase.com');
+global.apimock = global.nock('http://api.ticketbase.com');
 global.mockWidget = require('./helpers/mock_widget');
 
-if (typeof global.runs === 'undefined')
+if (typeof global.runs === 'undefined') {
   global.runs = 0;
-else
+} else {
   global.runs++;
+}
 
 require('mocha-jsdom')();
 
 before(function setJQuery () {
-  global.jQuery = $ = require('jquery');
+  global.jQuery = global.$ = require('jquery');
   require('chai').use(require('chai-jquery'));
 });
 
@@ -22,5 +24,5 @@ before(function setTB () {
 });
 
 afterEach(function () {
-  apimock.done();
+  global.apimock.done();
 });

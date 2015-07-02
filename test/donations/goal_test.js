@@ -1,17 +1,18 @@
+/* global describe, it, expect, $w, xit, mockWidget */
 require('../setup');
 
 describe('Donation goal:', function () {
 
   var mock = mockWidget.bind(this, {
     html:
-      "<div id='w' data-event='101' "+
-      "data-headline='true' "+
-      "data-tb='donation-form' "+
+      "<div id='w' data-event='101' " +
+      "data-headline='true' " +
+      "data-tb='donation-form' " +
       "data-powered-by='false'></div>",
     reply: require('../fixtures/event_ok.json')
   });
 
-  describe("with campaign goal:", function () {
+  describe('with campaign goal:', function () {
     mock(function (event) {
       event.campaign_goal = 800;
       event.campaign_goal_raised = 100;
@@ -34,7 +35,6 @@ describe('Donation goal:', function () {
       expect($w.find('.tb-goalmeter-description').text())
         .match(/100\s*raised of\s*800/);
     });
-
 
     xit('.', function () {
       expect($w.html()).eql('');

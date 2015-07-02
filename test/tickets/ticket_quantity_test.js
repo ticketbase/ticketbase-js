@@ -1,3 +1,5 @@
+/* global describe, it, mockWidget, expect, beforeEach, $w */
+
 require('../setup');
 var $select;
 
@@ -5,12 +7,12 @@ describe('Ticket quantitie:', function () {
 
   var mock = mockWidget.bind(this, {
     html:
-      "<div id='w' data-event='101' "+
+      "<div id='w' data-event='101' " +
       "data-tb='ticket-form'></div>",
     reply: require('../fixtures/event_ok.json')
   });
 
-  describe("with min 1 max 3:", function () {
+  describe('with min 1 max 3:', function () {
     mock(function (event) {
       event.ticket_types[0].min_purchase = 1;
       event.ticket_types[0].max_purchase = 3;
@@ -29,7 +31,7 @@ describe('Ticket quantitie:', function () {
     });
   });
 
-  describe("with min 5 max 7:", function () {
+  describe('with min 5 max 7:', function () {
     mock(function (event) {
       event.ticket_types[0].min_purchase = 5;
       event.ticket_types[0].max_purchase = 7;
