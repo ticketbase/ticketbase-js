@@ -1,24 +1,19 @@
 {
   "name": "ticketbase-js",
+  "description": "Integrate Ticketbase forms into your site",
   "version": "0.1.11",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "mocha",
-    "prepublish": "make -B"
-  },
-  "authors": [
-    "Ticketbase team <support@ticketbase.com>",
-    "Rico Sta. Cruz <hi@ricostacruz.com>"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ticketbase/ticketbase-js.git"
-  },
+  "author": "Ticketbase team <support@ticketbase.com>",
   "bugs": {
     "url": "https://github.com/ticketbase/ticketbase-js/issues"
   },
-  "homepage": "https://github.com/ticketbase/ticketbase-js",
+  "contributors": [
+    "Rico Sta. Cruz <hi@ricostacruz.com>"
+  ],
+  "dependencies": {
+    "ajaxapi": "0.0.0-pre5",
+    "dom101": "^0.7.0",
+    "ministache": "^0.1.3"
+  },
   "devDependencies": {
     "babel": "^4.7.16",
     "babelify": "^5.0.5",
@@ -28,7 +23,6 @@
     "chai": "^1.10.0",
     "chai-jquery": "^2.0.0",
     "deep-extend": "^0.3.2",
-    "eslint": "^0.20.0",
     "jquery": "^2.1.3",
     "jsdom": "^3.1.0",
     "mocha": "^2.2.4",
@@ -41,32 +35,30 @@
     "semistandard": "^6.1.1",
     "serve": "^1.4.0",
     "sinon": "^1.12.2",
-    "stylify": "git://github.com/contra/stylify#resolve-uses",
+    "stylify": "git://github.com/contra/stylify.git#resolve-uses",
     "stylus": "^0.50.0",
     "uglify-js": "^2.4.16",
     "watch": "^0.13.0"
   },
-  "dependencies": {
-    "ajaxapi": "0.0.0-pre5",
-    "dom101": "^0.7.0",
-    "ministache": "^0.1.3"
+  "directories": {
+    "doc": "docs",
+    "example": "example",
+    "test": "test"
   },
-  "eslintConfig": {
-    "ecmaFeatures": {
-      "modules": true
-    },
-    "env": {
-      "browser": true,
-      "node": true,
-      "es6": true
-    },
-    "rules": {
-      "quotes": 0,
-      "curly": 0,
-      "no-alert": 1,
-      "no-use-before-define": 0,
-      "no-multi-spaces": 0,
-      "camelcase": 0
-    }
+  "homepage": "https://github.com/ticketbase/ticketbase-js",
+  "keywords": [
+    "ticketbase",
+    "ticketing",
+    "widget"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ticketbase/ticketbase-js.git"
+  },
+  "scripts": {
+    "prepublish": "make -B",
+    "test": "mocha"
   }
 }
