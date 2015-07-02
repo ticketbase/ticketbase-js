@@ -1,10 +1,11 @@
+/* global describe, it, expect, mockWidget, beforeEach, $w, widget, $ */
 require('../setup');
 
 describe('Donations:', function () {
   mockWidget({
     html:
-      "<div id='w' data-tb='donation-form' "+
-      "data-headline='true' "+
+      "<div id='w' data-tb='donation-form' " +
+      "data-headline='true' " +
       "data-event='101'></div>",
     reply: require('../fixtures/event_ok.json')
   });
@@ -40,7 +41,7 @@ describe('Donations:', function () {
     });
 
     it('starts with 0 quantities', function () {
-      $qtys.each(function() {
+      $qtys.each(function () {
         expect($(this)).have.attr('value', '0');
       });
     });

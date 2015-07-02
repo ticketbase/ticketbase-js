@@ -1,3 +1,4 @@
+/* global describe, it, expect, xit, before, TB, $ */
 require('../setup');
 
 describe('CSS:', function () {

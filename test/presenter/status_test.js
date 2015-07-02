@@ -1,3 +1,5 @@
+/* global describe, it, expect, beforeEach, presentEvent */
+/* jshint expr: true */
 require('../setup');
 require('./setup');
 
@@ -15,11 +17,13 @@ describe('presenter status', () => {
 
     describe('form hidden', () => {
       it('has event ID', () => {
-        expect(data.form_hidden).include("input type='hidden' name='event_id' value='1'");
+        expect(data.form_hidden).include(
+          "input type='hidden' name='event_id' value='1'");
       });
 
       it('has item IDs', () => {
-        expect(data.form_hidden).include("order[order_items_attributes][0][item_id]");
+        expect(data.form_hidden).include(
+          'order[order_items_attributes][0][item_id]');
       });
     });
   });

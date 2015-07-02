@@ -1,3 +1,6 @@
+/* global describe, it, expect, presentEvent, beforeEach */
+/* jshint expr: true */
+
 require('../setup');
 require('./setup');
 

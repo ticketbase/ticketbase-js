@@ -1,6 +1,8 @@
+/* global describe, expect, it, beforeEach, $, $w, mockWidget */
+
 require('../setup');
 var extend = require('deep-extend');
-var $select, names;
+var names;
 
 describe('Deleted ticket:', function () {
 
@@ -9,14 +11,14 @@ describe('Deleted ticket:', function () {
     reply: require('../fixtures/event_ok.json')
   });
 
-  describe("ticket types", function () {
+  describe('ticket types', function () {
     mock(function (event) {
       var ticket = extend({}, event.ticket_types[0]);
 
       event.ticket_types = [
-        extend({}, ticket, { title: "VIP", status: 'live' }),
-        extend({}, ticket, { title: "General", status: 'live' }),
-        extend({}, ticket, { title: "Deleted item", status: 'deleted' }),
+        extend({}, ticket, { title: 'VIP', status: 'live' }),
+        extend({}, ticket, { title: 'General', status: 'live' }),
+        extend({}, ticket, { title: 'Deleted item', status: 'deleted' })
       ];
     });
 
@@ -40,7 +42,7 @@ describe('Deleted ticket:', function () {
         'order[order_items_attributes][0][quantity]',
         'order[order_items_attributes][1][item_id]',
         'order[order_items_attributes][1][item_type]',
-        'order[order_items_attributes][1][quantity]',
+        'order[order_items_attributes][1][quantity]'
       ]);
     });
   });
@@ -53,14 +55,14 @@ describe('Invisible ticket:', function () {
     reply: require('../fixtures/event_ok.json')
   });
 
-  describe("ticket types", function () {
+  describe('ticket types', function () {
     mock(function (event) {
       var ticket = extend({}, event.ticket_types[0]);
 
       event.ticket_types = [
-        extend({}, ticket, { title: "VIP", status: 'live' }),
-        extend({}, ticket, { title: "General", status: 'live' }),
-        extend({}, ticket, { title: "Deleted item", visibility: false }),
+        extend({}, ticket, { title: 'VIP', status: 'live' }),
+        extend({}, ticket, { title: 'General', status: 'live' }),
+        extend({}, ticket, { title: 'Deleted item', visibility: false })
       ];
     });
 
@@ -84,7 +86,7 @@ describe('Invisible ticket:', function () {
         'order[order_items_attributes][0][quantity]',
         'order[order_items_attributes][1][item_id]',
         'order[order_items_attributes][1][item_type]',
-        'order[order_items_attributes][1][quantity]',
+        'order[order_items_attributes][1][quantity]'
       ]);
     });
   });

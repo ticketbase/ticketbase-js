@@ -1,16 +1,18 @@
+/* global describe, it, mockWidget, expect, beforeEach, $w */
+
 require('../setup');
-var $item, $select;
+var $item;
 
 describe('Ticket types:', function () {
 
   var mock = mockWidget.bind(this, {
     html:
-      "<div id='w' data-event='101' "+
+      "<div id='w' data-event='101' " +
       "data-tb='ticket-form'></div>",
     reply: require('../fixtures/event_ok.json')
   });
 
-  describe("with fees:", function () {
+  describe('with fees:', function () {
     mock(function (event) {
       event.ticket_types = [
         { id: 3,
@@ -24,9 +26,9 @@ describe('Ticket types:', function () {
             amount: 25,
             fee: 0.99,
             amount_with_fees: 25.99,
-            formatted_amount: "$25",
-            formatted_fee: "$0.99",
-            formatted_amount_with_fees: "$25.99"
+            formatted_amount: '$25',
+            formatted_fee: '$0.99',
+            formatted_amount_with_fees: '$25.99'
           }
         }
       ];

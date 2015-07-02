@@ -1,3 +1,4 @@
+/* global apimock, beforeEach, $, TB, afterEach */
 var dextend = require('deep-extend');
 
 /*
@@ -16,7 +17,7 @@ var dextend = require('deep-extend');
  *  * `widget` - Widget instance (as returned by TB.widget())
  */
 
-module.exports = function mockWidget(options, overrides) {
+module.exports = function mockWidget (options, overrides) {
   var reply = dextend({}, options.reply);
   var html = options.html;
 
@@ -24,11 +25,11 @@ module.exports = function mockWidget(options, overrides) {
     overrides(reply);
   }
 
-  beforeEach(function() {
+  beforeEach(() => {
     apimock.get('/v1/events/101').reply(200, reply);
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     var $w = $(html);
     $('body').append($w);
     var widget = TB.widget($w[0]);
@@ -39,9 +40,9 @@ module.exports = function mockWidget(options, overrides) {
     return widget.promise;
   });
 
-  afterEach(function (){
+  afterEach(() => {
     global.$w.remove();
     delete global.$w;
     delete global.widget;
   });
-}
+};

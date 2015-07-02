@@ -1,10 +1,11 @@
+/* global describe, it, expect, mockWidget, $w */
 require('../setup');
 
 describe('Donation, powered by:', function () {
 
   mockWidget({
     html:
-      "<div id='w' data-event='101' "+
+      "<div id='w' data-event='101' " +
       "data-tb='ticket-form' data-powered-by='false'></div>",
     reply: require('../fixtures/event_ok.json')
   });
