@@ -1,7 +1,7 @@
 {
   "name": "ticketbase-js",
   "description": "Integrate Ticketbase forms into your site",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "author": "Ticketbase team <support@ticketbase.com>",
   "bugs": {
     "url": "https://github.com/ticketbase/ticketbase-js/issues"
