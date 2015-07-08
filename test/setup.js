@@ -3,7 +3,7 @@ require('babel/register');
 
 global.expect = require('chai').expect;
 global.nock = require('nock');
-global.apimock = global.nock('http://api.ticketbase.com');
+global.apimock = global.nock('https://api.ticketbase.com');
 global.mockWidget = require('./helpers/mock_widget');
 
 if (typeof global.runs === 'undefined') {

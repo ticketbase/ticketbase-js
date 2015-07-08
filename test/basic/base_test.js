@@ -7,7 +7,7 @@ if (global.runs === 0) {
     var $meta;
 
     it('defaults to api.ticketbase.com', function () {
-      expect(TB.getBase()).to.eql('http://api.ticketbase.com');
+      expect(TB.getBase()).to.eql('https://api.ticketbase.com');
     });
 
     it('can be overridden via <meta name>', function () {
