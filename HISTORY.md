@@ -1,3 +1,7 @@
+## [v0.1.13] - Aug 24, 2015
+
+* Implement promo codes.
+
 ## [v0.1.12] - Jul  8, 2015
 
 * Use https on all transactions. This fixes issues with including Ticketbase widgets on https pages.
@@ -96,6 +100,7 @@ Initial preview release
 [#16]: https://github.com/ticketbase/ticketbase-js/issues/16
 [#17]: https://github.com/ticketbase/ticketbase-js/issues/17
 [#18]: https://github.com/ticketbase/ticketbase-js/issues/18
+[v0.1.13]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.12...v0.1.13
 [v0.1.12]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.11...v0.1.12
 [v0.1.11]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.10...v0.1.11
 [v0.1.10]: https://github.com/ticketbase/ticketbase-js/compare/v0.1.9...v0.1.10
