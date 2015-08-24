@@ -43,10 +43,13 @@
    *     
    *       // ...items go here
    *
-   *       .tb-action
    *         button.tb-submit Order
    *         img.tb-powered-by
-   *
+   *         .tb-promocode
+   *            a.tb-inlinelink Use a promo code
+   *            input.tb-text
+   *  
+   *       .tb-action
    * Items:
    *
    *       // for donations
@@ -85,6 +88,7 @@
   &-action,
   &-submit,
   &-powered-by,
+  &-text,
   &-ticket-items,
   &-ticket,
   &-ticket-info,
@@ -93,6 +97,7 @@
   &-donation-items,
   &-donation-info,
   &-donation-amount,
+  &-promocode,
   &-price,
   &-prefix,
   &-amount,
@@ -102,6 +107,7 @@
   &-goalmeter-raised,
   &-goalmeter-text,
   &-goalmeter-total,
+  &-inlinelink,
   &-progressbar,
   &-progressbar-fill
     margin: 0
@@ -240,8 +246,31 @@
     height: 26px
     text-align: center
 
-.tb // Button
+.tb // Text
+  &-text
+    border: solid 1px $line
+    border-radius: 2px
+    padding: 5px 7px
 
+  &-promocode
+    clear: both
+    margin-top: 10px
+
+  &-inlinelink
+    background: transparent
+    cursor: pointer
+    display: inline-block
+    font-size: 0.9em
+    color: $gray
+    text-decoration: none
+
+    padding: 3px
+    margin-left: -6px
+
+    &:hover
+      color: $accent
+
+.tb // Button
   &-action
     padding: 30px
     overflow: hidden
