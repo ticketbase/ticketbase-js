@@ -1,4 +1,3 @@
-/* global describe, it, expect, before */
 require('./setup');
 
 describe('Distribution versions: TB', function () {
