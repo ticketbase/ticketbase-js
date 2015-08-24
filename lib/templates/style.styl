@@ -247,25 +247,36 @@
     text-align: center
 
 .tb // Text
+  &-promocode
+    clear: both
+    float: left
+    margin-top: 10px
+
+  &-inlinelink,
+  &-text
+    padding: 7px 8px
+    font-size: 0.9em
+    height: 30px
+    line-height: 1em
+    vertical-align: middle
+    display: inline-block
+    white-space: nowrap
+    border: solid 1px transparent
+
   &-text
     border: solid 1px $line
     border-radius: 2px
     padding: 5px 7px
 
-  &-promocode
-    clear: both
-    margin-top: 10px
+    &:focus
+      border-color: $accent
 
   &-inlinelink
     background: transparent
     cursor: pointer
-    display: inline-block
-    font-size: 0.9em
-    color: $gray
     text-decoration: none
-
-    padding: 3px
-    margin-left: -6px
+    margin-left: -12px
+    color: $lightgray
 
     &:hover
       color: $accent
@@ -298,12 +309,14 @@
   &-submit:active
     background-color: $accent - 5%
 
-  &-powered-by img
+  &-powered-by
     display: block
-    height: 30px
     margin-top: 5px
     float: right
     margin-left: 20px
+
+  &-powered-by img
+    height: 30px
 
 .tb // Misc
 
