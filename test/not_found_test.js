@@ -1,4 +1,3 @@
-/* global TB, apimock, beforeEach, describe, $, it, expect, afterEach */
 require('./setup');
 
 describe('TB (not found):', () => {
