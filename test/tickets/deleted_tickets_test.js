@@ -42,7 +42,8 @@ describe('Deleted ticket:', function () {
         'order[order_items_attributes][0][quantity]',
         'order[order_items_attributes][1][item_id]',
         'order[order_items_attributes][1][item_type]',
-        'order[order_items_attributes][1][quantity]'
+        'order[order_items_attributes][1][quantity]',
+        'order[promo_code_text]'
       ]);
     });
   });
@@ -86,7 +87,8 @@ describe('Invisible ticket:', function () {
         'order[order_items_attributes][0][quantity]',
         'order[order_items_attributes][1][item_id]',
         'order[order_items_attributes][1][item_type]',
-        'order[order_items_attributes][1][quantity]'
+        'order[order_items_attributes][1][quantity]',
+        'order[promo_code_text]'
       ]);
     });
   });
