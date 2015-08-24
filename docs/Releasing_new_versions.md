@@ -14,7 +14,7 @@
 
 Check out the `releases` branch into its own path, and follow its setup instructions
 
-    git checkout https://github.com/ticketbase/ticketbase-js.git
+    git clone https://github.com/ticketbase/ticketbase-js.git -b releases
 
     cd ticketbase-js
     cat README.md
