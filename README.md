@@ -17,7 +17,7 @@ See the [Integration instructions →](docs/Integration.md) for documentation on
 
 Versions are officially distributed though the Ticketbase's CDN in the following locations:
 
-- [](#version) `http://cdn.ticketbase.com/widgets/v0.1.12/ticketbase.js`
+- [](#version) `http://cdn.ticketbase.com/widgets/v0.1.13/ticketbase.js`
 - `http://cdn.ticketbase.com/widgets/v0.1/ticketbase.js`
 - `http://cdn.ticketbase.com/widgets/v0/ticketbase.js`
 
