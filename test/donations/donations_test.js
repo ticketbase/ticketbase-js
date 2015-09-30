@@ -67,5 +67,4 @@ describe('Donations:', function () {
       expect($qtys.eq(2)).have.attr('value', '0');
     });
   });
-
 });

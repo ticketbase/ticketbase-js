@@ -9,7 +9,6 @@ var original = require('../fixtures/event_ok.json');
 var data, event;
 
 describe('presenter goalmeter', () => {
-
   describe('with goal', () => {
     beforeEach(() => {
       event = extend({}, original, {

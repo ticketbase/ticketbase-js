@@ -2,7 +2,6 @@
 require('../setup');
 
 describe('Donation goal:', function () {
-
   var mock = mockWidget.bind(this, {
     html:
       "<div id='w' data-event='101' " +

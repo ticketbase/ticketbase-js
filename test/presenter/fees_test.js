@@ -8,7 +8,6 @@ var original = require('../fixtures/event_ok.json');
 var data, event;
 
 describe('presenter fees', () => {
-
   describe('ticket (with no fees)', () => {
     beforeEach(() => {
       event = clone(original);

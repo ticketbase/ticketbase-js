@@ -1,7 +1,6 @@
 require('./setup');
 
 describe('TB (ok):', () => {
-
   mockWidget({
     html:
       "<div id='w' data-tb='ticket-form' " +

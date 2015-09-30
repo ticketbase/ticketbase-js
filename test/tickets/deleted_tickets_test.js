@@ -5,7 +5,6 @@ var extend = require('deep-extend');
 var names;
 
 describe('Deleted ticket:', function () {
-
   var mock = mockWidget.bind(this, {
     html: "<div id='w' data-event='101' data-tb='ticket-form'></div>",
     reply: require('../fixtures/event_ok.json')
@@ -50,7 +49,6 @@ describe('Deleted ticket:', function () {
 });
 
 describe('Invisible ticket:', function () {
-
   var mock = mockWidget.bind(this, {
     html: "<div id='w' data-event='101' data-tb='ticket-form'></div>",
     reply: require('../fixtures/event_ok.json')
