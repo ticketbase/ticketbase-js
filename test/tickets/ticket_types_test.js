@@ -4,7 +4,6 @@ require('../setup');
 var $item;
 
 describe('Ticket types:', function () {
-
   var mock = mockWidget.bind(this, {
     html:
       "<div id='w' data-event='101' " +

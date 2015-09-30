@@ -8,7 +8,6 @@ var original = require('../fixtures/event_ok.json');
 var data, event;
 
 describe('presenter status', () => {
-
   describe('ticket', () => {
     beforeEach(() => {
       event = extend({}, original);
@@ -59,5 +58,4 @@ describe('presenter status', () => {
       expect(data.is_closed).be.true;
     });
   });
-
 });

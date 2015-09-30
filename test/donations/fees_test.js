@@ -4,7 +4,6 @@ require('../setup');
 var $item;
 
 describe('Donation fees:', () => {
-
   var mock = mockWidget.bind(this, {
     html:
       "<div id='w' data-event='101' " +

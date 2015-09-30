@@ -3,7 +3,6 @@ require('../setup');
 var $select;
 
 describe('Single ticket:', function () {
-
   var mock = mockWidget.bind(this, {
     html:
       "<div id='w' data-event='101' " +
