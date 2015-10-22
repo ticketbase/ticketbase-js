@@ -20,7 +20,7 @@
     "brfs": "1.4.1",
     "browserify": "11.2.0",
     "browserify-versionify": "1.0.3",
-    "chai": "3.3.0",
+    "chai": "3.4.0",
     "chai-jquery": "2.0.0",
     "deep-extend": "0.4.0",
     "jquery": "2.1.4",
