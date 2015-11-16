@@ -37,7 +37,7 @@
     "sinon": "1.17.2",
     "stylify": "git://github.com/contra/stylify.git#resolve-uses",
     "stylus": "0.52.4",
-    "uglify-js": "2.6.0",
+    "uglify-js": "2.6.1",
     "watch": "0.16.0"
   },
   "directories": {
