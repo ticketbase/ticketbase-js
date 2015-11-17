@@ -32,7 +32,7 @@
     "nib": "1.1.0",
     "nock": "2.18.2",
     "proxyquire": "1.7.3",
-    "semistandard": "7.0.2",
+    "semistandard": "7.0.3",
     "serve": "1.4.0",
     "sinon": "1.17.2",
     "stylify": "git://github.com/contra/stylify.git#resolve-uses",
