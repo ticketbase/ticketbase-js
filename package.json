@@ -38,7 +38,7 @@
     "stylify": "git://github.com/contra/stylify.git#resolve-uses",
     "stylus": "0.53.0",
     "uglify-js": "2.6.1",
-    "watch": "0.16.0"
+    "watch": "0.17.0"
   },
   "directories": {
     "doc": "docs",
