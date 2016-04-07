@@ -30,7 +30,7 @@
     "mocha-jsdom": "1.0.0",
     "mocha-standard": "1.0.0",
     "nib": "1.1.0",
-    "nock": "3.6.0",
+    "nock": "8.0.0",
     "proxyquire": "1.7.3",
     "semistandard": "7.0.5",
     "serve": "1.4.0",
