@@ -15,7 +15,7 @@
     "ministache": "0.1.3"
   },
   "devDependencies": {
-    "babel": "5.8.23",
+    "babel": "5.8.29",
     "babelify": "6.4.0",
     "brfs": "1.4.1",
     "browserify": "13.0.0",
