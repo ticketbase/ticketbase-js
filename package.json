@@ -34,7 +34,7 @@
     "proxyquire": "1.7.10",
     "semistandard": "7.0.5",
     "serve": "1.4.0",
-    "sinon": "1.17.2",
+    "sinon": "1.17.7",
     "stylify": "git://github.com/contra/stylify.git#resolve-uses",
     "stylus": "0.53.0",
     "uglify-js": "2.6.4",
